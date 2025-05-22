@@ -1,0 +1,176 @@
+.login-box{
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.120187);
+    border-radius: 8px;
+}
+.heading{
+    font-family: 'Frutiger LT Arabic';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 24px;
+/* or 133% */
+
+letter-spacing: 1.125px;
+
+color: #1D1556;
+
+}
+
+.container {
+    /* width: 108% !important; */
+    max-width: 100%;
+    padding-left: 50px;
+}
+
+.card{
+    //width: 1038px;
+    //height: 600px;
+    background: rgba(255, 255, 255, 0.9);
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.120187);
+border-radius: 8px;
+//top: 221px;
+    width: auto;
+//left: 431px;
+    padding-top: 57px;
+    padding-bottom: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 1;
+    //transform: translate(50px,100px);
+}
+
+.col-md-auto.col-12.root {
+    border-right: 2px solid silver;
+    padding-top: 180px;
+    padding-left: 87px;
+    padding-right: 102px;
+    padding-bottom: 211px;
+}
+.col-md-auto.col-12.root_2 {
+    padding-left: 41px;
+    padding-top: 63px;
+   // padding-right: 122px;
+   padding-right: 0px;
+}
+.logo {
+    top: 180px;
+    // padding-top: 180px;
+    // padding-left: 87px;
+    // padding-bottom: 200px;
+    // padding-right: 100px;
+}
+
+.welcm{
+    font-family: 'Frutiger LT Arabic mix';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 24px;
+/* or 133% */
+
+letter-spacing: 1.125px;
+
+color: #1D1556;
+}
+
+.rims{
+    font-family: 'Frutiger LT Arabic mix';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 24px;
+/* or 133% */
+
+letter-spacing: 1.125px;
+color: #3498DB;
+}
+
+.row.inputs {
+    margin-top: 80px;
+}
+
+.row.bottom{
+    margin-bottom: 16px;
+    padding-right: 30px;
+}
+.row.bottem{
+    padding-right: 48px;
+}
+
+.form-control{
+    height: 50px;
+}
+
+button.btn.btn-primary {
+    height: 35px;
+    background: #3498DB;
+    font-family: 'FrutigerLTArabic-65Bold';
+}
+
+input::placeholder{
+    color: #1D1556;
+    font-family: 'Frutiger-LT-Arabic-55-Roman';
+}
+
+
+::ng-deep #google-button{
+    .S9gUrf-YoZ4jf {
+        width: 345px !important;
+
+        iframe{
+            width: 345px !important;
+           
+        body.haAclf{
+                padding: 4px 3px !important;
+            }
+
+            .haAclf{
+                padding: 4px 3px !important;
+            }
+
+            #document{
+
+                .haAclf{
+                    padding: 2px 3px;
+                   
+                    .nsm7Bb-HzV7m-LgbsSe{
+                        width: auto;
+                        padding: 0px 107px;
+                    }
+                }
+            }
+        }
+    }
+  }
+  
+  ::ng-deep #google-button{
+    .S9gUrf-YoZ4jf {
+        width: 100% !important;
+       margin-left: 0px !important;
+    }
+    width: 95% !important;
+    margin-left: 6px !important;
+  }
+  ::ng-deep .google{
+    padding: 0px 4.8% 0 1.2%;
+  }
+
+  .resend-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 8%;
+
+    .resendLink{
+        display: flex;
+        justify-content: flex-end;
+        //padding-right: 8%;
+        font-family: "Frutiger LT Arabic mix";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        color: #3498DB !important;
+    
+      }
+} 
+  

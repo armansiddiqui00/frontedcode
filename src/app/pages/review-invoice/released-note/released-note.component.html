@@ -1,0 +1,98 @@
+<div class="modal-header bsdatepicker-modal">
+    <h4 class="modal-title">{{'Released Detail'}}</h4>
+    <button class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" style="padding: 20px;">
+    <div class="accordion access-ctl-acc">
+        <div class="accordion-item">
+            <h2 class="accordion-header margin-0" id="panelsStayOpen-headingOne">
+                <button class="accordion-button cst-acc-btn margin-0 padding-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseOne">
+                    <div class="acc-heading">{{"Version: " + releasedData[0]?.version}}</div>
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <div>
+
+                        <!--Release date and feature released commented for now-->
+                        <!-- <li><strong>Version: </strong>{{releasedData[0]?.version}}</li> -->
+                        <!-- <li><strong>Release Date: </strong>{{releasedData[0]?.relasedDetails?.releasedDate}}</li> -->
+                        <!-- <details> -->
+                            <!-- <summary> Feature Released </summary> -->
+                            <!-- <ul>
+                                <span *ngFor="let r of releasedData">
+                                    <span *ngIf="!isArray(r?.featureName)">
+                                        <li>{{r?.featureName}}</li>
+                                    </span>
+                                    <span *ngIf="isArray(r?.featureName)">
+                                        <li *ngFor="let a of r?.featureName">{{a}}</li>
+                                    </span>
+                                </span>
+                               
+                            </ul>
+                        </details> -->
+                        <details>
+                            <summary> Feature </summary>
+                            <ul>
+                                <span *ngFor="let r of releasedData; let i = index">
+                                    <span *ngIf="!isArray(r?.relasedDetails?.feature)">
+                                        <li>{{r?.relasedDetails?.feature}}</li>
+                                    </span>
+                                    <span *ngIf="isArray(r?.relasedDetails?.feature)">
+                                        <li *ngFor="let fe of r?.relasedDetails?.feature">{{fe}}</li>
+                                    </span>
+                                    <!-- <li *ngFor="let f of r?.relasedDetails?.feature">{{f}}</li> -->
+                                </span>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary> Fixes </summary>
+                            <ul>
+                                <span *ngFor="let r of releasedData; let i = index">
+                                    <span *ngIf="!isArray(r?.relasedDetails?.fixes)">
+                                        <li>{{r?.relasedDetails?.fixes}}</li>
+                                    </span>
+                                    <span *ngIf="isArray(r?.relasedDetails?.fixes)">
+                                        <li *ngFor="let f of r?.relasedDetails?.fixes">{{f}}</li>
+                                    </span>
+                                </span>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary> Known Issue </summary>
+                            <ul>
+                                <span *ngFor="let r of releasedData; let i = index">
+                                    <span *ngIf="!isArray(r?.relasedDetails?.knownIssue)">
+                                        <li>{{r?.relasedDetails?.knownIssue}}</li>
+                                    </span>
+                                    <span *ngIf="isArray(r?.relasedDetails?.knownIssue)">
+                                        <li *ngFor="let f of r?.relasedDetails?.knownIssue">{{f}}</li>
+                                    </span>
+                                </span>
+                            </ul>
+                        </details>
+                        <details>
+                            <summary> Important Note </summary>
+                            <ul>
+                                <span *ngFor="let r of releasedData; let i = index">
+                                    <span *ngIf="!isArray(r?.relasedDetails?.impNote)">
+                                        <li>{{r?.relasedDetails?.impNote}}</li>
+                                    </span>
+                                    <span *ngIf="isArray(r?.relasedDetails?.impNote)">
+                                        <li *ngFor="let f of r?.relasedDetails?.impNote">{{f}}</li>
+                                    </span>
+                                </span>
+                            </ul>
+                        </details>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

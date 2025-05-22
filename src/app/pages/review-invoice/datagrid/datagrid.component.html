@@ -1,0 +1,218 @@
+<div class="block-20"></div>
+<div *ngIf="userDetails?.roleName == 'Finance' && reviewInvoicePageInfo?.pageName == 'processinvoices'  && !bankDataGrid" class=" d-flex justify-content-end ">
+  <div class="btn-group" dropdown #dropdown="bs-dropdown" [insideClick]="true" style="top: 12px;">
+    <a id="button-basic" dropdownToggle type="button" class=" dropdown-toggle" aria-controls="dropdown-basic"> <img
+        src='assets/icons/downloadmanager.svg'></a>
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu download-menu" role="menu"
+      aria-labelledby="button-basic">
+
+      <div class="row">
+        <a class="dropdown-item" (click)="download('pdf')">{{'PDF'}}</a>
+      </div>
+      <div class="row">
+        <a class="dropdown-item" (click)="download('csv')">{{'Excel'}}</a>
+      </div>
+
+    </ul>
+  </div>
+  <button type="button" class="btn" >
+   <!-- <div>{{'Update Payment Status'}}</div> -->
+   <!-- <i class="fa fa-refresh" aria-hidden="true" (click)="updatePaymentStatus('paymentInitiated')"></i> -->
+   <img src="assets/icons/process.png" alt="" width="28" height="28" (click)="openConfirmationDialog($event)">
+   
+  </button>
+</div>
+
+<div *ngIf="reviewInvoicePageInfo?.pageName == 'attendence'  && !bankDataGrid && dataSource != null" class=" d-flex justify-content-end ">
+  <button type="button" class="btn" >
+    <img (click)="reportDownload('pdf')"src='assets/icons/downloadmanager.svg'>
+   </button>
+</div>
+
+<br>
+<!-- <a class="d-load"><img src='assets/icons/downloadmanager.svg' class="icon-t-download" alt="table download icon"(click)="download()"></a> -->
+<div id="grid">
+<dx-data-grid id="gridContainer" [dataSource]="dataSource" [columns]="columns" [showBorders]="true"
+  [keyExpr]="primaryKey" [showColumnLines]="true" [showRowLines]="true" [columnAutoWidth]="true"
+  [rowAlternationEnabled]="true" (onContextMenuPreparing)="onRightClick($event)"
+  [(selectedRowKeys)]="selectedRows"
+  (onSelectionChanged)="selectionChangedHandler($event)" (onCellPrepared)="onCellPrepared($event)">
+  <dxo-master-detail [enabled]="false" template="details"></dxo-master-detail>
+  <dxo-scrolling [useNative]="false" [scrollByContent]="true" [scrollByThumb]="true">
+  </dxo-scrolling>
+  <div id="detailsCard" *dxTemplate="let detail of 'details'">
+    <app-detail-grid [key]="detail.key" [headerConfig]="headerConfig" [pageConfig]="pageConfig" [pageName]="pageName"></app-detail-grid>
+  </div>
+  <div *dxTemplate="let data of 'header'">
+    {{ data.column.caption }}
+  </div>
+  <dxo-selection *ngIf="(reviewInvoicePageInfo?.pageName == 'processinvoices' || reviewInvoicePageInfo?.pageName == 'attendence') && !bankDataGrid"
+  [selectAllMode]="allMode"
+  [showCheckBoxesMode]="checkBoxesMode"
+  
+  mode="multiple"
+></dxo-selection>
+  <dxo-paging [pageSize]="10"> </dxo-paging>{{bankDataGrid}}
+<dxo-pager *ngIf="!bankDataGrid"
+  [visible]="true"
+  [displayMode]="displayMode"
+  [showPageSizeSelector]="showPageSizeSelector"
+  [showInfo]="showInfo"
+  [showNavigationButtons]="showNavButtons"
+>
+</dxo-pager>
+</dx-data-grid>
+
+
+</div>
+
+<div class="wrapper-main" *ngIf="showNoRecords">
+  <section class="no-records">
+    <img class="mb-3" src="assets/icons/icon-no-record.svg">
+    <div style="clear:both;"></div>
+    <span>{{'No records to display'}}</span>
+  </section>
+</div>
+
+<!-- <dx-tooltip  [target]="TooltipTarget" [visible]="isVisible"  >
+  <div *dxTemplate="let data of 'content'">
+      <div style="height: 500; width: 200; color: black;">{{ToolTipText}}
+      </div>
+  </div>
+</dx-tooltip> -->
+
+<ng-template #approveInvoice>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Approve Invoice'}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- <div class="wrapper-main"> -->
+    <div class="row">
+      <label class="form-label">{{'Are you sure, you want to approve the invoice of ' + approveData.consultantName + "?"}}</label>
+    </div>
+    <div class="row">
+      <div class="d-flex" style="margin-top: 12px">
+        <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+          (click)="modalRef?.hide();approve()">{{'Yes'}}</button>
+        <button type="button" class="btn btn-primary bg-primary-light col-lg-1 col-md-3"
+          (click)="modalRef?.hide()">{{'Cancel'}}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #rejectInvoice>
+
+  <div class="modal-header widthCls">
+    <h4 class="modal-title pull-left">{{'Reject Invoice'}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <label class="form-label required" style="margin-bottom:0px;">{{'Comment'}}</label>
+      <textarea type="text" class="form-control" placeholder="Comment" name="mahrattareason"
+        [(ngModel)]="comment"></textarea>
+    </div>
+    <div class="row">
+      <div class="d-flex" style="margin-top: 12px">
+        <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+        (click)="reject()">{{'Reject'}}</button>
+      <button type="button" class="btn btn-primary bg-primary-light col-lg-1 col-md-3"
+        (click)="modalRef?.hide()">{{'Cancel'}}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #passwordTemplate>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Enter Password'}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalHide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <input type="password" name="password" [(ngModel)]="password" placeholder="Enter Password"
+        (keyup.enter)="onViewReview('')">
+      <div class="d-flex">
+        <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+          (click)="onViewReview('')">{{'OK'}}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<!-- modal for pdf download -->
+<ng-template #downloadTemplate>
+ <div id="updateModal" class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{downloadFlag == 'update' ? 'Update Payment' :downloadFlag == 'pdf'? 'Download PDF':'Download Excel'}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalHide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body formBody" >
+<input type="radio" id="regular" name="regular" value="regular" [(ngModel)]="sarAndInr" >
+      <label class="all">{{downloadFlag == 'pdf' ? 'Download selected Invoice(s)' : 'Regular Transfer'}}</label>
+
+      <br>
+
+      <input [hidden]="downloadFlag == 'pdf'" type="radio" id="online" name="online" value="online" [(ngModel)]="sarAndInr" >
+      <label [hidden]="downloadFlag == 'pdf'" class="all">{{'Online Transfer'}}</label>
+   
+  </div>
+  <div class="modal-footer download">
+    <div class="d-flex" style="justify-content: end;">
+      <button type="button" class="btn btn-light bg-primary-light" (click)="modalHide()">{{'Cancel'}}</button>
+      <button type="button" *ngIf="downloadFlag=='pdf'" class="btn btn-primary bg-primary-blue"
+        (click)="pdfdownload();modalHide()">{{'Download'}}</button>
+      <button type="button" *ngIf="downloadFlag=='csv'" class="btn btn-primary bg-primary-blue"
+        (click)="csvData();modalHide()">{{'Download'}}</button>
+      <button type="button" *ngIf="downloadFlag=='update'" class="btn btn-primary bg-primary-blue"
+        (click)="updatePaymentStatus('');modalHide()">{{'Update'}}</button>
+    </div>
+  </div>
+ </div>
+</ng-template>
+
+<ng-template #updateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Update Payment Status'}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalHide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="height: 400px;">
+    <div class="row">
+      <div class="form-group col col-md-12 col-12 custom-form">
+        <label style="margin-bottom: 8px;">{{'Invoice Number'}}</label>
+        <input type="text" name="invNum" class="form-control " style="margin-bottom: 0px; background-color: #e9ecef !important;"
+           [(ngModel)]="invoiceNumber" placeholder="{{'Invoice Number'}}" disabled="true">
+      </div>
+      <div class="form-group col col-md-12 col-12 custom-form">
+        <label style="margin-bottom: 8px;">{{'Consultant Name'}}</label>
+        <input type="text" name="consultantName" class="form-control "  style="margin-bottom: 0px;background-color: #e9ecef !important;"
+            [(ngModel)]="consultantName"  placeholder="{{'Consultant Name' }}" disabled="true">
+      </div>
+      <div class="form-group col col-md-12 col-12 custom-form">
+        <label style="margin-bottom: 8px;" class="required">{{'Transaction Ref. Number'}}</label>
+        <input type="text" name="trxRefNo" class="form-control " style="margin-bottom: 0px;"
+        [(ngModel)]="trxRefNo" placeholder="{{'Transaction Ref. Number'}}">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer download"> 
+    <button type="button" class="btn btn-primary bg-primary-blue"
+        (click)="updatePaymentStatus('paid');modalHide()" [disabled]="trxRefNo == null || trxRefNo == ''" >{{'Update'}}</button>
+    <button type="button" class="btn btn-light bg-primary-light" (click)="modalHide()">{{'Cancel'}}</button>
+  </div>
+</ng-template>

@@ -1,0 +1,208 @@
+<div class="modal-header bsdatepicker-modal">
+    <h4 class="modal-title">{{ reviewService.obj == 'bank' ? 'Bank Details' : 'Invoice Details'}}</h4>
+    <button class="close" aria-label="Close" (click)="close()">
+       <span aria-hidden="true">&times;</span>
+    </button>
+ </div>
+
+ <div class="modal-body ">
+    <div *ngIf="reviewService.obj == 'invoice' || reviewService.obj == 'processinvoices'" class="wrapper-main">
+        <!-- <label class="Submit">{{'Attendance Timesheet'}}</label>
+        <hr>
+        <br> -->
+        <label class="invStatus" [ngStyle]="copyData?.invoiceObj?.invoiceStatus == 'underReview' ? {'color':'orange'} : copyData?.invoiceObj?.invoiceStatus == 'Rejected' ? {'color':'red'} :  {'color':'green'}">{{copyData?.invoiceObj?.invoiceStatus == 'underReview' ? "Under Review" : copyData?.invoiceObj?.invoiceStatus == 'paymentInitiated' ? 'Payment Initiated' : copyData?.invoiceObj?.invoiceStatus == 'paid' ? 'Paid' : copyData?.invoiceObj?.invoiceStatus}}</label>
+        <ul class="nav nav-tabs ">
+            <li class="nav-item" >
+                <a class="nav-link" [ngClass]="{'active': tabIndex == 0}" (click)="tabClicked(0)">{{'Review Invoice Sheet'}}</a>         
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " [ngClass]="{'active': tabIndex == 1}" (click)="tabClicked(1)">{{'Review Attendance'}}</a>
+            </li>
+            <li>
+                
+            </li>
+            <!-- <span class="text-left"><i class="fa fa-download" aria-hidden="true" (click)="downloadPDF()"></i></span> -->
+        </ul>
+        <br>
+        <form>
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    <div><label class="label">{{'Consultant/Company Name'}}</label></div>
+                    <div><label class="value">{{copyData?.invoiceObj?.vendor || copyData?.invoiceObj?.consultantName}}</label></div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div><label class="label">{{'Manager Name'}}</label></div>
+                    <div><label class="value">{{copyData.invoiceObj.reportingManagerName}}</label></div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div><label class="label">{{'Invoice Number'}}</label></div>
+                    <div><label class="value">{{copyData.invoiceObj.invNum}}</label></div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div><label class="label">{{'Client Name(s)'}}</label></div>
+                    <div><div class="value" style="word-break: break-all; color: #747C91; font-size: 16px;">{{copyData.clientName}}</div></div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    <div><label class="label">{{'Invoice Date'}}</label></div>
+                    <div><label class="value">{{copyData.invoiceObj.submissionDate}}</label></div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <div><label class="label">{{'Bill To'}}</label></div>
+                    <div><label class="value">{{"Rootware Technologies DWC-LLC Dated 4/26/2024 PO Box 712738, Dubai UAE"}}</label></div>
+                </div>
+            </div>
+           
+            <!-- <div class="d-flex" style="justify-content: left;" >
+                <button type="button" class="btn btn-primary bg-primary-blue col-lg-2 col-md-3" (click)="generateAttendance()">{{'Generate Attendance'}}</button>
+            </div> -->
+          
+            <div   class="paymentDetails">{{tabIndex == 0 ? 'Invoice Details' : 'Timesheet Details'}}</div>
+            <div *ngIf="tabIndex == 1" class="col-md-12 col-12 paymentDeadline">
+                <div class="attendance">
+                <table  style="margin: 0px 0px 24px;">
+                    <thead>
+                      <tr>
+                        <th scope="col">{{'Date of Month'}}</th>
+                        <th scope="col">{{'No of Hours Worked'}}</th>
+                        <th scope="col">{{'Overtime'}}</th>
+                        <th scope="col">{{'Total Hours'}}</th>
+                        <th scope="col">{{'Remarks'}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of copyData.invoiceObj?.attendance">
+                        <td>{{data.dateOfMonth}}</td>
+                        <!-- <td contenteditable='true'>{{data.noOfHoursWorked}}</td> -->
+                        <td>{{data.noOfHoursWorked}}</td>
+                        <td>{{data.overTimeHours}}</td>
+                        <td>{{data.totalHours}}</td>
+                        <td>{{data.remarks}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+            <div *ngIf="tabIndex == 0" class="col-md-12 col-12 paymentDeadline2">
+                <table >
+                    <thead>
+                        <tr>
+                            <th>{{'Particular(s)'}}</th>
+                            <th style="text-align: end;">{{'Attachment(s)'}}</th>
+                            <th style="text-align: end;">{{'No. of days'}}</th>
+                            <th style="text-align: end;">{{'Amount(s)'}}{{'('+copyData?.invoiceObj?.invSubmittedCurr+')'}}</th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{copyData?.invoiceObj.particulars}}</td>
+                            <td>{{'-'}}</td>
+                            <td style="text-align: end;">{{copyData?.invoiceObj.noOfDays}}</td>
+                            <td style="text-align: end;">{{copyData?.invoiceObj.invAmount | number :'.2'}}</td>
+                        </tr>
+                        <tr *ngFor="let count of copyData?.invoiceObj?.invParticulars;let i = index;let last = last">
+                            <!-- <td *ngIf="count.name != ''">{{count.name == "Others" ? count?.name + ' (' + count.others + ')' : count.name == "Offshore" ? count?.name + ' (' + count.comment + ')' :count?.name == "Overtime" ? count?.name + '  (' + count.hours +' hrs)':count.name}}</td> -->
+                            <td *ngIf="count.name != ''">{{count?.name == "otherDeduction" ? "Other Deductions"  + ' (' + count.comment + ')': count?.name == "otherAddition" ? "Other Additions"  + ' (' + count.comment + ')': 
+                                count?.name == "Onsite" ? count?.comment : count?.name == "Offshore" ? count.comment : count?.name == "Onsite Unpaid Leave" ? "Onsite Unpaid Leave" + ' (' + count.comment + ')':
+                                count?.name == "Offshore Unpaid Leave" ? 'Offshore Unpaid Leave' + ' (' + count.comment + ')': count?.name == "Onsite Leave" ? 'Onsite Leave' + ' (' + count.comment + ')': count?.name == "Offshore Leave" ? 'Offshore Leave' + ' (' + count.comment + ')' :
+                                count?.name == "partialInvoice" ? 'Partial Invoice'+ ' (' + count.comment + ')' :count?.name == "Overtime" ? count?.name + '  (' + count.hours +' hrs)' :count.name == "Others" ? count?.name + ' (' + count.others + ')' : count?.name}}</td>
+                            <td *ngIf="count.name != ''" style="max-width:174px !important;text-align: end;">
+                                <span *ngFor="let file of count?.attachment, let j = index">
+                                    <i class="fa fa-eye" (click)="openReasonModal(viewDoc,file)"></i> 
+                                </span>
+
+                              <ng-template #viewDoc>
+       
+                                <div class="modal-header">
+                                  <h4 class="modal-title pull-left">{{'Document Viewer'}}</h4>
+                                  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                                     <span aria-hidden="true">&times;</span>
+                                  </button>
+                               </div>
+                               <div class="modal-body">
+                                   
+                                <div class="row">
+                                  <!-- <img [src]="count.file" > <br/> -->
+                                  <img [src]="showImage" > <br/>
+                            <pdf-viewer  [src]="showPdf" [render-text]="true"  [show-all]="true" [original-size]="true"
+                                  [fit-to-page]="false"  style="display: block;"></pdf-viewer>
+                                  <div *ngIf="showMail != ''" [innerHTML]="showMail.html"></div>
+                                </div>
+                                  
+                                  <div class="row">
+                                     <div class="d-flex">
+                                        <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                                           (click)="hideModal()">{{'Close'}}</button>
+                                     </div>
+                                  </div>
+                               </div>
+                              </ng-template>
+                            </td>
+                            <td *ngIf="count.name != ''" style="text-align: end;">{{count.noOfDays == "" ? '-' : count.noOfDays || count.perdiem}}</td>
+                            <td *ngIf="count.name != ''" style="text-align: end;"><span *ngIf="(count.name == 'otherDeduction' || count.name == 'partialInvoice' || count.name == 'Offshore Unpaid Leave' || count.name == 'Onsite Unpaid Leave' || count.name == 'Other') && count.amount != '*****'" id="minus">-</span>{{count.amount == '*****' ? count.amount : (count.amount  | number: '.2')}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;font-weight: 700;color: #1d1556;"><label style="font-family:'FrutigerLTArabic-65Bold' ">{{amountInWords}}</label></td>
+                            <td></td>
+                            <td style="text-align: end;font-weight: 700 !important;color: #1d1556;">{{'Total Amount'}}</td>
+                            <td style="text-align: end;font-weight: 700 !important;color: #1d1556;cursor: pointer;">{{copyData.invoiceObj.totalAmount | number: '.2'}}</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="block-20"></div>
+            <div class="d-flex" >
+                <button *ngIf="this.tabIndex == 0" type="button" class="btn btn-primary bg-primary-blue" (click)="downloadPDF()">{{'Download'}}</button>
+                <button *ngIf="this.tabIndex == 1" type="button" class="btn btn-primary bg-primary-blue" (click)="downloadAttendencePdf()">{{'Download'}}</button>
+                <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="close()">{{'Close'}}</button>
+            </div>
+    
+        </form>
+    </div>
+    <div *ngIf="reviewService.obj == 'bank'">
+        <data-grid [dataSource]="reviewService.viewData" [bankDataGrid]="bankDataGrid" [pageConfig]="pageConfig" [pageName]="reviewService.pageName"></data-grid>
+        <!-- <table>
+            <thead>
+                <tr>
+                    <th>{{'Account Holder Name'}}</th>
+                    <th>{{'Account No.'}}</th>
+                    <th>{{'Bank Name'}}</th>
+                    <th>{{'Bank Address'}}</th>
+                </tr>
+            </thead>
+        </table> -->
+    </div>
+</div>
+
+
+<ng-template #passwordTemplate>
+ 
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'Enter Password'}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+    <!-- <div class="wrapper-main"> -->
+       <!-- <div class="wrapper-main"> -->
+       <div class="row">
+        <input type="password" name="password" [(ngModel)]="password" placeholder = "Enter Password" (keyup.enter)="decript();hideModal()">
+          <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                (click)="decript();hideModal()">{{'OK'}}</button>
+          </div>
+       </div>
+    <!-- </div> -->
+ </div>
+  </ng-template>
+
+
+  

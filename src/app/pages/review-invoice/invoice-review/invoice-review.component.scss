@@ -1,0 +1,249 @@
+@import '../../../../itcss/01-settings.scss';
+.paymentDeadline{
+    border: 2px solid rgba(116, 124, 145, 0.3);
+    padding: 22px 42px;
+    border-radius: 4px;
+    margin:0px 0px 36px 0px;
+}
+
+.paymentDetails{
+    position: relative;
+    top: 12px;
+    left: 25px;
+    display: inline;
+    padding: 0px 10px;
+    z-index: 1;
+    background: white;
+    font-size: 18px;
+    font-weight: 700 !important;
+    color: #1d1556;
+    font-family: "FrutigerLTArabic-65Bold" !important;
+    line-height: 31px !important;
+}
+
+.block-20{
+    height: 20px;
+}
+
+.Submit{
+    font-family: "Frutiger-LT-Arabic-55-Roman";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 31px !important;
+}
+
+.between-stretch{
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-top: 24px;
+    padding-left: 0px;
+
+    label.expense{
+        font-size: 18px;
+        font-weight: 700 !important;
+        color: #1d1556;
+        font-family: "FrutigerLTArabic-65Bold" !important;
+        margin-left: 0px;
+        padding-top: 18px;
+    }
+
+    .plus{
+        padding: 0px;
+        height: 40px;
+        /* width: 0px; */
+        min-width: 40px;
+        border-radius: 200px;
+       // border: 1px solid #e1e1e1;
+       font-size: 23px;
+       color: #3498DB;
+        i.fa.fa-plus {
+            font-size: 18px;
+        }
+    }
+}
+
+.table{
+    margin-bottom: 12px;
+
+    thead tr {
+        background: #FFFFFF;
+        border-bottom: 2px solid #3498DB;
+        box-shadow: 0px 2px 10px rgba(61, 85, 128, 0.1);
+        color: #1D1556;
+        height: 50px;
+    }
+    td{
+        padding: 1.75rem 0.75rem;
+        border: none;
+
+        input{
+            border: none;
+            border-bottom: 1px solid #dedede !important;
+            height: 20px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        input:focus, textarea:focus
+{
+  //  border: 1px solid #1670BE;
+   // box-shadow: 0 0 3px #1670BE;
+    outline-offset: 0px;
+    outline: none;
+}
+
+select{
+    width: none !important;
+    border: none;
+    border-bottom: 1px solid #dedede;
+    margin-top: -14px;
+    font-size: 14px;
+    margin: 0px;
+    margin-top: -13px;
+    padding-left: 0px;
+    padding-right: 47px;
+    height: 25px;
+    cursor: pointer;;
+}
+
+select:focus, textarea:focus
+{
+  //  border: 1px solid #1670BE;
+   // box-shadow: 0 0 3px #1670BE;
+    outline-offset: 0px;
+    outline: none;
+}
+    }
+}
+
+.total{
+    background: #FFFFFF;
+   // border-bottom: 2px solid #3498DB;
+ 
+    box-shadow: 0px 2px 10px rgba(61, 85, 128, 0.1);
+    .col{
+        font-family: "Frutiger-LT-Arabic-55-Roman";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+    }
+}
+
+.d-flex {
+    justify-content: end;
+    display: flex!important;
+}
+
+.switch{
+    position: relative;
+    display: inline-block;
+    top: 30px;
+    width: 60px;
+    height: 15px;
+    left: 0px;
+    input { 
+          opacity: 0;
+          width: 0;
+          height: 0;
+          &:checked + .slider {
+                background-color: #09B39C !important;
+                border: 2px solid #09B39C !important;
+                border-radius: 100px !important;
+ 
+                &:after {
+                   transition: all .5s;
+                   left: 30%;
+                   content: "";
+                   color: $white;
+               } 
+               &:before {
+                position: absolute;
+               // content: url(../../../../assets/icons/correctTick.svg) !important;;
+               content: url(../../../../assets/icons/correct-tick.svg) !important;
+              // content: 'ok';
+                height: 24px;
+                width: 24px;
+                left: -2px;
+                bottom: -5px;
+                top: 2px !important;
+                color: $primary;
+                background-color: $white;
+                border: 1px solid $gray90;
+                -webkit-transition: .4s;
+                transition: .4s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                 transform: translateX(26px);
+              }  
+          }
+          &:focus + .slider {
+             box-shadow: 0 0 1px $primary;
+          }
+        }
+    .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 11px;
+          bottom: 0;
+          -webkit-transition: .4s;
+          transition: .4s;
+          content: "";
+          color: $accent;
+          width: 52px !important;
+           height: 32px !important;
+           background: #FFFFFF;
+           border: 2px solid #D8D8D8;
+           border-radius: 100px !important;
+ 
+          &:before {
+                position: absolute;
+               // content: url(../../../../assets/icons/correctTick.svg) !important;;
+               content:'';
+              // content: 'ok';
+                height: 24px;
+                width: 24px;
+                left: 2px;
+                bottom: -5px;
+                top: 2px !important;
+                background-color:  #D8D8D8;
+                -webkit-transition: .4s;
+                transition: .4s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+          &:after {
+                content: "";
+                color: $white;
+                display: block;
+                position: absolute;
+                transform: translate(-50%,-50%);
+                top: 50%;
+                left: 70%;
+                transition: all .5s;
+                font-size: 10px;
+                font-family: Verdana,sans-serif;
+               }
+        }
+        .round {
+             border-radius: 34px;
+             top: -28px;
+             bottom: 25px;
+             &:before {
+                   border-radius: 50%;
+                 }
+           }
+  }
+
+  ::ng-deep bs-datepicker-container {
+   // transform: translate3d(451px, 274px, 0px) !important;
+}

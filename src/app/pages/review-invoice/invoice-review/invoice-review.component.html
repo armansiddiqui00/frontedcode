@@ -1,0 +1,79 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Review'}}&nbsp;<span class="subpage-heading2">/&nbsp;{{'Invoice Review'}}</span></span>
+    <hr>
+</div>
+
+<div class="wrapper-main">
+    <form #reviewInvoiceSheetForm="ngForm" autocomplete="off">
+        <div class="row">
+            
+            <div *ngIf="!review.viewHistory" class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Search By Month'}}</label>
+                <input type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                placement="bottom"
+                bsDatepicker
+                [bsValue]="displayMonth" (bsValueChange)="onMonthChange($event)"
+                [bsConfig]="{ dateInputFormat: 'MM/YYYY',showWeekNumbers: false, isAnimated: false,minMode:'month' }"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                name="review"  readonly onfocus="this.blur()">
+            </div>
+
+            
+            <div  *ngIf="review.viewHistory" class="form-group custom-form col-md-3 col-sm-6" id="container">
+                <label class="form-label required">{{'Month Range'}}</label>
+                <!-- <input
+                type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                placement="bottom"
+                bsDatepicker
+                [bsValue]="dateSelected"
+                (bsValueChange)="onMonthRangeChange($event)"
+                [dateCustomClasses]="selectedClass"
+                [bsConfig]="{
+                    dateInputFormat: 'MM/YYYY',showWeekNumbers: false, isAnimated: false,minMode:'month'
+                }"
+                > -->
+                <!-- <input type="text" class="form-control" placeholder="MM/YYYY" (click)="onclick()" name="date" [(ngModel)]="date"/>
+                <bs-datepicker-inline id="datePicker" *ngIf="visible" [bsValue]="dateSelected" (bsValueChange)="onMonthRangeChange($event)"  
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',showWeekNumbers: false,minMode:'month',containerClass: 'dark-blue',monthLabel: 'MMM'  }"></bs-datepicker-inline> -->
+                <input type="text" class="form-control" placeholder="YYYY-MMM" name="date"  id="exampleInput"  readonly onfocus="this.blur()">
+            </div>
+            <div *ngIf="review.viewHistory" class="form-group custom-form col-md-3 col-sm-6"> 
+                <label class="form-label">{{'Consultant(s)'}}</label>
+                <angular2-multiselect name="client" [data]="pageConfig?.employeeList"
+                [(ngModel)]="review.empId" [settings]="getEmployeeSetting()" required>
+                </angular2-multiselect>
+            </div>
+            <div *ngIf="review.viewHistory" class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Invoice Status'}}</label>
+                <angular2-multiselect name="client" [data]="invStatusDrp"
+                [(ngModel)]="review.invoiceStatus" [settings]="getStatusSetting()" required>
+                </angular2-multiselect>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6" style="padding: 45px 20px 20px;"> 
+                <label class="switch">
+                    <input id="toggele-button-value" type="checkbox"
+                        (change)="viweHistory($event)"
+                        [(ngModel)]="review.viewHistory" name="viewHistory">
+                    <span class="slider round"></span>
+               </label><label class="selectAllLabel">{{'View History'}}</label>
+            </div>
+        </div>
+        <div class="block-20"></div>
+        <div class="d-flex" >
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="search()">{{'Search'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="reset()">{{'Reset'}}</button>
+        </div>
+    </form>
+</div>
+
+<!-- <data-grid [reviewInvoicePageInfo]="reviewInvoicePageInfo" (applyFiltersEvent)="applyFilters($event)" [dataSource]="dataSource"></data-grid> -->
+
+
+
+
+

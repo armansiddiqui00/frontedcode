@@ -1,0 +1,13 @@
+@import "../../../itcss/01-settings.scss";
+
+.base {
+    padding: 0 0 5px;
+    .parent {
+        font-size: $larger;
+        padding-right: 10px;
+    }
+    .child{
+        font-size: $regular-sharp;
+        color: rgba($color: $default, $alpha: 0.4);
+    }
+}

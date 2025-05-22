@@ -1,0 +1,5 @@
+<app-daily-timesheet *ngIf="timesheetPageInfo.urlPageName == 'submittimesheet'" (newItemEvent)="addItem($event)"></app-daily-timesheet>
+<app-view-timesheet *ngIf="timesheetPageInfo.urlPageName == 'viewtimesheet'" (newItemEvent)="addItem($event)"></app-view-timesheet>
+<app-inbox *ngIf="timesheetPageInfo.urlPageName == 'Inbox'"></app-inbox>
+ 
+<!-- <data-grid *ngIf="dataSource" [dataSource]="dataSource" [gridHeader]="gridHeader" [timesheetPageInfo]="timesheetPageInfo"></data-grid> -->

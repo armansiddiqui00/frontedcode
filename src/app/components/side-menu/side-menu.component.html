@@ -1,0 +1,27 @@
+<div class="side-menu-base flex-column-start-stretch">
+    <div class="menu-item start-menu" [class.active]="item.active"
+        *ngFor="let item of sideMenu.menuItems; let i = index" (click)="menuItemClick(i)">
+
+        <div class="item-icon flex-row-start-center main-box">
+            <img src='assets/icons/{{item.icon}}.svg' class="icon-normal" alt="left-icon">
+            <!-- <img src='assets/icons/{{item.icon}}-hover.svg' class="icon-select" alt="left-icon"> -->
+        </div>
+        <div class="item-text first  flex-row-start-center  menu-label"
+            (click)="item.subMenu.length > 0 && toggleSubMenu($event, i)">{{item.text}}</div>
+        <div class="item-icon itm-arrow flex-row-start-center" *ngIf="item.subMenu.length > 0"
+            (click)="toggleSubMenu($event, i)">
+            <!--<i class="fas fas fa-chevron-right" *ngIf="!item.dropdown"></i>-->
+            <div class="menu-arrow-right" *ngIf="!item.dropdown"></div>
+            <!--<i class="fas fas fa-chevron-down" *ngIf="item.dropdown"></i>-->
+            <div class="menu-arrow-down" *ngIf="item.dropdown"> </div>
+        </div>
+        <div class="sub-menu" *ngIf="item.dropdown">
+            <div *ngFor="let subMenu of item.subMenu; let j = index" class="menu-item {{subMenu.selected}}"
+                (click)="subMenuClick($event, i, j)" (contextmenu)="onRightClick($event, i, j)">
+                <!--<div class="item-icon flex-row-start-center"><i class="{{subMenu.icon}}"></i></div>-->
+                <div class="item-text second flex-row-start-center "><b>-</b>&nbsp;&nbsp;{{subMenu.text}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,261 @@
+@import "../../../itcss/01-settings.scss";
+
+.side-menu-base {
+    color: $secondary;
+    height: 100%;
+    /*overflow: auto;*/
+    overflow: visible;
+    background: linear-gradient(180deg, #0A3158 11.84%, #1D6BB9 31.71%, #2364A5 39.08%, #1A4D80 69.27%, #0D3E6C 82.29%, #034180 99.99%, rgba(1, 83, 165, 0) 100%) !important;
+   
+
+    .avatar {
+        display: grid;
+        grid-template: 32px 32px / 60px 1fr;
+     background-color: rgba($color: #d2d6de, $alpha: 0.03);
+
+        .icon {
+            grid-column: 1;
+            grid-row: 1 / span 2;
+
+            i {
+                font-size: $large;
+            }
+        }
+
+        .name {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .status {
+            grid-column: 2;
+            grid-row: 2;
+
+            font-size: 1.2rem;
+
+            .green {
+                font-size: $small;
+                color: $success;
+            }
+
+            side-menu-base flex-column-start-stretch .red {
+                font-size: $small;
+                color: $error;
+            }
+        }
+    }
+
+    .custom-class {
+        //border-bottom: 3px solid $dark-cyan-blue !important;
+      //  color: $dark-cyan-blue !important;
+       // border-left: 3px solid;
+    }
+
+    .sub-menu .menu-item .item-text{
+        width: 279px;
+        padding: 24px;
+        padding-left: 58px;
+    }
+
+    .sub-menu .menu-item .item-text:hover {
+        background: #f2f5f7;
+        color: deepskyblue;
+      
+    }
+
+    /* ::ng-deep .menu-open .menu-item .sub-menu .menu-item .item-text:hover::before {
+           background:$accent;
+           content: "Before -";
+            background-color: green;
+        }*/
+
+
+
+
+
+    .menu-item,
+    .logout {
+        width: 100%;
+        display: grid;
+        grid-template: 60px 1fr / 72px 1fr 56px;
+        cursor: pointer;
+        border-bottom: 1px solid deepskyblue;
+       // background-color: #f2f5f7 !important;
+        color: black; 
+
+        &.active {
+            //border-left: 3px solid $primary;
+          
+        }
+
+        &:hover {
+           // background-color: #f2f5f7;
+            z-index: 999;
+        }
+
+        .item-icon {
+          //  justify-content: center;
+          padding-left: 15px;
+            &:hover{
+                //background-color: #f2f5f7;
+            }
+        }
+
+        .sub-menu {
+            padding-left: 28px;
+            grid-column: 1 / span 3;
+            grid-row: 2;
+          //  background-color: white !important;
+          background-color: $cyan-blue;
+
+            .menu-item {
+                //background-color: white !important;
+                background-color: $cyan-blue;
+
+                .item-text {
+                    font-size: $regular-flat;
+                }
+            }
+            
+        }
+    }
+
+
+    .logout .item-icon.glow{
+        width: 55px;
+        height: 55px;
+
+    }
+
+
+    .logout,
+    .download-manager {
+        background-color: rgba($color: $tertiary, $alpha: 0.03);
+
+        .item-icon {
+            width: 55px;
+            margin-left: 2px;
+        }
+    }
+
+    .glow {
+        width: 50px;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        margin-left: 5px;
+    }
+
+    .glow:before {
+        content: '';
+       // background: linear-gradient(45deg, $bright-red, $vibrant-orange, $yellow, $lime-green, $cyan, $royal-blue, $indigo, $fuchsia-pink, $bright-red);
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    .glow {
+        color: $accent
+    }
+
+    .glow:after {
+        background: transparent;
+    }
+
+    .glow:before {
+        opacity: 1;
+    }
+
+    .glow:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: $accent;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+
+    @keyframes glowing {
+        0% {
+            background-position: 0 0;
+        }
+
+        50% {
+            background-position: 400% 0;
+        }
+
+        100% {
+            background-position: 0 0;
+        }
+    }
+}
+
+
+
+::ng-deep .menu-open .menu-item .sub-menu .menu-item .item-text:hover::before {
+    background: #f2f5f7;
+    content: " ";
+    height: 50px;
+    width: 50px;
+    margin-left: -75px;
+    position: absolute;
+   
+
+}
+
+::ng-deep .ctxmenu {
+    cursor: pointer;
+    box-shadow: 0 0 10px 1px $cyan-blue;
+    height: 40px;
+    width: 175px;
+    z-index: 1111;
+    background: $white;
+    color: initial;
+    border-radius: 5px;
+    border: 1px solid $cyan-blue;
+
+    p {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: 600;
+
+        &:hover {
+           // background-color: $safe-blue;
+            color: initial
+        }
+    }
+}
+
+.item-text.first.flex-row-start-center.menu-label {
+    color: white;
+    font-size: 16px;
+    font-family: 'Frutiger-LT-Arabic-55-Roman' !important;
+}
+
+.item-text.second.flex-row-start-center {
+    font-size: 14px !important;
+    color: white;
+    margin-left: -26px;
+    font-family: 'Frutiger-LT-Arabic-55-Roman' !important;
+}
+i.fas.fa-sign-out-alt {
+    color: white;
+}
+
+.logg{
+    color: white;
+    font-family: 'Frutiger-LT-Arabic-55-Roman' !important;
+}

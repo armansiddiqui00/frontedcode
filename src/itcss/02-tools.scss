@@ -1,0 +1,23 @@
+// globally used mixins and functions. It’s important not to output any CSS in the first 2 layers
+
+@import "./01-settings.scss";
+
+@mixin custom-media ($props) {
+    @each $prop, $values in $props {
+        @media #{$bp-desktop} {
+            #{$prop} : nth($values, 1);
+        }
+        @media #{$bp-tablet} {
+            #{$prop} : nth($values, 2);
+        }
+        @media #{$bp-phablet} {
+            #{$prop} : nth($values, 3);
+        }
+        @media #{$bp-phone} {
+            #{$prop} : nth($values, 4);
+        }
+        @media #{$bp-small} {
+            #{$prop} : nth($values, 5);
+        }
+    }
+}

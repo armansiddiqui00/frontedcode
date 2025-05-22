@@ -1,0 +1,4 @@
+<app-reviewer-setting *ngIf="settingsPageInfo.urlPageName == 'reviwerSetting'" (filterEvent)="approvedOrReview($event)"></app-reviewer-setting>
+<app-approval-setting *ngIf="settingsPageInfo.urlPageName == 'approvalSetting'"></app-approval-setting>
+<div class="block-20"></div>
+<data-grid *ngIf="dataSource" [dataSource]="dataSource" [settingsPageInfo]="settingsPageInfo" [gridHead]="gridHead" [serviceNotResponded]="serviceNotResponded"></data-grid>

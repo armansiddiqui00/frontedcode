@@ -1,0 +1,97 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Travel Desk'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{'Passport Details'}}</span></span>
+    <hr>
+</div>
+
+<div class="wrapper-main">
+    <form #passportForm="ngForm" autocomplete="off">
+    <div class="row">
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Passport Type'}}</label>
+            <select name="passportType" class="form-select" [(ngModel)]="passportModel.passportType2" [ngClass]="passportModel.passportType2 == null?'':'selected'">
+                <option selected [ngValue]="null" disabled="true" >{{'Select Passport Type'}}</option>
+                <option ngValue="P">{{'Personal'}}</option>
+                <option ngValue="D">{{'Diplomatic'}}</option>
+                <option ngValue="S">{{'Service'}}</option>
+            </select>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Country Code'}}</label>
+            <select name="countryCode" class="form-select" [(ngModel)]="passportModel.countryCode2" [ngClass]="{'selected':passportModel.countryCode2 != null,'redBorder': (passportModel.countryCode2 == null && submitFlag)}"  required (change)="onChange()">
+                <option selected [ngValue]="null" disabled="true" >{{'Select Country Code'}}</option>
+                <option ngValue="IND">{{'INDIAN'}}</option>
+            </select>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Passport Number'}}</label>
+            <input type="text" class="form-control" name="passportNo"  placeholder="Passport Number" [(ngModel)]="passportModel.passportNo2" [ngClass]="{'redBorder': (passportModel.passportNo2 == null && submitFlag)}"  required >
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Given Name'}}</label>
+            <select name="empId" id="" class="form-select" [(ngModel)]="passportModel.empId2" (change)="onChange()" [ngClass]="{'selected':passportModel.empId2 != null,'redBorder': (passportModel.empId2 == null && submitFlag)}"  required >
+                <option selected value=null disabled="true">{{'Select Employee'}}</option>
+                <option *ngFor="let emp of employeeList" [ngValue]="emp.empId">{{emp.empFirstName}}</option>
+            </select>
+            <!-- <input type="text" class="form-control" name="givenName" placeholder="Given Name" [(ngModel)]="passportModel.givenName2"> -->
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Surname'}}</label>
+            <input type="text" class="form-control" name="surname" placeholder="Surname" [(ngModel)]="passportModel.surname2" [ngClass]="{'redBorder': (passportModel.surname2 == null && submitFlag)}"  required >
+        </div>
+        
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Nationality'}}</label>
+            <input type="text" class="form-control" name="nationality" placeholder="Nationality" [(ngModel)]="passportModel.nationality2" [ngClass]="{'redBorder': (passportModel.nationality2 == null && submitFlag)}"  required>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Sex'}}</label>
+           
+            <select name="visaType" id="" class="form-select" [(ngModel)]="passportModel.sex2" [ngClass]="{'selected':passportModel.sex2,'redBorder': (passportModel.sex2&& submitFlag)}" required>
+                <option selected value="null" [disabled]="true">{{'Select sex'}}</option>
+                <option value="M">{{'Male'}}</option>
+                <option value="F">{{'Female'}}</option>
+            </select>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Date Of Birth'}}</label>
+            <input type="text"
+            placeholder="Datepicker"
+            class="form-control"
+            placement="bottom"
+            bsDatepicker
+            [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="dateOfBirth" [(ngModel)]="passportModel.dateOfBirth2" [ngClass]="{'redBorder': (passportModel.dateOfBirth2 == null && submitFlag)}"  required>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Place Of Birth'}}</label>
+            <input type="text" class="form-control" name="placeOfBirth" placeholder="Place Of Birth" [(ngModel)]="passportModel.placeOfBirth2" [ngClass]="{'redBorder': (passportModel.placeOfBirth2 == null && submitFlag)}"  required>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Place Of Issue'}}</label>
+            <input type="text" class="form-control" name="placeOfIssue" placeholder="Place Of Issue" [(ngModel)]="passportModel.placeOfIssue2" [ngClass]="{'redBorder': (passportModel.placeOfIssue2 == null && submitFlag)}"  required>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Date Of Issue'}}</label>
+            <input type="text"
+            placeholder="Datepicker"
+            class="form-control"
+            placement="bottom"
+            bsDatepicker
+            (bsValueChange)="changeDate($event)"
+            [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="dateOfIssue" [(ngModel)]="passportModel.dateOfIssue2" [ngClass]="{'redBorder': (passportModel.dateOfIssue2 == null && submitFlag)}"  required>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Date Of Expiry'}}</label>
+            <input type="text"
+            placeholder="Datepicker"
+            class="form-control"
+            placement="bottom"
+            bsDatepicker
+            [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="dateOfExpiry" [(ngModel)]="passportModel.dateOfExpiry2" [ngClass]="{'redBorder': (passportModel.dateOfIssue2 == null && submitFlag)}"  required>
+        </div>
+    </div>
+    <div class="d-flex">
+        <button type="submit" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" [disabled]="disabled" (click)="save(passportForm)">{{passportModel.passportId2 == null ? 'Save' : 'Update'}}</button>
+        <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="reset()">{{'Reset'}}</button>
+    </div> 
+</form>
+</div>

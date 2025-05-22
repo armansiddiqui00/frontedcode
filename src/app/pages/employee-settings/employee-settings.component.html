@@ -1,0 +1,4 @@
+<app-manage-employee *ngIf="managePageInfo.pageName == 'manageemployee'" [pageConfig]="pageConfig"  (getFilter)="getFilter()" [dataSource]="dataSource" [headerConfig]="headerConfig"></app-manage-employee>
+<app-manage-project *ngIf="managePageInfo.pageName == 'manageproject'" [pageConfig]="pageConfig"  (getFilter)="getFilter()" [dataSource]="dataSource" [headerConfig]="headerConfig"></app-manage-project>
+
+<app-datagrid  *ngIf="dataSource || showNoRecords || showNoService"  [dataSource]="dataSource" [showNoRecords]="showNoRecords" [showNoService]="showNoService" [managePageInfo]="managePageInfo" [pageConfig]="pageConfig" (getFilter)="getFilter()" [headerConfig]="headerConfig"></app-datagrid>

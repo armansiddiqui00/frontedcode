@@ -1,0 +1,127 @@
+<div class="wrapper-main">
+    <!-- <div class="card-body"> -->
+     <!-- <form #travelForm="ngForm" autocomplete="off"> -->
+        <div class="row">
+
+            <div class="form-group custom-from custom-from col-md-3 col-sm-3" *ngIf="edit==false">
+                <label>{{'Employee Name'}}</label> 
+                <select name="empName" id="mySelect"  class="form-select mt" name="employeName" [(ngModel)]="expenseData.travelId" #employeName="ngModel" (change)="onChange()"  [ngClass]="expenseData.employeName == null?'':'selected'"  required>
+                    <option selected [ngValue]="null" [disabled]="true">{{'Select Employee'}}</option>
+                    <option *ngFor="let data of requestData" selected [ngValue]="data.reqId" >{{data.employeName}} From {{data.travelOrign}} To {{data.travelDestination}} {{data.travelProcessDetailsEntity[0]?.reqCreatedDate}}</option>
+                </select> 
+                <!-- <angular2-multiselect name="empName" id="mySelect" class="custom-form" [data]="requestData" 
+                [(ngModel)]="req" [settings]="getBizServicesSetting()" (onSelect)=" onChange()">
+            </angular2-multiselect>   -->
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-3" *ngIf="edit==true">
+                <label>{{'Employee Name'}}</label> 
+                <input type="text" class="form-control"[(ngModel)]="expenseData.employeName" placeholder="Employe Name" name="origin1">
+            </div>
+
+            <!-- <div class="form-group custom-form col-md-3 col-sm-3">
+                <label>{{'Travel Origin'}}</label> 
+                <input type="text" class="form-control"[(ngModel)]="expenseData.travelOrign" placeholder="Travel Origin" name="origin2">
+            </div>
+
+            <div class="form-group custom-form col-md-3 col-sm-3">
+                <label>{{'Place Of Visit'}}</label> 
+                <input type="text" class="form-control"[(ngModel)]="expenseData.travelDestination" placeholder="Place Of Visit" name="origin3">
+            </div>
+
+            <div class="form-group custom-form col-md-3 col-sm-3">
+                <label>{{'Purpose Of Visit'}}</label> 
+                <input type="text" class="form-control" placeholder="Purpose Of Visit" [(ngModel)]="expenseData.travelPurpose" name="origin4">
+            </div> -->
+
+            <div class="form-group custom-form col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Added By'}}</label> 
+                <input type="text" class="form-control" placeholder="Added By" [(ngModel)]="expenseData.employeName"  name="origin5">
+            </div>
+
+            <div class="form-group custom-form col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Added Time'}}</label> 
+                <input type="text" class="form-control" placeholder="Added Time" [(ngModel)]="time" name="origin6">
+            </div>
+
+            <div class="form-group custom-form col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Modified By'}}</label> 
+                <input type="text" class="form-control" placeholder="Modified By" [(ngModel)]="expenseData.employeName"  name="origin7">
+            </div>
+
+            <div class="form-group custom-form col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Modified Time'}}</label> 
+                <input type="text" class="form-control" placeholder="Modified Time" [(ngModel)]="time" name="origin8">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="between-stretch">
+                <label class="expense">{{'Expense'}}</label>
+                <label *ngIf="gridFLag==false"><button class="btn-light plus" (click)="increment()"><img src="assets/icons/icon_plusDetail.svg"></button>&nbsp;&nbsp;<button class="btn-light plus" (click)="decrement()">{{'-'}}</button></label>
+            </div>
+        </div>
+
+        <div class="row table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" *ngFor="let header of travelExpenseHeader">{{header}}</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="gridFLag==false">
+                  <tr *ngFor="let count of row;let i = index">
+                    <td><input type="text" name="fromDesc-{{i}}" [(ngModel)]="count.fromDesc"></td>
+                    <td><select name="toDesc-{{i}}"  class="mt" [(ngModel)]="count.toDesc" required>
+                        <option selected value="null" [disabled]="true">{{'Select Destination'}}</option>
+                        <option value="Mumbai">{{"Mumbai"}}</option>
+                        <option value="Chennia">{{"Chennia"}}</option>
+                        <option value="New Delhi">{{"New Delhi"}}</option>
+                    </select></td>
+                    <td><input type="text" name="flightTicket-{{i}}" [(ngModel)]="count.flightTicket"  (change)="totalSumFunction()"></td>
+                    <td><input type="text" name="hotel-{{i}}" [(ngModel)]="count.hotel"  (change)="totalSumFunction()"></td>
+                    <td><input type="text" name="food-{{i}}" [(ngModel)]="count.food"  (change)="totalSumFunction()"></td>
+                    <td><input type="text" name="cab-{{i}}" [(ngModel)]="count.cab"  (change)="totalSumFunction()"></td>
+                    <td><input type="text" name="localTransport-{{i}}" [(ngModel)]="count.localTransport"  (change)="totalSumFunction()"></td>
+                    <td><input type="text" name="others-{{i}}" [(ngModel)]="count.others" (change)="totalSumFunction()"></td>
+                    <td><input type="text" name="reason-{{i}}" [(ngModel)]="count.reason"></td>
+                    <td><input type="text" name="totalSum-{{i}}" [(ngModel)]="count.totalSum"></td>
+                  </tr>
+                  <!-- <tr>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                      <td>{{'Total Sum:'}}</td>
+                      <td><input type="text" name="completeTotalOfRows" [(ngModel)]="completeTotalOfRows"></td>
+                  </tr> -->
+                </tbody>
+                <tbody *ngIf="gridFLag==true">
+                    <tr *ngFor="let count of datagrid;let i = index">
+                        <td>{{count.fromDesc}}</td>
+                        <td>{{count.toDesc}}</td>
+                        <td>{{count.flightTicket}}</td>
+                        <td>{{count.hotel}}</td>
+                        <td>{{count.food}}</td>
+                        <td>{{count.cab}}</td>
+                        <td>{{count.localTransport}}</td>
+                        <td>{{count.others}}</td>
+                        <td>{{count.reason}}</td>
+                        <td>{{count.totalSum}}</td>
+                    </tr>
+                    <tr>
+                      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                      <td>{{'Total Expense:'}}</td>
+                      <td>{{completeTotalOfRows}}</td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+     
+
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="submit()">{{edit == true?'Update':'Submit'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="reset()">{{'Cancel'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="navigate()" >{{'Back'}}</button>
+        </div>
+
+     <!-- </form> -->
+    <!-- </div> -->
+ </div>

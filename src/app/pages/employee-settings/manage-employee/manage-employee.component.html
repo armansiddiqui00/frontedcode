@@ -1,0 +1,413 @@
+<div class="pageHeadings">
+    <span *ngIf="!fromAccount" class="page-heading2">{{'Master'}}&nbsp;<span class="subpage-heading2">/&nbsp;{{'Manage
+            Employee'}}</span></span>
+
+    <span *ngIf="fromAccount" class="subpage-heading2">{{'Edit Profile'}}</span>
+    <hr>
+</div>
+
+<div class="wrapper-main">
+
+
+    <form autocomplete="off" #EmployeeForm="ngForm">
+        
+        <div class="row" *ngIf="this.userDetails?.roleName == 'HR' && !showFileButton">
+            <div class="form-group uploadBtn">
+                <label for="fileUpload" class="btn btn-primary bg-primary-blue">Upload File</label>
+                <input id="fileUpload" type="file" accept="'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" (change)="onFileChange($event)" style="display: none;" />
+                <span *ngIf="selectedFileName">{{ selectedFileName }}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="accordion access-ctl-acc">
+                <div class="accordion-item">
+                    <h2 class="accordion-header margin-0" id="panelsStayOpen-headingEmployee">
+                        <button class="accordion-button cst-acc-btn margin-0 padding-0" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseEmployee" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseEmployee">
+                            <div class="acc-heading">{{'Employee Details'}}</div>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseEmployee" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingEmployee">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Employee Name'}}</label>
+                                    <div class="btn-group" dropdown class="form-select" id="button-basic" dropdownToggle
+                                        aria-controls="singleDropdown"
+                                        [ngStyle]="data.id != null ?{'opacity': '0.5','pointer-events':'none'} : {}">
+                                        <span
+                                            [ngClass]="data.empId.value != 'Select Employee'? 'selectedFont':''">{{data.empId.value}}</span>
+                                        <ul id="singleDropdown" *dropdownMenu class="dropdown-menu" role="menu"
+                                            aria-labelledby="button-basic">
+                                            <li class="dropdown-item" [ariaDisabled]="true"
+                                                [ngClass]="data?.empId.value == 'Select Employee'? 'selectedColor':''">
+                                                {{'Select Employee'}}
+                                            </li>
+                                            <li *ngFor="let emp of  pageConfig?.dwcEmployeeList" role="menuitem"
+                                                name="report" [value]="emp.empId"
+                                                [ngClass]="data?.empId.value == emp.firstName?'selected':''"
+                                                class="dropdown-item" (click)="onEmpChange($event,emp.empId)">
+                                                {{emp.firstName}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label">{{'Last Name'}}</label>
+                                    <input type="text" class="form-control" name="lastName" [(ngModel)]="data.lastName"
+                                        placeholder="Last Name" [disabled]="fromAccount" onkeydown="return /[a-z]/i.test(event.key)"
+                                        appBlockCopyPaste>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Email'}}</label>
+                                    <input type="text" class="form-control" name="email" [(ngModel)]="data.emailId" placeholder="Email"
+                                        required pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" [disabled]="fromAccount"
+                                        autocomplete="off" #email="ngModel">
+                                    <span class="help-block" *ngIf="email.invalid && data.emailId == null">
+                                        Email is required
+                                    </span>
+                                    <span class="help-block" *ngIf="email.invalid && email.touched && data.emailId != ''">
+                                        Email is invalid
+                                    </span>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Mobile Number'}}</label>
+                                    <input type="text" class="form-control" name="mobileNumber" [(ngModel)]="data.mobileNumber"
+                                        placeholder="Mobile Number" [disabled]="fromAccount"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        (paste)="numberValid($event,'mobileNumber')" maxlength="10" minlength="10" required>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Employee Address'}}</label>
+                                    <textarea class="text employee-address" name="employee-address"
+                                        placeholder="Employee Address" [(ngModel)]="data.address" required></textarea>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Employement Status'}}</label>
+                                    <select name="employeementStatus" class="form-select" [(ngModel)]="data.employmentStatus"
+                                        [ngClass]="data.employmentStatus == null?'':'selected'" required [disabled]="fromAccount">
+                                        <option selected [ngValue]="null" disabled="true">{{'Select Employement Status'}}</option>
+                                        <option ngValue="active">{{"Active"}}</option>
+                                        <option ngValue="inActive">{{"InActive"}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Work Location'}}</label>
+                                    <select name="particular" class="form-select" [(ngModel)]="data.particular"
+                                        [ngClass]="data.particular == null?'':'selected'" required [disabled]="fromAccount"
+                                        (change)="particularChange()">
+                                        <option selected [ngValue]="null" disabled="true">{{'Select Work Location'}}</option>
+                                        <option ngValue="Offshore">{{"Offshore"}}</option>
+                                        <option ngValue="Onsite">{{"Onsite"}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label" [ngClass]="{'required':data.roleName != 'Manager'}">{{'Manager Name'}}</label>
+                                    <select name="reportingId" class="form-select" [(ngModel)]="data.reportingId"
+                                        [ngClass]="data.reportingId == null?'':'selected'" [required]="data.roleName != 'Manager'"
+                                        [disabled]="fromAccount" (change)="onManagerChange()">
+                                        <option [ngValue]=null>{{"Select Manager"}}</option>
+                                        <option *ngFor="let emp of  pageConfig?.managerList" [ngValue]="emp.reportingId">
+                                            {{emp.reportingManagerName}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label">{{'Vendor Name'}}</label>
+                                    <input type="text" class="form-control" name="vendorName" [(ngModel)]="data.vendor.vendorName"
+                                        placeholder="Vendor Name" appBlockCopyPaste [disabled]="fromAccount">
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Client Name(s)'}}</label>
+                                    <angular2-multiselect name="client" [data]="clientList" [(ngModel)]="data.clientId"
+                                        [settings]="getClientsSetting()" required [disabled]="fromAccount" (onClose)="onClose($event)">
+                                    </angular2-multiselect>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Project Name(s)'}}</label>
+                                    <angular2-multiselect name="project" [data]="projectList" [(ngModel)]="data.cpdId"
+                                        [settings]="getProjectsSetting()" required [disabled]="fromAccount">
+                                    </angular2-multiselect>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6 relative">
+                                    <label class="form-label">{{'Password'}}</label>
+                                    <span class='icon'><i
+                                            [ngClass]="userPassword != '*****' && data.password != null? 'fa fa-eye' : userPassword == '*****' && data.password != null ? 'fa fa-eye-slash' :''"
+                                            (click)="showPassword('Password')"></i></span>
+                                    <input [type]="userPassword != '*****' ? 'text' : 'password'" class="form-control" name="password"
+                                        [(ngModel)]="data.password" placeholder="Password" autocomplete="off" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="accordion access-ctl-acc">
+                <div class="accordion-item">
+                    <h2 class="accordion-header margin-0" id="panelsStayOpen-headingCompensation">
+                        <button class="accordion-button cst-acc-btn margin-0 padding-0" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseCompensation"
+                            aria-expanded="true" aria-controls="panelsStayOpen-collapseCompensation">
+                            <div class="acc-heading">{{'Compensation Details'}}</div>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseCompensation" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingCompensation">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="form-group custom-form col-md-3 col-sm-6 relative">
+                                    <label class="form-label required">{{'Package Type'}}</label>
+                                    <select name="packageType" class="form-select" [(ngModel)]="data.compEntity.packageType"
+                                        [ngClass]="data.compEntity.packageType == '' ? '' : 'selected'" required
+                                        [disabled]="fromAccount">
+                                        <option selected value="" disabled="true">{{'Select Package Type'}}</option>
+                                        <option value="fixed">{{'Fixed'}}</option>
+                                        <option value="floating">{{'Floating'}}</option>
+            
+                                    </select>
+                                </div>
+
+                                <div class="form-group custom-form col-md-3 col-sm-6 relative">
+                                    <label class="form-label required">{{'Bill Cycle'}}</label>
+                                    <select name="billCycleRange" class="form-select" [(ngModel)]="datas.compEntity.billCycleRange"
+                                        [ngClass]="datas.compEntity.billCycleRange == null ? '' : 'selected'" required
+                                        [disabled]="fromAccount" (ngModelChange)="onBillCycleRangeChange($event)">
+                                        <option selected [ngValue]="null" disabled="true">{{'Select Bill Cycle Range'}}</option>
+                                        <option value="26-25">26-25</option>
+                                        <option value="01-31">01-31</option>
+            
+                                    </select>
+                                </div>
+                               
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Invoice Date'}}</label>
+                                    <select name="invoiceDueDate" class="form-select" [(ngModel)]="data.invoiceDueDate"
+                                        [ngClass]="data.invoiceDueDate == null?'':'selected'" required [disabled]="fromAccount">
+                                        <option selected [ngValue]="null" disabled="true">{{'Select Invoice Date'}}</option>
+                                        <option *ngFor="let from of  fromNumbers" [ngValue]="from.toString()">{{from}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Due Date(in days)'}}</label>
+                                    <input type="text" class="form-control" name="invoiceDueDays" [(ngModel)]="data.invoiceDueDays"
+                                        placeholder="Due Date" [disabled]="fromAccount"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        required>
+                                </div>
+
+                                <div class="form-group custom-form custom-form col-md-3 col-sm-6">
+                                    <label class="form-label">{{'Offshore Currency'}}</label>
+                                    <select name="currencyType" class="form-select" [(ngModel)]="data.compEntity.currency"
+                                        [ngClass]="data.compEntity.currency == null?'':'selected'" [disabled]="fromAccount">
+                                        <option selected [ngValue]=null>{{'Select Currency Type'}}</option>
+                                        <option *ngFor="let currency of multiselect?.currencyType" [ngValue]="currency">{{currency}}
+                                        </option>
+                                    </select>
+                                </div>
+                    
+                    
+                                <div class="form-group custom-form col-md-3 col-sm-6 relative">
+                                    <label class="form-label">{{'Offshore Package'}}</label>
+                                    <span class='icon'><i
+                                            [ngClass]="offPkg != '*****' && data.compEntity.offshorePkgAnnum != null? 'fa fa-eye' : offPkg == '*****' && data.compEntity.offshorePkgAnnum != null ? 'fa fa-eye-slash' :''"
+                                            (click)="showPassword('Offshore')"></i></span>
+                                    <input [type]="offPkg != '*****' ? 'text' : 'password'" matInput mask="separator.2"
+                                        thousandSeparator="," class="form-control" name="offshore-package"
+                                        [(ngModel)]="data.compEntity.offshorePkgAnnum" placeholder="Offshore Package"
+                                        [disabled]="fromAccount"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        (paste)="numberValid($event,'offshorePkgAnnum')">
+                                    <!-- id="i0" (input)="maskInput()"<input id="i1" readonly>Shaddow text -->
+                                </div>
+                    
+                                <div class="form-group custom-form custom-form col-md-3 col-sm-6">
+                                    <label class="form-label">{{'Onsite Currency'}}</label>
+                                    <select name="onsiteCurrency" class="form-select" [(ngModel)]="data.compEntity.onsiteCurrency"
+                                        [ngClass]="data.compEntity.onsiteCurrency == null?'':'selected'" [disabled]="fromAccount">
+                                        <option selected [ngValue]=null>{{'Select Currency Type'}}</option>
+                                        <option *ngFor="let currency of multiselect?.currencyType" [ngValue]="currency">{{currency}}
+                                        </option>
+                                    </select>
+                                </div>
+                    
+                                <div class="form-group custom-form col-md-3 col-sm-6 relative">
+                                    <label class="form-label">{{'Onsite Package'}}</label>
+                                    <span class='icon'><i
+                                            [ngClass]="onSitePkg != '*****' && data.compEntity.onsitePkgAnnum != null? 'fa fa-eye' : onSitePkg == '*****' && data.compEntity.onsitePkgAnnum != null ? 'fa fa-eye-slash' :''"
+                                            (click)="showPassword('Onsite')"></i></span>
+                                    <input [type]="onSitePkg != '*****' ? 'text' : 'password'" matInput mask="separator.2"
+                                        thousandSeparator="," class="form-control" name="onsite-package"
+                                        [(ngModel)]="data.compEntity.onsitePkgAnnum" placeholder="Onsite Package" [disabled]="fromAccount"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        (paste)="numberValid($event,'onsitePkgAnnum')">
+                                    <!-- id="i0" (input)="maskInput()"<input id="i1" readonly>Shaddow text -->
+                                </div>
+                    
+                    
+                                <div class="form-group custom-form custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Transfer Currency'}}</label>
+                                    <select name="transferCurrency" class="form-select" [(ngModel)]="data.compEntity.transferCurrency"
+                                        required [ngClass]="data.compEntity.transferCurrency == null?'':'selected'"
+                                        [disabled]="fromAccount">
+                                        <option selected [ngValue]="null" disabled="true">{{'Select Currency Type'}}</option>
+                                        <option *ngFor="let currency of  multiselect?.currencyType" [ngValue]="currency">{{currency}}
+                                        </option>
+                                    </select>
+                                </div>
+                    
+                                <div class="form-group custom-form custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Transfer Country'}}</label>
+                                    <select name="transferCountry" class="form-select" [(ngModel)]="data.compEntity.transferCountry"
+                                        required [ngClass]="data.compEntity.transferCountry == null?'':'selected'" [disabled]="fromAccount">
+                                        <option selected [ngValue]="null" disabled="true">{{'Select Transfer Country'}}</option>
+                                        <option *ngFor="let country of  multiselect?.currencyCountry" [ngValue]="country">{{country}}
+                                        </option>
+                                    </select>
+                                </div>
+                    
+                                <div class="form-group custom-form col-md-3 col-sm-6 relative">
+                                    <label class="form-label">{{'Per Diem'}}</label>
+                                    <span class='icon'><i
+                                            [ngClass]="perDiem != '*****' && data.compEntity.perDiem != null? 'fa fa-eye' : perDiem == '*****' && data.compEntity.perDiem != null ? 'fa fa-eye-slash' :''"
+                                            (click)="showPassword('Perdiem')"></i></span>
+                                    <input (keypress)="numberOnly($event)" [type]="perDiem != '*****' ? 'text' : 'password'" matInput
+                                        mask="separator.2" thousandSeparator="," class="form-control" name="perDenim"
+                                        [(ngModel)]="data.compEntity.perDiem" placeholder="Per Diem" [disabled]="fromAccount"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        (paste)="numberValid($event,'perDiem')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="accordion access-ctl-acc">
+                <div class="accordion-item">
+                    <h2 class="accordion-header margin-0" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button cst-acc-btn margin-0 padding-0" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseOne">
+                            <div class="acc-heading">{{'Bank Details'}}</div>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Name of Account Holder'}}</label>
+                                    <input type="text" class="form-control" name="accountHolder"
+                                        [(ngModel)]="data.bankEntity.accountHolderName"
+                                        placeholder="Account Holder Name" required [disabled]="fromAccount"
+                                        onkeydown="return /^[A-Za-z ]+$/.test(event.key)" appBlockCopyPaste>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Account Number'}}</label>
+                                    <input type="text" class="form-control" name="accountNumber"
+                                        [(ngModel)]="data.bankEntity.accountNumber" placeholder="Account Number"
+                                        required [disabled]="fromAccount"
+                                        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        (paste)="numberValid($event,'accountNumber')">
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Bank Name'}}</label>
+                                    <input type="text" class="form-control" name="bankName"
+                                        [(ngModel)]="data.bankEntity.bankName" placeholder="Bank Name" required
+                                        [disabled]="fromAccount" onkeydown="return /^[A-Za-z ]+$/.test(event.key)"
+                                        appBlockCopyPaste>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Bank Address'}}</label>
+                                    <input type="text" class="form-control" name="bankAddress"
+                                        [(ngModel)]="data.bankEntity.bankAddress" placeholder="Bank Address" required
+                                        [disabled]="fromAccount">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label">{{'Swift code'}}</label>
+                                    <input type="text" class="form-control" name="swiftCode"
+                                        [(ngModel)]="data.bankEntity.swiftCode" placeholder="Swift Code"
+                                        [disabled]="fromAccount" onkeydown="return /^[A-Za-z0-9]+$/.test(event.key)"
+                                        (paste)="numberAndAlpValid($event,'swiftCode')">
+
+                                    <span class="or">OR</span>
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label">{{'IFSC code'}}</label>
+                                    <input type="text" class="form-control" name="ifscCode"
+                                        [(ngModel)]="data.bankEntity.ifscCode" placeholder="IFSC Code"
+                                        [disabled]="fromAccount" onkeydown="return /^[A-Za-z0-9]+$/.test(event.key)"
+                                        (paste)="numberAndAlpValid($event,'ifscCode')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+
+            <div class="accordion access-ctl-acc">
+                <div class="accordion-item">
+                    <h2 class="accordion-header margin-0" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button cst-acc-btn margin-0 padding-0" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseOne">
+                            <div class="acc-heading">{{'CSA Details'}}</div>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                        aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Company Name'}}</label>
+                                    <input type="text" class="form-control" name="companyName"
+                                        [(ngModel)]="data.companyName" placeholder="Company Name"
+                                        [disabled]="fromAccount">
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Company Address'}}</label>
+                                    <input type="text" class="form-control" name="companyAddr"
+                                        [(ngModel)]="data.companyAddr" placeholder="Company Name"
+                                        [disabled]="fromAccount">
+                                </div>
+                                <div class="form-group custom-form col-md-3 col-sm-6">
+                                    <label class="form-label required">{{'Execution Date'}}</label>
+                                    <input type="text" placeholder="Datepicker" class="form-control calender-icon"
+                                        placement="bottom" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',showWeekNumbers: false, isAnimated: false }"
+                                        name="invoiceDate" [(ngModel)]="data.executionDate" [disabled]="fromAccount">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div> -->
+
+        <div class="block-20"></div>
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                (click)="save(EmployeeForm)">{{data.id != null || fromAccount ? 'Update' : 'Save'}}</button>
+            <button *ngIf="!fromAccount" type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3"
+                (click)="reset()">{{'Reset'}}</button>
+            <!-- <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3"
+                (click)="download()">{{'Download'}}</button>-->
+        </div>
+
+    </form>
+
+</div>

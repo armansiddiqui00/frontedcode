@@ -1,0 +1,76 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Review'}}&nbsp;<span class="subpage-heading2">/&nbsp;{{'Invoice History'}}</span></span>
+    <hr>
+</div>
+
+<div class="wrapper-main">
+
+    <form #reviewInvoiceSheetForm="ngForm" autocomplete="off">
+        <div class="row">
+            <!-- <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Search By Invoice Number'}}</label>
+                <select name="invoiceNo" class="form-select" [(ngModel)]="history.invoiceNo" (change)="onChange(history.invoiceNo)" [ngClass]="history.invoiceNo == null?'':'selected'">
+                    <option selected value="null" disabled="true" >{{'Search By Invoice Number'}}</option>
+                    <option ngValue="All">{{'All Invoice'}}</option>
+                    <option *ngFor="let data of pageConfig?.invoiceByEmpId" [ngValue]="data?.invNum">{{data?.invNum}}</option>
+                </select>
+            </div> -->
+            
+            <!-- <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Search By Month'}}</label>
+                <select name="passportType" class="form-select">
+                    <option selected [ngValue]="null" disabled="true" >{{'Search By Month'}}</option>
+                    <option ngValue="October 2023">{{'October 2023'}}</option>
+                    <option ngValue="November 2023">{{'November 2023'}}</option>
+                    <option ngValue="November 2023">{{'December 2023'}}</option>
+                </select>
+            </div> -->
+            <div  *ngIf="!history.viewHistory" class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Search By Month'}}</label>
+                <input type="text"
+                [placeholder]=""
+                class="form-control"
+                placement="bottom"
+                bsDatepicker
+                [bsValue]="month"
+                (bsValueChange)="onMonthChange($event)"
+                [bsConfig]="{ dateInputFormat: 'MM/YYYY',showWeekNumbers: false, isAnimated: false,minMode:'month' }"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                name="travelDate" readonly onfocus="this.blur()"
+                >
+            </div>
+
+
+            <div  *ngIf="history.viewHistory" class="form-group custom-form col-md-3 col-sm-6" id="container">
+                <label class="form-label required">{{'Month Range'}}</label>
+                <!-- <input type="text" class="form-control" placeholder="MM/YYYY" (click)="onclick()" name="date" [(ngModel)]="date" />
+                <bs-datepicker-inline id="datePicker" *ngIf="visible" [bsValue]="dateSelected" (bsValueChange)="onMonthRangeChange($event)"  
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',showWeekNumbers: false,minMode:'month',containerClass: 'dark-blue',monthLabel: 'MMM'  }"></bs-datepicker-inline> -->
+                <input type="text" class="form-control" placeholder="YYYY-MMM" name="date"  id="exampleInput" readonly onfocus="this.blur()">
+        </div>
+
+        <div *ngIf="history.viewHistory" class="form-group custom-form col-md-3 col-sm-6">
+            <label class="form-label">{{'Invoice Status'}}</label>
+            <angular2-multiselect name="client" [data]="invStatusDrp"
+            [(ngModel)]="history.invoiceStatus" [settings]="getStatusSetting()" required>
+            </angular2-multiselect>
+        </div>
+        <div class="form-group custom-form col-md-3 col-sm-6" style="padding: 45px 20px 20px;"> 
+            <label class="switch">
+                <input id="toggele-button-value" type="checkbox"
+                    (change)="viweHistory($event)"
+                    [(ngModel)]="history.viewHistory" name="viewHistory">
+                <span class="slider round"></span>
+           </label><label class="selectAllLabel">{{'View History'}}</label>
+        </div>
+        <div class="block-20"></div>
+        <div class="d-flex" >
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="search()">{{'Search'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="reset()">{{'Reset'}}</button>
+        </div>
+        </div>
+    </form>
+</div>
+
+<!-- <data-grid [reviewInvoicePageInfo]="reviewInvoicePageInfo" (applyFiltersEvent)="applyFilters($event)" [dataSource]="dataSource"></data-grid> -->

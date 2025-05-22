@@ -1,0 +1,120 @@
+.iconss{
+   // padding-right: 14px;
+   // padding-left: 14px;
+}
+
+.fa.fa-check{
+    background: transparent;
+color: #0fe70f;
+font-size: 25px;
+cursor: pointer;
+}
+
+.fa.fa-close{
+    background: transparent;
+    color: #E53012;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.fa.fa-eye{
+    background: transparent;
+    color: #0c0cef;
+    font-size: 25px;
+    cursor: pointer;
+
+}
+
+//.btn-light:disabled{
+    .fa.fa-check:disabled{
+        color: rgba(0, 166, 90, 0.3);
+    }
+    .fa.fa-close:disabled{
+        color: rgba(221, 75, 57, 0.3);
+    }
+//}
+
+button.btn.btn-light {
+    padding: 0px;
+    font-size: 12px;
+}
+
+table{
+    td{
+       vertical-align: middle !important;
+      }
+}
+
+
+
+    .iconss{ 
+        max-width: 70px !important;
+        border: none;
+        // padding-left: 0px;
+        // padding-top: 0px !important;
+        // padding-bottom: 11px !important;
+
+        button.btn.btn-light{
+            // padding: 2px;
+            // padding-right: 11px !important;
+            // padding-bottom: 4px !important;
+            // margin-left: -5px !important;
+            border-radius: 6px;
+           // margin: 5px;
+            cursor: pointer;
+            height: auto;
+            margin-top: 18px;
+
+            label{
+                margin-top: 0px; 
+                font-weight: 600;
+                font-family: "Frutiger-LT-Arabic-55-Roman";
+                font-size: 14px;
+                cursor: pointer;
+            }
+        }
+    }
+
+
+.fa.fa-close.closed{
+    color: #3498DB;
+}
+
+button.btn.btn-light.modalBtn {
+    position: absolute;
+    top: 47px;
+    height: 39px;
+    width: 22px !important;
+    border-radius: 8px;
+
+    i.fa.fa-check{
+       
+        font-size: 24px;
+        
+        }
+
+       i.fa.fa-close.bb{
+            
+            font-size: 24px;
+            
+        }
+        
+}
+
+.modal-header {
+    h4{
+        font-weight: 700 !important;
+    color: #1d1556;
+    font-family: "FrutigerLTArabic-65Bold" !important;
+    }
+}
+
+.form-group label {
+    font-family: "Frutiger-LT-Arabic-55-Roman";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 31px;
+    color: #6f7c9b;
+    margin-bottom: 8px;
+}

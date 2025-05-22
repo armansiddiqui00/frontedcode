@@ -1,0 +1,12 @@
+<dx-data-grid [hidden]="serviceNotResponded" id="reviewerContainer" [dataSource]="dataSource"  [columns]="columns"
+[showBorders]="true" [showColumnLines]="true" [showRowLines]="true"
+[columnAutoWidth]="true">
+<dxo-filter-row [visible]="true"></dxo-filter-row>
+</dx-data-grid>
+
+<div class="wrapper-main noRecords-Todisplay" *ngIf="serviceNotResponded">
+    <section class="no-records">
+        <div style="clear:both;"></div>
+        <span>{{"Not available at the moment"}}</span>
+    </section>
+</div>

@@ -1,0 +1,49 @@
+// used with preprocessors and contain font, colors definitions, etc.
+
+// Colors
+$primary: #3c8dbc;
+$secondary: #ecf0f5;
+$tertiary: #d2d6de;
+$accent: #000;
+$default: #333333;
+
+$steel-blue: #C2CEE3;
+$cyan-blue: #3498DB;
+$success: #00a65a;
+$warning: #f39c12;
+$error: #dd4b39;
+$white:#FFFFFF;
+$lightGrey:#747C91;
+$inputGrey:#cfd1d7;
+$primaryBlue:#2A235F;
+$creamWhite:#F1F1F2;
+$green:#09B39C;
+$darkBlue:#1D1556;
+$shadow-black: rgba(0, 0, 0, 0.1);
+$danger:#FD625E;
+$info:#8AD4EB;
+$cream-violet: #ACADC1;
+$safe-blue: #F9FCFF;
+$maritime-blue: #26273B;
+$very-light-gray: #ddd;
+$white-blue: #F0F0F5;
+$gray90: #E5E5E5;
+// Typography
+$smallest: 0.2rem;
+$smaller: 0.4rem;
+$small: 0.8rem;
+$regular-flat : 1.2rem;
+$regular: 1.6rem;
+$regular-sharp: 2.0rem;
+$large: 2.4rem;
+$larger: 3.2rem;
+$half-jumbo: 4.0rem;
+$jumbo: 4.8rem;
+$jumbo-plus: 5.6rem;
+
+// Breakpoints
+$bp-desktop: "all and (min-width:1200px)";
+$bp-tablet: "all and (min-width: 960px) and (max-width: 1199px)";
+$bp-phablet: "all and (min-width: 768px) and (max-width: 959px)";
+$bp-phone: "all and (min-width: 480px) and (max-width: 767px)";
+$bp-small: "all and (max-width: 479px)";

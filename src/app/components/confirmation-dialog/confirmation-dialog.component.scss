@@ -1,0 +1,19 @@
+@import "../../../itcss/01-settings.scss";
+
+.confirmClass{
+  font-family: "Frutiger-LT-Arabic-55-Roman";
+    font-weight: 400;
+    padding: 17px 41px 16px 102px;
+}
+
+.cancelBtnn{
+  margin-right: 11px;
+}
+.applyBtnn{
+  margin-right: 0px !important;
+}
+.bg-primary-blue{
+  background: #2A235F;
+    border-radius: 4px;
+    height: 35px;
+}

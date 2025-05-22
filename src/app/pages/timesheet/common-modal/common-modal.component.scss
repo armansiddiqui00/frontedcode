@@ -1,0 +1,34 @@
+.modal-dialog.modal-dialog-centered.modal-dialog-scrollable.modal-xl {
+    /* width: 900px; */
+    --bs-modal-width: 900px;
+}
+
+.contain{
+    margin: 12px;
+}
+
+button.close {
+    border: 2px solid lightskyblue;
+    border-radius: 7px;
+}
+
+.card{
+    border: none;
+}
+
+tr{
+    height: 55px;
+}
+
+.fa.fa-close{
+    color: #3498DB;
+}
+
+.btn-light:hover{
+border:1px solid lightblue;
+background-color: #f8f9fa;
+}
+.btn-light:focus{
+    border: none;
+    background-color: #f8f9fa;
+    }

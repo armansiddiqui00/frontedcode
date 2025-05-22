@@ -1,0 +1,478 @@
+<div class="pageHeadings">
+  <span class="page-heading2">{{'Invoice Details'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{heading == 'update' ?
+      'Update Invoice Sheet' :'Fill Invoice Sheet'}}</span></span>
+  <hr>
+</div>
+
+
+<div class="wrapper-main">
+  <form #invoiceSheetForm="ngForm" autocomplete="off">
+    <div class="row">
+      <div class="form-group custom-form col-md-3 col-sm-6">
+        <label class="form-label required">{{'Client Name(s)'}}</label>
+        <angular2-multiselect name="Clients" [data]="clientList" [(ngModel)]="invoiceDetails.clientId"
+          [settings]="getClientsSetting()" required (onSelect)="projectChange($event,'select')"
+          (onSelectAll)="selectOrDeselectAllProject($event,'select')" (onDeSelect)="projectChange($event,'deselect')"
+          (onDeSelectAll)="selectOrDeselectAllProject($event,'deSelect')">
+        </angular2-multiselect>
+      </div>
+      <div class="form-group custom-form col-md-3 col-sm-6">
+        <label class="form-label required">{{'Consultant Name'}}</label>
+        <input type="text" class="form-control" name="consultantName" placeholder="Consultant Name"
+          [(ngModel)]="invoiceDetails.consultantName" required disabled="true">
+      </div>
+      <div class="form-group custom-form col-md-3 col-sm-6">
+        <label class="form-label required">{{'Manager Name'}}</label>
+        <!-- <select name="passportType" class="form-select" [(ngModel)]="invoiceDetails.supervisor" [ngClass]="invoiceDetails.supervisor == null?'':'selected'" required>
+                    <option selected [ngValue]="null" disabled="true" >{{'Select Supervisor'}}</option>
+                    <option *ngFor="let sup of pageConfig?.projectRelatedToEmp" [ngValue]="sup.supervisor">{{sup.supervisor}}</option>
+                </select> -->
+
+        <input type="text" class="form-control" name="reportingManagerName" placeholder="Supervisor"
+          [(ngModel)]="invoiceDetails.reportingManagerName" required disabled="true">
+      </div>
+      <div class="form-group custom-form col-md-3 col-sm-6">
+        <label class="form-label required">{{'Project Name(s)'}}</label>
+        <angular2-multiselect name="projects" [data]="projectList" [(ngModel)]="invoiceDetails.projectId"
+          [settings]="getProjectsSetting()">
+        </angular2-multiselect>
+      </div>
+      <!-- <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Clients'}}</label>
+                <angular2-multiselect name="services" [data]="multiselect.clients" 
+                [(ngModel)]="clients" [settings]="getClientsSetting()">
+                </angular2-multiselect>
+            </div> -->
+      <div class="form-group custom-form col-md-3 col-sm-6">
+        <label class="form-label required">{{'Invoice Submission Month'}}</label>
+        <input type="text" placeholder="Invoice Submission Month" class="form-control" placement="bottom"
+          [minDate]="minDate" [maxDate]="maxDate" bsDatepicker [(ngModel)]="invoiceDetails.submissionMonth"
+          (ngModelChange)="onDateChange($event)" name="submissionDate"
+          [bsConfig]="{ dateInputFormat: 'MM/YYYY',showWeekNumbers: false, isAnimated: false,minMode:'month',containerClass: 'green'  }"
+          readonly onfocus="this.blur()">
+        <!-- <input type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                placement="bottom"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                name="travelDate"
+                [(ngModel)]="invoiceDetails.submissionDate" (ngModelChange)="onDateChange($event)" [markDisabled]="isDisabled">  -->
+
+
+      </div>
+      <div class="form-group custom-form col-md-3 col-sm-6">
+        <label class="form-label required">{{'Invoice Number'}}</label>
+        <input type="text" class="form-control" name="invoiceNumber" placeholder="Invoice Number"
+          [(ngModel)]="invoiceDetails.invoiceNo" required
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+      </div>
+    </div>
+    <div class="block-20"></div>
+    <div class="row submission" *ngIf="gridView != true">{{'Please select the invoice submission month to view the
+      payment details.'}}</div>
+    <div *ngIf="gridView == true" class="paymentDetails">{{'Payment Details'}}</div>
+    <div *ngIf="gridView == true" class="col-md-12 col-12 paymentDeadline">
+      <div class="between-stretch">
+        <label class="expense">{{'Monthly Payment'}}</label>
+      </div>
+
+      <!-- table 1 -->
+      <div class="row">
+        <div class="col col-md-11">
+          <table style="margin: 0px 0px 24px;">
+            <thead>
+              <tr>
+                <th scope="col">{{'Particular'}}</th>
+                <th scope="col" style="text-align: end;">{{'No of days'}}</th>
+                <th scope="col" style="text-align: end;">{{'Amount '}}{{ compensation.defaultPkg == 'Onsite' ?
+                  '('+compensation.onsiteCurrency+')' :
+                  '('+compensation.currency+')'}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <!-- <td><input type="text" name="particular" style="width: 100% !important;border: none;padding: 0px;margin:0px;" [(ngModel)]="invoiceDetails.particulars"></td> -->
+                <td>{{invoiceDetails.particulars}}</td>
+                <td class="text-end">{{invoiceDetails.noOfDays}}</td>
+                <td class="text-end">{{invoiceDetails.invAmount | number: '.2'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- table 2 -->
+      <div class="between-stretch" style="margin:0px">
+        <label class="expense">{{'Deductions / Additions'}}</label>
+      </div>
+      <div class="row">
+        <div class="col col-md-11">
+          <table style="margin: 0px 0px 24px;" id="deductTable">
+            <thead>
+              <tr>
+                <th scope="col">{{'Particular(s)'}}</th>
+                <th scope="col">{{'No of days'}}</th>
+                <th scope="col">{{'Comment'}}</th>
+                <th scope="col">{{'Amount(s) '}}{{ compensation.defaultPkg == 'Onsite' ?
+                  '('+compensation.onsiteCurrency+')' :
+                  '('+compensation.currency+')'}}</th>
+              </tr>
+            </thead>
+            <tbody class="table" id="table2">
+              <tr *ngFor="let deduction of invoiceDetails.deductions;let i = index;let last = last">
+                <td>
+                  <div class="row transparent">
+                    <div class="form-group col-md-6 col-sm-12 padding-bottom">
+                      <select class="form-select" name="deduction{{i}}" [(ngModel)]="deduction.name"
+                        [ngClass]="deduction.name == ''?'':'selected'" style="padding-left: 10px;"
+                        (change)="deductionChange(deduction.name,i)">
+                        <option value="" [disabled]="true">{{'Select Particular(s)'}}</option>
+                        <option
+                          *ngIf="(onsitePkgAnnum != 0 && onsitePkgAnnum != null) && compensation.defaultPkg == 'Offshore' || (onsitePkgAnnum != 0 && onsitePkgAnnum != null) && compensation.defaultPkg == 'Onsite'"
+                          value="Onsite Unpaid Leave">{{'Onsite Unpaid Leave'}}</option>
+                        <option *ngIf="(offshorePkgAnnum != 0 && offshorePkgAnnum != null)"
+                          value="Offshore Unpaid Leave">{{'Offshore Unpaid Leave'}}</option>
+                        <option
+                          *ngIf="(onsitePkgAnnum != 0 && onsitePkgAnnum != null) && compensation.defaultPkg == 'Offshore'"
+                          value="Onsite">{{'Onsite'}}</option>
+                        <option
+                          *ngIf="(offshorePkgAnnum != 0 && offshorePkgAnnum != null) && compensation.defaultPkg == 'Onsite'"
+                          value="Offshore">{{'Offshore'}}</option>
+                        <option *ngIf="(offshorePkgAnnum != 0 && offshorePkgAnnum != null)" value="Offshore Leave">
+                          {{'Offshore Leave'}}</option>
+                        <option
+                          *ngIf="(perDiem != null && perDiem != 0) || ((onsitePkgAnnum != 0 && onsitePkgAnnum != null) && compensation.defaultPkg == 'Offshore') || ((onsitePkgAnnum != 0 && onsitePkgAnnum != null) && compensation.defaultPkg == 'Onsite')"
+                          value="Onsite Leave">{{'Onsite Leave'}}</option>
+                        <option *ngIf="!onlyPerdiemFlag" value="partialInvoice">{{'Partial Invoice'}}</option>
+                        <option value="otherDeduction">{{'Other Deductions'}}</option>
+                        <option value="otherAddition">{{'Other Additions'}}</option>
+                      </select>
+                    </div>
+                    <div *ngIf="deduction.name != 'otherDeduction' && deduction.name != 'otherAddition'"
+                      class="form-group col-md-6 col-sm-12 padding-bottom">
+                      <input type="text" id="unpaidOthers" placeholder="Datepicker" class="form-control calender-icon"
+                        placement="bottom" bsDaterangepicker (bsValueChange)="onOffshore($event,i,deduction.name)"
+                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',showWeekNumbers: false, isAnimated: false }"
+                        name="date{{i}}" [minDate]="invoiceDetails.effectiveFromDate"
+                        [maxDate]="invoiceDetails.effectiveToDate"
+                        [daysDisabled]="(deduction.name !='Onsite' && deduction.name !='Offshore' && deduction.name !='partialInvoice' ) ? [5,6] : []"
+                        style="padding: 10px;" readonly onfocus="this.blur()" [(ngModel)]="deduction.dates"
+                        (click)="updateSeletedDate($event,i)">
+                      <!-- [dateCustomClasses]="dateCustomClasses" -->
+                      <!-- [datesDisabled]="(defaultPkg == 'Offshore' && (onsitePkgAnnum != null && onsitePkgAnnum != 0 && onsitePkgAnnum != '') && (deduction.name == 'Offshore Leave' || deduction.name == 'Offshore Unpaid Leave')) || (defaultPkg == 'Onsite' && (offshorePkgAnnum != null && offshorePkgAnnum != 0 && offshorePkgAnnum != '') && (deduction.name == 'Onsite Unpaid Leave' || deduction.name == 'Onsite Leave')) || (offshoreAndPerdiem  && (deduction.name == 'Offshore Unpaid Leave' || deduction.name == 'Offshore Leave')) ? offOrOnShoreDatesCopy : (deduction.name == 'Onsite' || deduction.name == 'Offshore') ? offOrOnShoreDatesCopy : ''" -->
+                      <!-- (defaultPkg == 'Offshore' && (onsitePkgAnnum != null && onsitePkgAnnum != 0 && onsitePkgAnnum != '') && (deduction.name == 'Onsite Leave' || deduction.name == 'Onsite Unpaid Leave')) || (defaultPkg == 'Onsite' && (offshorePkgAnnum != null && offshorePkgAnnum != 0 && offshorePkgAnnum != '') && (deduction.name == 'Offshore Unpaid Leave' || deduction.name == 'Offshore Leave')) || (onlyPerdiemFlag && (deduction.name == 'Onsite Leave' || deduction.name == 'Onsite Unpaid Leave')) || (offshoreAndPerdiem && deduction.name == 'Onsite Leave') -->
+                      <!-- (defaultPkg == 'Offshore' && (onsitePkgAnnum != null && onsitePkgAnnum != 0 && onsitePkgAnnum != '') && (deduction.name == 'Onsite Leave' || deduction.name == 'Onsite Unpaid Leave')) || (defaultPkg == 'Onsite' && (offshorePkgAnnum != null && offshorePkgAnnum != 0 && offshorePkgAnnum != '') && (deduction.name == 'Offshore Unpaid Leave' || deduction.name == 'Offshore Leave')) || (onlyPerdiemFlag && (deduction.name == 'Onsite Leave' || deduction.name == 'Onsite Unpaid Leave')) || (offshoreAndPerdiem && deduction.name == 'Onsite Leave') -->
+                    </div>
+                    <div  class="form-group col-md-6 col-sm-12 padding-bottom">
+                    <input *ngIf="deduction.name == 'otherDeduction' || deduction.name == 'otherAddition'"
+                      class="form-control inputCls w-100" type="number" min="0" name="otherDeduction{{i}}"
+                      [(ngModel)]="deduction.amountcal" placeholder="Enter Amount"
+                      (input)="otherDeduction($event,i)" style="padding:5px;width: 100% !important; height: 50px;"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46;" min="0">
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="deduction?.dates?.length > 0 && deduction.name != 'Onsite' && deduction.name != 'Offshore' && deduction.name != 'partialInvoice' && deduction.dates[0] != 'Invalid Date' && (deduction.dates[0] | date) == (deduction.dates[1] | date)"
+                    class="row transparent">
+                    <div class="from-group col-md-6 col-8"></div>
+                    <div class="from-group col-md-6 col-12">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input class="form-check-input radioStyle" type="radio" name="fromFull{{i}}"
+                            [(ngModel)]="deduction.startDay" value="fromFull"
+                            (change)="onRadioChange(i,deduction.name,'deduction')">
+                          <label class="form-check-label padding-left">Full Day</label>
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-check-input radioStyle" type="radio" name="fromFull{{i}}"
+                            [(ngModel)]="deduction.startDay" value="fromHalf"
+                            (change)="onRadioChange(i,deduction.name,'deduction')">
+                          <label class="form-check-label padding-left">Half Day</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row transparent"
+                    *ngIf="deduction?.dates?.length > 0 && deduction.name != 'Onsite' && deduction.name != 'Offshore' && (deduction?.dates[0] != 'Invalid Date' || deduction?.dates[0] != null ?  (deduction?.dates[0] | date) : deduction.dates[0]) != (deduction?.dates[0] != 'Invalid Date' || deduction.dates[1] != null?  (deduction?.dates[1] | date) : deduction.dates[1])">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 col-sm-12">
+                      <div class="row"
+                        *ngIf="deduction.name != 'Onsite' && deduction.name != 'Offshore' && deduction.name != 'partialInvoice'">
+                        <div class="col-md-6 col-sm-12">
+                          <span class="font">{{'From'}}</span>
+                          <div class="row">
+                            <div class="col-md-6 paddingLeft0">
+                              <input class="form-check-input radioStyle" type="radio" name="fromFull{{i}}"
+                                [(ngModel)]="deduction.startDay" value="fromFull"
+                                (change)="onRadioChange(i,deduction.name,'deduction')">
+                              <label class="form-check-label padding-left">Full Day</label>
+                            </div>
+                            <div class="col-md-6 paddingLeft0">
+                              <input class="form-check-input radioStyle" type="radio" name="fromHalf{{i}}"
+                                [(ngModel)]="deduction.startDay" value="fromHalf"
+                                (change)="onRadioChange(i,deduction.name,'deduction')">
+                              <label class="form-check-label padding-left">Half Day</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <span class="font">{{'To'}}</span>
+                          <div class="row">
+                            <div class="col-md-6 paddingLeft0">
+                              <input class="form-check-input radioStyle" type="radio" name="toFull{{i}}"
+                                [(ngModel)]="deduction.endDay" value="toFull"
+                                (change)="onRadioChange(i,deduction.name,'deduction')">
+                              <label class="form-check-label padding-left">Full Day</label>
+                            </div>
+                            <div class="col-md-6 paddingLeft0">
+                              <input class="form-check-input radioStyle" type="radio" name="toHalf{{i}}"
+                                [(ngModel)]="deduction.endDay" value="toHalf"
+                                (change)="onRadioChange(i,deduction.name,'deduction')">
+                              <label class="form-check-label padding-left">Half Day</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="font-weight: 400 !important;font-family: Frutiger-LT-Arabic-55-Roman !important;">
+                    {{deduction.noOfDays == null ? 'NA' : deduction.noOfDays}}</div>
+                </td>
+                <td *ngIf="deduction.name != 'Offshore' && deduction.name != 'Onsite'"><input class="transparent"
+                    type="text" name="comment{{i}}" [(ngModel)]="deduction.comment"
+                    [placeholder]="deduction.name != '' && deduction.name != 'Offshore'? 'Enter Comment' : ''"></td>
+                <td *ngIf="deduction.name == 'Offshore' || deduction.name == 'Onsite'"><label
+                    class="transparent">{{deduction.comment}}</label></td>
+                <td id="input-wrapper"><span *ngIf="deduction.amount != null"
+                    [ngClass]="{'input-currency': deduction.name == 'Offshore Unpaid Leave' || deduction.name == 'Onsite Unpaid Leave' || deduction.name == 'partialInvoice' || deduction.name == 'otherDeduction'}">{{deduction.amount
+                    != null && deduction.name == 'otherDeduction' || deduction.name == 'Offshore Unpaid Leave' ||
+                    deduction.name == 'Onsite Unpaid Leave' || deduction.name == 'partialInvoice' ? '-' : ''}}</span>
+                  <input class="transparent" type="text" name="deductionAmt-{{i}}" style="text-align: end;" currencyMask
+                    [options]="options" [(ngModel)]="deduction.amount" (change)="sumOfIncome()"
+                    [placeholder]="deduction.name != ''? 'Enter Amount' : ''" disabled="true">
+                  <!-- <input class="transparent" type="text" currencyMask [options]="options"  name="deductionAmt-{{i}}" style="text-align: end;" [(ngModel)]="deduction.amount" (change)="sumOfIncome()"  disabled="true"></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col col-md-1">
+          <div class="row" style="height: 50px !important;"></div>
+          <div class="flex" style="height: 94px;" *ngFor="let deduction of invoiceDetails.deductions;let last = last">
+
+            <div *ngIf="last" class="col col-sm-5 col-11"><button class="btn-light plus"
+                (click)="increment('deduction')">{{'+'}}</button></div>
+            <div class="col col-sm-1 col-1"></div>
+            <div *ngIf="last" class="col col-sm-5 col-11"><button class="btn-light minus"
+                (click)="decrement('deduction')">{{'-'}}</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="between-stretch" style="margin:0px">
+        <label class="expense">{{'Expense'}}</label>
+      </div>
+      <!-- Table 2 -->
+      <div class="row">
+        <div class="col col-md-11">
+          <table style="margin: 0px 0px 24px;" id="expensesTable">
+            <thead>
+              <tr>
+                <th scope="col">{{'Particular(s)'}}</th>
+                <th scope="col" style="text-align: end;">{{'Attachment(s)'}}</th>
+                <th scope="col" style="text-align: end;">{{'Amount(s) '}}{{ compensation.defaultPkg == 'Onsite'
+                  ? '('+compensation.onsiteCurrency+')' :
+                  '('+compensation.currency+')'}}</th>
+              </tr>
+            </thead>
+            <tbody class="table" id="expensesTable">
+              <!-- <input type="text" name="particular-{{i}}" style="width: 100% !important;" [(ngModel)]="count.particular"> -->
+              <tr *ngFor="let count of invoiceDetails.expenses;let i = index;let last = last">
+                <td>
+                  <div class="row transparent">
+                    <div class="form-group col-md-6">
+                      <select class="form-select" name="particular{{i}}" [(ngModel)]="count.name"
+                        [ngClass]="count.name == ''?'':'selected'" style="padding: 10px;" (change)="onChange(i)">
+                        <option value="" [disabled]="true">{{'Select Particular(s)'}}</option>
+                        <option value="Dongle Recharge">{{'Dongle Recharge'}}</option>
+                        <option value="Overtime">{{'Overtime'}}</option>
+                        <option
+                          *ngIf="((onsitePkgAnnum == 0 || onsitePkgAnnum == null) && (perDiem != null && perDiem != 0)) "
+                          value="Perdiem">{{'Perdiem'}}</option>
+                        <option value="Others">{{'Others'}}</option>
+                      </select>
+                    </div>
+
+
+                    <div class="form-group col-md-6 pr-0">
+                      <div *ngIf="count.name == 'Overtime'" class="form-group col-row" style="display: flex;">
+                        <select class="form-select col-md-6" name="overtimeAmt1{{i}}"
+                          [ngClass]="count.otHourlyRate == '' ?'':'selected'" [(ngModel)]="count.otHourlyRate"
+                          style="padding: 10px;" (change)="onHourlyRateChange(i)">
+                          <option value='' [disabled]="true">{{"Select Overtime Rate"}}</option>
+                          <option value="1">{{"1x"}}</option>
+                          <option value="1.5">{{"1.5x"}}</option>
+                          <option value="2">{{"2x"}}</option>
+                        </select> &nbsp;&nbsp;
+
+                        <input class="form-control inputCls col-md-6" type="number" name="overtime{{i}}"
+                          pattern="^\d+(\.\d+)?$" style="padding:5px;width: 100% !important; height: 50px;"
+                          [(ngModel)]="count.hours" (ngModelChange)="onHourChange($event,i)"
+                          placeholder="Enter Overtime Hours"
+                          onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46;" min="0">
+
+                      </div>
+                      <div *ngIf="count.name == 'Perdiem'" class="form-group "
+                        style="width: 100% !important;padding-right: 0px;">
+                        <input type="text" id="unpaidOthers" placeholder="Datepicker" class="form-control calender-icon"
+                          placement="bottom" bsDaterangepicker (bsValueChange)="calculatePerdiem($event,i)"
+                          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',showWeekNumbers: false, isAnimated: false }"
+                          name="perdiem{{i}}" [(ngModel)]="count.dates" [minDate]="invoiceDetails.effectiveFromDate"
+                          [maxDate]="invoiceDetails.effectiveToDate" style="padding: 10px;" readonly
+                          onfocus="this.blur()">
+                        <!-- [datesDisabled]="offOrOnShoreDatesCopy" -->
+                        <!-- [dateCustomClasses]="dateCustomClasses" -->
+                      </div>
+                      <div *ngIf="count.name != 'Overtime' && count.name != 'Perdiem' && count.name != ''"
+                        class="form-group col-row pr-0" style="display: flex;padding-bottom: 10px;">
+                        <select name="expensecurr{{i}}" class="form-select"
+                          [(ngModel)]="invoiceDetails.expenses[i].expCurrency"
+                          [ngClass]="invoiceDetails.expenses[i].expCurrency == null?'':'selected'"
+                          (change)="particularCurrencyChange(i)" style="padding: 10px;">
+                          <option selected [ngValue]=null disabled="true">{{'Select Currency'}}</option>
+                          <option *ngFor="let currency of multiselect?.currencyType" [ngValue]="currency">{{currency}}
+                          </option>
+                        </select> &nbsp;&nbsp;
+
+                        <input *ngIf="count.name == 'Dongle Recharge' || count.name == 'Variable Pay'"
+                          class="form-control inputCls" type="number" min="0" name="dongle{{i}}"
+                          style="width: 100% !important;" [(ngModel)]="count.amountcal" placeholder="Enter Amount"
+                          (input)="calculateCurrecncyRate(i)" style="padding:5px;width: 100% !important; height: 50px;"
+                         onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46;" min="0">
+                        <input *ngIf="count.name == 'Others'" class="form-control inputCls col-md-6" type="number"
+                          name="Others{{i}}" style="width: 100% !important;" min="0" step="1"
+                          [placeholder]="'Enter Amount'" [(ngModel)]="count.amountcal"
+                          (input)="calculateCurrecncyRate(i)" style="padding:5px;width: 100% !important;"
+                          onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46;" min="0">
+
+                      </div>
+                      <div *ngIf="count.name == 'Others'" class="form-group pr-0">
+                        <input class="form-control inputCls col-md-12" type="text" name="others{{i}}"
+                          [(ngModel)]="count.others" style="padding:5px;width: 100% !important;"
+                          placeholder="Enter comment">
+                      </div>
+
+
+                      <!-- <input *ngIf="count.name == 'Perdiem'"  class="form-control inputCls" type="number" min="1" step="1" name="perdiem{{i}}" style="width: 100% !important;" [(ngModel)]="count.noOfDays" placeholder="Enter No. of Days" (ngModelChange)="calculatePerdiem($event,i)" style="padding:5px;width: 90% !important;"   onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">  -->
+                      <!-- [disabled]="(offshorePkgAnnum == null || offshorePkgAnnum ==0) && (onsitePkgAnnum == null || onsitePkgAnnum == 0) && (perDiem != null && perDiem != 0)" -->
+
+
+                    </div>
+                  </div>
+                </td>
+                <!-- max-width:174px !important; -->
+                <td style="text-align: end;">
+                  <div class="row transparent">
+                    <div class="col-md-10 col">
+                      <span *ngFor="let file of count.attachment, let j = index">
+                        <i class="fa fa-times" (click)="cancelImage(i,j)"></i>
+                        <i class="fa fa-eye" (click)="openReasonModal(viewDoc,i,j)"></i>
+                      </span>
+                    </div>
+                    <div class="col-md-2 col">
+                      <button *ngIf="count.name != 'Perdiem' && count.name != 'Variable Pay'" id="file-upload-button"
+                        data-toggle="tooltip" data-placement="top" title="Only PDF, JPG, and EML files are allowed.">
+                        <input type="file" name="file-{{i}}" multiple (change)="onSelectFile($event,i)"
+                          accept="'application/pdf', 'image/jpeg', 'image/jpg', 'message/rfc822' ,'image/png'">
+                        <!-- <div *ngIf="fileSizeError" class="error-message">File size exceeds 1 MB. Please upload a smaller file.</div> -->
+                      </button>
+                    </div>
+                  </div>
+
+
+
+                  <ng-template #viewDoc>
+                    <div class="modal-header">
+                      <h4 class="modal-title pull-left">{{'Document Viewer'}}</h4>
+                      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+
+                      <div class="row">
+                        <img [src]="showImage"> <br />
+                        <pdf-viewer [src]="showPdf" [render-text]="true" [show-all]="true" [original-size]="true"
+                          [fit-to-page]="false" style="display: block;"></pdf-viewer>
+
+                        <div *ngIf="showMail != ''" [innerHTML]="showMail.html"></div>
+                      </div>
+
+                      <div class="row">
+                        <div class="d-flex">
+                          <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                            (click)="hideModal()">{{'Close'}}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </td>
+                <!-- <input type="text" matInput mask="separator.2" thousandSeparator="," name="amounts-{{i}}" style="text-align: end;" [(ngModel)]="count.amount" (change)="sumOfIncome()" (keyup)="numFormatted2($event,i)" [placeholder]="count.name != ''? 'Enter Amount' : ''"> -->
+                <td style="padding-left: 16px;font-size: 1em;direction: rtl;"><input class="transparent" type="text"
+                    name="amounts-{{i}}" style="text-align: end;" currencyMask [options]="options"
+                    [(ngModel)]="count.amount" (change)="sumOfIncome()" disabled="true"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col col-md-1">
+          <div class="row" style="height: 50px !important;"></div>
+          <div class="flex" style="height: 94px;" *ngFor="let count of invoiceDetails.expenses;let last = last">
+
+            <div *ngIf="last" class="col col-sm-5 col-11"><button class="btn-light plus"
+                (click)="increment('expenses')">{{'+'}}</button></div>
+            <div class="col col-sm-1 col-1"></div>
+            <div *ngIf="last" class="col col-sm-5 col-11"><button class="btn-light minus"
+                (click)="decrement('expenses')">{{'-'}}</button></div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- table 3 -->
+      <div class="row">
+        <div class="col col-md-11">
+          <table>
+            <tbody class="table">
+              <tr style="height: 50px;">
+                <td style="font-weight: 700;color: #1d1556; text-align: left;"><label
+                    style="font-family:'FrutigerLTArabic-65Bold' ">{{amountInWords}}</label></td>
+                <td style="max-width: 82px !important; text-align: end;"><span class="total">Total Amount :
+                  </span><label style="font-size: 16px;">{{ sumOfIncome() | number: '.2'}}</label></td>
+              </tr>
+              <!-- <tr style="height: 50px;">
+                            <td></td>
+                            <td style="text-align: end;font-weight: 700;color: #1d1556;"><label style="font-family:'FrutigerLTArabic-65Bold' ">{{amountInWords}}</label></td>
+                          </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="d-flex" *ngIf="gridView == true">
+      <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+        (click)="Save(invoiceSheetForm)">{{'Next'}}</button>
+      <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3"
+        (click)="reset()">{{'Reset'}}</button>
+    </div>
+  </form>
+</div>
+
+
+
+<!-- <input matInput mask="separator.2" thousandSeparator=","  [(ngModel)]="currency"> -->

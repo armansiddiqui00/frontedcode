@@ -1,0 +1,44 @@
+<div>
+    <div class="pageHeadings">
+        <span class="page-heading2">{{'Settings'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{"Review And Approved"}}</span></span>
+        <hr>
+    </div>
+    <div class="wrapper-main">
+        <div class="row">
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Approver"}}</label>
+                <select name="reviewer"  class="form-select mt" [(ngModel)]="searchFilters.approverUserId2" (change)="appoverSelected('approver')"
+                [ngClass]="searchFilters.approverUserId2 == null?'':'selected'">
+                    <option selected value="null" [disabled]="true">{{'Select Approver'}}</option>
+                    <option *ngFor="let approver of approverList" [ngValue]="approver.empId">{{approver.empFirstName}}</option>
+                </select>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Approvee"}}</label>
+                <angular2-multiselect name="approvee" [data]="approveeList" 
+                [(ngModel)]="searchFilters.approvyUserId2" [settings]="getApproveeSetting()">
+                </angular2-multiselect>
+            </div>
+
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Reviewer"}}</label>
+                <select name="reviewer"  class="form-select mt" [(ngModel)]="searchFilters.reviewerUserId2" (change)="appoverSelected('reviwer')"
+                [ngClass]="searchFilters.reviewerUserId2 == null?'':'selected'" [disabled]="searchFilters.approverUserId2 == null || searchFilters.approvyUserId2 == null"> 
+                    <option selected value="null" [disabled]="true">{{'Select Reviewer'}}</option>
+                    <option *ngFor="let reviwer of reviwerList2" [ngValue]="reviwer.empId">{{reviwer.empFirstName}}</option>
+                </select>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Reviewee"}}</label>
+                <angular2-multiselect name="services" [data]="reviweeList2" 
+                [(ngModel)]="searchFilters.reviewyUserId2" [settings]="getRevieweeSetting">
+                </angular2-multiselect>
+            </div>
+        </div>
+        
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="submit()">{{searchFilters.id2 == null ?'Submit' : 'Update'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="cancel()">{{'Cancel'}}</button>
+        </div>
+    </div>
+</div>

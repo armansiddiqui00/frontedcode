@@ -1,0 +1,131 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Travel Desk'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{'Travel Expense'}}</span></span>
+    <hr>
+</div>
+<div class="wrapper-main" *ngIf="addEditFlag==false">
+    <!-- <div class="d-flex"> -->
+        <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="addNewRecod()">{{'Add Expense'}}</button>
+    <!-- </div> -->
+</div>
+
+<!-- <div class="pageHeadings">
+    <span class="page-heading2">{{'Travel Desk'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{'Travel Expense'}}</span></span>
+    <hr>
+</div>
+
+<div class="card wrapperCard">
+    <div class="card-body">
+     <form #travelForm="ngForm" autocomplete="off">
+        <div class="row">
+
+            <div class="form-group col-md-3 col-sm-3">
+                <label>{{'Employee Name'}}</label> 
+                <select name="empName" id="mySelect"  class="form-select mt" name="employeName" [(ngModel)]="expenseData.employeName" (change)="onChange()" [ngClass]="expenseData.employeName == null?'':'selected'"  required>
+                    <option selected [ngValue]="null" [disabled]="true">{{'Select Employee'}}</option>
+                    <option *ngFor="let data of requestData" [ngValue]="data.employeeName">{{data.employeeName}}</option>
+                </select>   
+            </div>
+
+            <div class="form-group col-md-3 col-sm-3">
+                <label>{{'Travel ID'}}</label> 
+                <select name="travelId"  class="form-select mt" [(ngModel)]="expenseData.travelId" [ngClass]="expenseData.travelId == null?'':'selected'" required>
+                    <option selected value="null" [disabled]="true">{{'Select Travel ID'}}</option>
+                    <option value="TravelID1">{{"TravelID1"}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3 col-sm-3">
+                <label>{{'Place Of Visit'}}</label> 
+                <input type="text" class="form-control" placeholder="Place Of Visit" [(ngModel)]="expenseData.travelOrign" name="origin1">
+            </div>
+
+            <div class="form-group col-md-3 col-sm-3">
+                <label>{{'Purpose Of Visit'}}</label> 
+                <input type="text" class="form-control" placeholder="Purpose Of Visit" [(ngModel)]="expenseData.travelPurpose" name="origin2">
+            </div>
+
+            <div class="form-group col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Added By'}}</label> 
+                <input type="text" class="form-control" placeholder="Added By" [(ngModel)]="expenseData.employeName"  name="origin3">
+            </div>
+
+            <div class="form-group col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Added Time'}}</label> 
+                <input type="text" class="form-control" placeholder="Added Time" [(ngModel)]="time" name="origin4">
+            </div>
+
+            <div class="form-group col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Modified By'}}</label> 
+                <input type="text" class="form-control" placeholder="Modified By" [(ngModel)]="expenseData.employeName"  name="origin5">
+            </div>
+
+            <div class="form-group col-md-3 col-sm-3" *ngIf="gridFLag==true">
+                <label>{{'Modified Time'}}</label> 
+                <input type="text" class="form-control" placeholder="Modified Time" [(ngModel)]="time" name="origin6">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="between-stretch">
+                <label class="expense">{{'Expense'}}</label>
+                <label *ngIf="gridFLag==false"><button class="btn-light plus" (click)="increment()"><img src="assets/icons/icon_plusDetail.svg"></button>&nbsp;&nbsp;<button class="btn-light plus" (click)="decrement()">{{'-'}}</button></label>
+            </div>
+        </div>
+
+        <div class="row table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" *ngFor="let header of travelExpenseHeader">{{header}}</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="gridFLag==false">
+                  <tr *ngFor="let count of row;let i = index">
+                    <td><input type="text" name="description-{{i}}" [(ngModel)]="count.desc"></td>
+                    <td> <input type="text" name="date-{{i}}" placeholder="Datepicker" placement="bottom" bsDatepicker type="text"
+                        [(ngModel)]="count.date" [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="createdDate" ></td>
+                    <td><input type="text" name="ticket-{{i}}" [(ngModel)]="count.ticket"></td>
+                    <td><input type="text" name="lodging-{{i}}" [(ngModel)]="count.loding"></td>
+                    <td><input type="text" name="boarding-{{i}}" [(ngModel)]="count.boarding"></td>
+                    <td><input type="text" name="phone-{{i}}" [(ngModel)]="count.phone"></td>
+                    <td><input type="text" name="localConveyance-{{i}}" [(ngModel)]="count.local"></td>
+                    <td><input type="text" name="incidentals-{{i}}" [(ngModel)]="count.incidentals"></td>
+                    <td><input type="text" name="others-{{i}}" [(ngModel)]="count.others"></td>
+                    <td><select name="travelId-{{i}}"  class="mt" [(ngModel)]="count.currency" required>
+                        <option selected value="null" [disabled]="true">{{'Select Currency'}}</option>
+                        <option value="Dinar">{{"Dinar"}}</option>
+                        <option value="Dollar">{{"Dollar"}}</option>
+                        <option value="Pound">{{"Pound"}}</option>
+                        <option value="Euro">{{"Euro"}}</option>
+                    </select></td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="gridFLag==true">
+                    <tr *ngFor="let count of row;let i = index">
+                        <td>{{count.desc}}</td>
+                        <td>{{count.date}}</td>
+                        <td>{{count.ticket}}</td>
+                        <td>{{count.loding}}</td>
+                        <td>{{count.boarding}}</td>
+                        <td>{{count.phone}}</td>
+                        <td>{{count.local}}</td>
+                        <td>{{count.incidentals}}</td>
+                        <td>{{count.others}}</td>
+                        <td>{{count.currency}}</td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+     
+
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="submit()">{{'Submit'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="reset()">{{'Cancel'}}</button>
+        </div>
+
+     </form>
+    </div>
+ </div> -->
+
+ <!-- <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="addNewRecod()">{{'Add Record'}}</button> -->

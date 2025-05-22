@@ -1,0 +1,110 @@
+.between-stretch{
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-top: 24px;
+    padding-left: 0px;
+
+    label.expense{
+        font-size: 18px;
+        font-weight: 700 !important;
+        color: #1d1556;
+        font-family: "FrutigerLTArabic-65Bold" !important;
+        margin-left: 0px;
+        padding-top: 18px;
+    }
+
+    .plus{
+        padding: 0px;
+        height: 40px;
+        /* width: 0px; */
+        min-width: 40px;
+        border-radius: 200px;
+       // border: 1px solid #e1e1e1;
+       font-size: 23px;
+       color: #3498DB;
+        i.fa.fa-plus {
+            font-size: 18px;
+        }
+    }
+}
+
+.table{
+    margin-bottom: 12px;
+
+    thead th {
+        vertical-align: middle;
+        border-top: none;
+        border-bottom: 2px solid #dee2e6;
+        background: #f9fafc;
+        font-size: 14px;
+    }
+    td{
+        padding: 1.75rem 0.75rem;
+        border: none;
+
+        input{
+            border: none;
+            border-bottom: 1px solid #dedede;
+            height: 20px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        input:focus, textarea:focus
+{
+  //  border: 1px solid #1670BE;
+   // box-shadow: 0 0 3px #1670BE;
+    outline-offset: 0px;
+    outline: none;
+}
+
+select{
+    width: none !important;
+    border: none;
+    border-bottom: 1px solid #dedede;
+    margin-top: -14px;
+    font-size: 14px;
+    margin: 0px;
+    margin-top: -13px;
+    padding-left: 0px;
+    padding-right: 47px;
+    height: 25px;
+    cursor: pointer;;
+}
+
+select:focus, textarea:focus
+{
+  //  border: 1px solid #1670BE;
+   // box-shadow: 0 0 3px #1670BE;
+    outline-offset: 0px;
+    outline: none;
+}
+    }
+}
+
+table tbody tr:nth-child(odd) {
+    background: #FFFFFF;
+   // border: none  !important; 
+}
+table tbody tr:nth-child(even) {
+    background: #FFFFFF;
+ //   border: none  !important; 
+}
+
+.redBorderBizService{
+         background-color: #FFFFFF; 
+    color: #cfd1d7; 
+     border: 1px solid rgba(116, 124, 145, 0.3); 
+    border-radius: 6px; 
+     height: 50px; 
+     font-family: "Frutiger-LT-Arabic-55-Roman"; 
+     font-style: normal; 
+     font-weight: 400; 
+     font-size: 16px; 
+     line-height: 31px; 
+     margin: 0px;
+}
+

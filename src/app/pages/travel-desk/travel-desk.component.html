@@ -1,0 +1,12 @@
+<app-travel-request *ngIf="travelDeskPageInfo.urlPageName == 'travelRequest'" (newItemEvent)="addItems($event)" (newrequestEvent)="travelReqEvent($event)" [showNoRecords]="showNoRecords" [dataSource]="dataSource"></app-travel-request>
+<app-visa *ngIf="travelDeskPageInfo.urlPageName == 'visaDetails'" (newItemEvent)="visaDetails($event)" [showNoRecords]="showNoRecords"></app-visa>
+<app-view-travel-req *ngIf="travelDeskPageInfo.urlPageName == 'viewTravelReqStatus'" (newItemEvent)="addItems($event)" (newrequestEvent)="travelReqEvent($event)" [showNoRecords]="showNoRecords"></app-view-travel-req>
+<app-travel-expense *ngIf="travelDeskPageInfo.urlPageName == 'travelExpense'" (newItemEvent)="addEdit($event)" (getItemEvent)="getItemEvent($event)"></app-travel-expense>
+<app-demo-page *ngIf="travelDeskPageInfo.urlPageName == 'demoPage'"></app-demo-page>
+
+<data-grid *ngIf="dataSource || showNoRecords" [dataSource]="dataSource"  [showNoRecords]="showNoRecords" [gridHeader]="gridHeader" [travelDeskPageInfo]="travelDeskPageInfo" [newRecord]="newRecord"></data-grid>
+<!-- <app-travel-expense-edit *ngIf="addEvent=='addEdit'" [dataSource]="dataSource"   (newItemEvent)="addEdit($event)"></app-travel-expense-edit> -->
+
+<app-travel-expense-edit *ngIf="travelDeskPageInfo.urlPageName == 'travelExpenseEdit'"></app-travel-expense-edit>
+
+<!-- || addEvent=='Go Back' -->

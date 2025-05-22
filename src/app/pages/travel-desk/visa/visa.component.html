@@ -1,0 +1,88 @@
+
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Travel Desk'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{'Visa'}}</span></span>
+    <hr>
+</div>
+<form #visaForm="ngForm">
+    <div class="card wrapperCard wrapper-main"> 
+      <div class="card-body">
+        <div class="row">
+            <div class="form-group custom-from custom-from col-md-3 col-sm-3" >
+                <label>{{'Employee Name'}}</label> 
+                <select name="empName" id="mySelect"  class="form-select mt" name="employeName" [(ngModel)]="visaModel.traveldeskEntityModel.reqId" #employeName="ngModel"  (change)="onChange()" [ngClass]="visaModel.traveldeskEntityModel.reqId == null?'':'selected'"  required>
+                    <option selected [ngValue]="null" [disabled]="true">{{'Select Employee'}}</option>
+                    <!-- <option selected [ngValue]="expenseData.employeName" [disabled]="true">{{expenseData.employeName}}</option> -->
+                    <option *ngFor="let data of requestData" [ngValue]="data.reqId">{{data.employeName}} TravelId ({{data.reqId}})</option>
+                </select>   
+            </div>   
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label  class="form-label">{{"Visa No."}}</label>
+                <input type="text" class="form-control" placeholder="Enter Visa Number" name="visaNo" [(ngModel)]="visaModel.visaNo">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Valid From"}}</label>
+                <input type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                placement="bottom"
+                bsDatepicker
+                (bsValueChange)="dateRangeChange($event)"
+                [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="validityFromDate" [(ngModel)]="visaModel.validFrom">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Valid Until"}}</label>
+                <input type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                placement="bottom"
+                [minDate]="minDate"
+                bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="validityToDate" [(ngModel)]="visaModel.validUntill">
+            </div>               
+            
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Duration Of Stay'}}</label>
+                <input type="text" class="form-control" placeholder="Enter Duration Of Stay" name="durationOfStay" [(ngModel)]="visaModel.durationOfStay">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Place Of Issue'}}</label>
+                <input type="text" class="form-control" placeholder="Enter Place Of Issue" name="placeOfIssue" [(ngModel)]="visaModel.placeOfIssue">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label  class="form-label">{{"Purpose"}}</label>
+                <input type="text" class="form-control" placeholder="Enter Visa Purpose" name="purpose" [(ngModel)]="visaModel.purpose">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label  class="form-label">{{"Entry Type"}}</label>
+                <input type="text" class="form-control" placeholder="Enter Entry Type" name="entryType" [(ngModel)]="visaModel.entryType">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Visa Type"}}</label>
+                <select name="visaType" id="" class="form-select mt" [(ngModel)]="visaModel.visaType" [ngClass]="{'selected':visaModel.visaType,'redBorder': (visaModel.visaType && invalidFlag)}" required>
+                    <option selected value="null" [disabled]="true">{{'Select Visa Type'}}</option>
+                    <option value="Tourist">{{'Tourist Visa'}}</option>
+                    <option value="Employment">{{'Employment Visa'}}</option>
+                    <option value="Business">{{'Business  Visa'}}</option>
+                    <option value="Project">{{'Project  Visa'}}</option>
+                </select>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label  class="form-label">{{"Nationality"}}</label>
+                <input type="text" class="form-control" placeholder="Enter Nationality" name="nationality" [(ngModel)]="visaModel.nationality">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label  class="form-label">{{"Passport No."}}</label>
+                <input type="text" class="form-control" placeholder="Enter Passport Number" name="passportNumber" [(ngModel)]="visaModel.passportNo">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label  class="form-label">{{"Occupation"}}</label>
+                <input type="text" class="form-control" placeholder="Enter Occupation" name="occupation" [(ngModel)]="visaModel.occupation">
+            </div>
+           </div>
+           <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" [disabled]="flag" (click)="submitVisaDetails(visaForm)">{{'Submit'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="cancelVisaDetails()">{{'Cancel'}}</button>
+        </div>
+      </div>
+    </div>
+</form>

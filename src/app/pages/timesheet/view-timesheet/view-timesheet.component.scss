@@ -1,0 +1,94 @@
+.wrapperCard{
+    .form-group{
+        .form-select{
+            margin: 0.8rem;
+        }
+        input{
+           // width: 100%;
+        }
+        textarea{
+            margin: 0;
+            margin-left: 0.8rem;
+        }
+    }
+    button{
+      margin-top: 50px;
+    }
+}
+
+
+
+.fa.fa-eye{
+    background: transparent;
+    color: #0c0cef;
+    font-size: 25px;
+    cursor: pointer;
+
+}
+
+.fa.fa-retweet{
+    background: transparent;
+    color: #cd0722;
+    font-size: 25px;
+    cursor: pointer;
+}
+.fa.fa-retweet:disabled{
+   // color: #b1757d;
+    color: rgba(221, 75, 57, 0.3);
+}
+
+    // .iconss{
+    //     border: none;
+    //     //padding-left: 0px;
+    //     padding-top: 0px !important;
+    //     padding-bottom: 8px !important;
+
+    //     button.btn.btn-light{
+    //         border-radius: 6px;
+    //         cursor: pointer;
+    //         height: auto;
+    //         margin-top: 18px;
+
+    //         label{
+    //             margin-top: 0px; 
+    //             font-weight: 600;
+    //             font-family: "Frutiger-LT-Arabic-55-Roman";
+    //             font-size: 14px;
+    //             cursor: pointer;
+    //         }
+    //     }
+    // }
+    .iconss{
+        border: none;
+      
+
+        button.btn.btn-light{
+             padding: 0px;
+            // padding-right: 11px !important;
+            // padding-bottom: 4px !important;
+            // margin-left: -5px !important;
+            border-radius: 6px;
+           // margin: 5px;
+            cursor: pointer;
+            height: auto;
+            margin-top: 5px;
+
+            label{
+                margin-top: 0px; 
+                font-weight: 600;
+                font-family: "Frutiger-LT-Arabic-55-Roman";
+                font-size: 14px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    table{
+        td{
+           vertical-align: middle !important;
+          }
+    }
+    
+    td.iconss {
+        max-width: 70px !important;
+    }

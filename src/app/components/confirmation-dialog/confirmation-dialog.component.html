@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ title }}</h4>
+    <button class="close" aria-label="Close" (click)="decline()">
+        <span aria-hidden="true"><img src="assets/icons/icon-close-new.png"></span>
+    </button>
+</div>
+<div class="modal-body confirmClass">
+    {{ message }}
+</div>
+<div class="modal-footer common-trx">
+    <!-- <button type="button" class="btn btn-block btn-light btn-light-custom col-lg-1" (click)="decline()">{{ btnCancelText}}</button>
+    <button type="button" class="btn btn-block btn-primary btn-primary-custom col-lg-1" (click)="accept()">{{ btnOkText}}</button> -->
+    <button type="button" class="btn btn-light bg-primary-light  col-lg-1 col-md-2 " (click)="decline()" > <label class="applyBtnn-label">{{ btnCancelText}}</label></button>
+    <button type="button" class="btn btn-primary bg-primary-blue  col-lg-1 col-md-2" (click)="accept()" ><label class="cancelBtnn-label">{{ btnOkText}}</label></button>
+</div>

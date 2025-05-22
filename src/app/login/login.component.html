@@ -1,0 +1,51 @@
+﻿<form [formGroup]="loginForm" *ngIf="authenticationService.isUserValid != 'true'">
+    <div class="row ">
+        <div class="col-md-auto col-12 root">
+            <div class="logo"><img src="assets/icons/logo (1).svg"></div>
+        </div>
+        <div class="col-md-auto col-12 root_2">
+            <div class="row headings"><span class="welcm">Welcome to</span><br>
+                <span class="rims">DWC Supplier Portal</span>
+
+            </div>
+            <div class="form-group" *ngIf="showOtpTB != 'show'">
+                <div class="row inputs bottom">
+                    <input type="text" formControlName="username" class="form-control box"
+                        placeholder="Email">
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Username is required</div>
+                    </div>
+                </div>
+            </div>
+            <div  class="form-group" *ngIf="showOtpTB != 'show'">
+                <div class="row bottom">
+                    <input type="password" formControlName="password" class="form-control" placeholder="Password">
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 30px;"></div>
+            <div class="resend-container">
+                <a *ngIf="showOtpTB == 'show'" (click)="resendOtp()" class="resendLink">{{'Resend OTP'}}</a>
+            </div>
+            <!-- <a *ngIf="showOtpTB == 'show'" (click)="resendOtp()" class="resendLink">{{'Resend OTP'}}</a> -->
+            <!--  *ngIf="showOtpTB == 'Success'"  -->
+            <div *ngIf="showOtpTB == 'show'" class="form-group">
+                <div class="row bottom">
+                    <input type="otp" formControlName="otp" class="form-control" placeholder="Enter OTP">
+                </div>
+            </div>
+
+            <div class="row bottem">
+                <button class="btn btn-primary" [disabled]="loading" (click)="onSubmit()">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Login</button>
+
+            </div>
+            <div class="google" size='large' #googlebutton></div>
+
+        </div>
+
+    </div>
+</form>

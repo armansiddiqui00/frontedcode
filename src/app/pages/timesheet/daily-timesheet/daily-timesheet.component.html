@@ -1,0 +1,329 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Timesheet'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{daily?"Submit  Timesheet" : "Weekly Timesheet"}}</span></span>
+    <hr>
+</div>
+
+
+<form #dailyForm="ngForm">
+    <div class="wrapper-main">
+        <div class="tsStatus">
+           <!-- <div style="display:flex"> -->
+            <!-- <h3>{{daily?"Submit  Timesheet" : "Weekly Timesheet"}}</h3> -->
+            <!-- <div> -->
+             <!-- <label class="switch">
+              
+               <input class="m-0 mt-1 toogle form-control" id="toggel-position monthly" type="checkbox" name="daily" [(ngModel)]="daily">
+               <span class="slider round"></span>
+             </label> -->
+           <!-- </div> -->
+            <!-- </div> -->
+            <div><h3>{{'Total work logged (in hrs) '+totalHours+" : "+totalMin}}</h3></div>
+           <div><h4>{{"Timesheet Status : "}}<b [ngStyle]="tsStaus == 'Pending'?{'color':'#F59D1A'}:{'color':'#01B8AA'}">{{tsStaus}}</b></h4></div>
+           
+        </div>
+        <div *ngIf="daily;else weekly">
+           
+            <div class="row">
+                <input type="hidden" [(ngModel)]="dailyTS.id" [value]="'daily_'+idDate" name="id">
+                <div class="form-group custom-form  col-md-3 col-sm-6">
+                    <label class="form-label">{{"Project Name"}}</label>
+                    <select name="projectId" id="" class="form-select" [(ngModel)]="dailyTS.projectId" [ngClass]="{'selected':dailyTS.projectId!= null,'redBorder': (dailyTS.projectId== null && invalidFlag)}" required (change)="onChange()">
+                        <option selected value="null" disabled="true">{{'Select Project Name'}}</option>
+                        <option *ngFor="let project of dropdownList?.projectList" [value]="project.projectId">{{project.projectName}}</option>
+                    </select>
+                </div>
+                <div class="form-group custom-form  col-md-3 col-sm-6">
+                    <label class="form-label">{{"Task Name"}}</label>
+                    <select name="taskId" id="" class="form-select" [(ngModel)]="dailyTS.taskId" [ngClass]="{'selected':dailyTS.taskId!= null,'redBorder': (dailyTS.taskId== null && invalidFlag)}" required>
+                        <option selected value="null" [disabled]="true">{{'Select Task Name'}}</option>
+                        <option *ngFor="let task of dropdownList?.taskList" [value]="task.taskId">{{task.taskName}}</option>
+                    </select>
+                </div>
+                
+                <div class="form-group  custom-form col-md-3 col-sm-6"  id="datepicker">
+                    <label class="form-label">{{"Timesheet Date"}}</label>
+                    <input type="text"
+                    placeholder="Datepicker"
+                    class="form-control"
+                    placement="bottom"
+                    bsDatepicker
+                    [maxDate] = maxDate
+                    [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="createdDate" [(ngModel)]="dailyTS.timesheetDate" (ngModelChange)="onDateChange($event)" [disabled]="navEditFlag" [ngStyle]="navEditFlag?{'background-color':'#e9ecef'}:{}">
+                </div>
+                <div class="form-group custom-form  col-md-3 col-sm-6">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <label>{{"From"}}</label>
+                            <!-- <input type="time" id="appt" name="fromHours" [(ngModel)]="dailyTS.fromHours"> -->
+                            <select name="fromTime" class="form-select fromDate" [(ngModel)]="dailyTS.fromTime" [ngClass]="{'selected':dailyTS.fromTime!= null,'redBorder': (dailyTS.fromTime== null && invalidFlag ) || tempHours >= 1441 || (dailyTS.toTime != null && dailyTS.fromTime == null)}" required #fromTime="ngModel" (change)="timeCalculate(dailyTS.fromTime,dailyTS.toTime)">
+                                <option selected value="null" [disabled]="true">{{'From'}}</option>
+                                <option *ngFor="let time of time" [value]="time.key">{{time.value}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <label>{{"To"}}</label>
+                            <select name="toTime" id="" class="form-select toDate" [(ngModel)]="dailyTS.toTime" [ngClass]="{'selected':dailyTS.toTime!= null,'redBorder': (dailyTS.toTime== null && invalidFlag) || tempHours >= 1441 || (dailyTS.fromTime != null && dailyTS.toTime == null)}" required #toTime="ngModel" (change)="timeCalculate(dailyTS.fromTime,dailyTS.toTime)">
+                                <option selected value="null" [disabled]="true">{{'To'}}</option>
+                                <option *ngFor="let time of time" [value]="time.key">{{time.value}}</option>
+                            </select>
+                            <!-- <input type="time" id="appt" name="fromHours" [(ngModel)]="dailyTS.toHours"> -->
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group custom-form  col-md-3 col-sm-6">
+                    <label>{{"Task Category"}}</label>
+                    <select name="categoryId" id="" class="form-select mt" [(ngModel)]="dailyTS.categoryId" [ngClass]="{'selected':dailyTS.categoryId!= null,'redBorder': (dailyTS.categoryId== null && invalidFlag)}" required>
+                        <option selected value="null" [disabled]="true">{{'Select Task Category'}}</option>
+                        <option *ngFor="let catList of dropdownList?.taskCatogry" [value]="catList.category_id">{{catList.category_name}}</option>
+                    </select>
+                </div>
+                <div class="form-group custom-form  col-md-3 col-sm-6">
+                    <label>{{"Task Status"}}</label>
+                    <select name="taskStatus" id="" class="form-select mt" [(ngModel)]="dailyTS.taskStatus" [ngClass]="{'selected':dailyTS.taskStatus!= null,'redBorder': (dailyTS.taskStatus== null && invalidFlag)}" required>
+                        <option selected value="null" [disabled]="true">{{'Select Task Status'}}</option>
+                        <option value="Completed">{{"Completed"}}</option>
+                        <option value="Pending">{{"Pending"}}</option>
+                        <option value="Progress">{{"Progress"}}</option>
+                        <option value="Rejected">{{"Rejected"}}</option>
+                    </select>
+                </div>
+                <div class="form-group custom-form col-md-3 col-sm-6">
+                    <label>{{"Comment"}}</label>
+                    <textarea type="text" name='hours' [(ngModel)]="dailyTS.comment" class="form-control"></textarea>
+                </div>
+                <div class="col-md-3 col-sm-6 displayFlex">
+                    <!-- <span class="buttonPadding" (click)="saveDailyTS(dailyForm)" style="pointer-events: all;">Add Timesheet</span> -->
+                    <button type="button" class="btn btn-light addTask"  (click)="saveDailyTS(dailyForm)" style="height: 24px;
+                    margin-top: 17px;" [disabled]="saveStatus.status == 'SUCCESS'"><label style="margin-top: 0px;margin-left: 2px;">{{'Add Task'}}</label><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="row" *ngIf="displayTableArray.length>0">
+                <table>
+                    <thead>
+                        <tr>
+                            <th *ngFor="let header of dailyTableHeader">{{header}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of displayTableArray,let i=index">
+                            <td>{{data.tsMode2}}</td>
+                            <td>{{data.projectName2}}</td>
+                            <td>{{data.taskName2}}</td>
+                            <td>{{data.timesheetDate2}}</td>
+                            <td>{{data.fromTime2}}</td>
+                            <td>{{data.toTime2}}</td>
+                            <td>{{data.taskCategory2}}</td>
+                            <td>{{data.taskStatus2}}</td>
+                            <!-- <td  [ngClass]="data.timesheetStatus2 == 'Completed'?'text-success':data.timesheetStatus2 == 'Pending'?'text-warning':data.timesheetStatus2 == 'Rejected'?'text-danger':'text-info'">{{data.timesheetStatus2}} -->
+                            <td>{{data.comment2}}</td>
+                            <td><button class="fa fa-trash" [ngStyle]="saveStatus?.status=='SUCCESS' || navEditFlag ?{'color':'rgba(221, 75, 57,0.3)'}:{'color':'#dd4b39'}" (click)="deleteDailyRow(i,data)" [disabled]="saveStatus?.status=='SUCCESS'  || navEditFlag"  style="background:transparent ;"></button></td>
+                            <td><button class="fa fa-edit" [ngStyle]="saveStatus?.status=='SUCCESS' || data.timesheetStatus2 == 'Approved' ?{'color':'rgba(0,166,90,0.3)'}:{'color':'#00a65a'}" (click)="editDailyRow(i,data)" [disabled]="saveStatus?.status=='SUCCESS' || data.timesheetStatus2 == 'Approved' "  style="background:transparent ;"></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex">
+                <button type="button" *ngIf="saveStatus?.status!='SUCCESS'" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"  (click)="submitDailyTs(dailyForm)">{{'Submit'}}</button>
+                <button type="button" *ngIf="saveStatus?.status=='SUCCESS'" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3 not-allowed">{{'Submit'}}</button>
+                <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="cancelDailyTs()" [disabled]="saveStatus?.status=='SUCCESS'">{{'Cancel'}}</button>
+            </div>
+        </div>
+
+
+        <!--------------------------------------------Weekly----------------------------------------------->
+        <ng-template #weekly> 
+          <form #weeklyForm="ngForm">
+            <!-- <div class="card-body"> -->
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>{{"Select Week"}}</label>
+                        <input type="text"
+                        placeholder="Daterangepicker"
+                        class="form-control"
+                        bsDatepicker name="weeklyDate" [(ngModel)]="weeklyDate">
+                    </div>
+                    <div class="col-md-9">
+                        <h3 class="text-end">{{'Total time spend is '+totalHours+" : "+totalMin}}</h3>
+                    </div>
+                </div>
+                <div class="row" *ngIf="weeklyDate != null">
+                    <table id='weeklyTable'>
+                        <!-- <span>{{'Date is 9th Apr 2023 to 13th Apr 2023'}}</span> -->
+                        <thead>
+                            <tr>
+                                <th *ngFor="let week of weeks" class="col-md-1">{{week}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-md-1 weekly" *ngFor="let week of weekly2,let i=index">
+                                    <div class="form-group row">
+                                        <label  class="col-form-label">{{'Project Name'}}</label>
+                                        <select name="projectName" [id]="i==0?'sunWeek':i==1?'monWeek':i==2?'tueWeek':i==3?'wedWeek':i==4?'thurWeek':i==5?'friWeek':i==6?'satWeek':''" (change)="onValueChange(i)"
+                                         class="form-select" [(ngModel)]="week.projectName" [ngClass]="{'selected':week.projectName != null}" required>
+                                            <option selected value="null" disabled="true">{{'Select Project Name'}}</option>
+                                            <option value="dpp">{{"DPP"}}</option>
+                                            <option value="rims">{{"RIMS"}}</option>
+                                        </select>
+                                   </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-1 weekly" *ngFor="let week of weekly2,let i =index">
+                                    <div class="form-group row">
+                                        <label  class="col-form-label">{{'Task Name'}}</label>
+                                        <select [name]="'taskName'" [id]="i==0?'sunWeek':i==1?'monWeek':i==2?'tueWeek':i==3?'wedWeek':i==4?'thurWeek':i==5?'friWeek':i==6?'satWeek':''" (change)="onValueChange(i)"
+                                        class="form-select" [(ngModel)]="week.taskName" [ngClass]="{'selected':week.taskName != null}" required>
+                                            <option selected value="null" [disabled]="true">{{'Select Task Name'}}</option>
+                                            <option value="task1">{{"Task 1"}}</option>
+                                            <option value="task2">{{"Task 2"}}</option>
+                                        </select>
+                                   </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-1 weekly" *ngFor="let week of weekly2,let i=index">
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <label  class="col-form-label">{{'From'}}</label>
+                                            <select [name]="'fromHours'" [id]="i==0?'sunWeek':i==1?'monWeek':i==2?'tueWeek':i==3?'wedWeek':i==4?'thurWeek':i==5?'friWeek':i==6?'satWeek':''" (change)="onValueChange(i)"
+                                             class="form-select" [(ngModel)]="week.fromHours" [ngClass]="{'selected':week.fromHours != null}" required>
+                                                <option selected value="null" [disabled]="true">{{'From'}}</option>
+                                                <option *ngFor="let time of time" [value]="time.key">{{time.value}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label  class="col-form-label">{{'To'}}</label>
+                                            <select [name]="'toHours'" [id]="i==0?'sunWeek':i==1?'monWeek':i==2?'tueWeek':i==3?'wedWeek':i==4?'thurWeek':i==5?'friWeek':i==6?'satWeek':''" (change)="onValueChange(i)"
+                                             class="form-select" [(ngModel)]="week.toHours" [ngClass]="{'selected':week.toHours != null}" required>
+                                                <option selected value="null" [disabled]="true">{{'To'}}</option>
+                                                <option *ngFor="let time of time" [value]="time.key">{{time.value}}</option>
+                                            </select>
+                                        </div>
+                                   </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-1 weekly" *ngFor="let week of weekly2,let i=index">
+                                    <div class="form-group row">
+                                        <label  class="col-form-label">{{'Task Status'}}</label>
+                                        <select [name]="'taskStatus'" [id]="i==0?'sunWeek':i==1?'monWeek':i==2?'tueWeek':i==3?'wedWeek':i==4?'thurWeek':i==5?'friWeek':i==6?'satWeek':''" (change)="onValueChange(i)"
+                                         class="form-select mt" [(ngModel)]="week.taskStatus" [ngClass]="{'selected':week.taskStatus != null}" required>
+                                            <option selected value="null" [disabled]="true">{{'Select Task Status'}}</option>
+                                            <option value="completed">{{"Completed"}}</option>
+                                            <option value="pending">{{"Pending"}}</option>
+                                            <option value="progress">{{"Progress"}}</option>
+                                            <option value="rejected">{{"Rejected"}}</option>
+                                        </select>
+                                   </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-1 weekly" *ngFor="let week of weekly2,let i=index">
+                                    <div class="form-group row">
+                                        <label  class="col-form-label">{{'Comment'}}</label>
+                                        <textarea type="text" [name]="'comment'" [(ngModel)]="week.comment" class="form-control"></textarea>
+                                   </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="col-md-1 weekly" *ngFor="let week of weekly2,let i=index">
+                                    <div class="form-group d-flex">
+                                        <span><button type="submit" class="dailyIbtn"><i class="fa fa-check" (click)="saveWeekTs(week.day,i,weeklyForm)"></i></button></span>
+                                   </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>  
+                    <div class="block-30"></div>
+                    <table *ngIf="weeklyDataArray.length > 0">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let weeklyHead of weeklyTableHeader" class="col-md-1">{{weeklyHead}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let sun of sunday,let i = index">
+                                <td>{{sun.day}}</td>
+                                <td>{{sun.projectName}}</td>
+                                <td>{{sun.taskName}}</td>
+                                <td>{{sun.fromHours}}</td>
+                                <td>{{sun.toHours}}</td>
+                                <td>{{sun.taskStatus}}</td>
+                                <td>{{sun.comment}}</td>
+                                <td><i class="fa fa-trash" (click)="deleteRow(sun.day,sun.id,i,sun)"></i></td>
+                            </tr>
+                            <tr *ngFor="let mon of monday,let i = index">
+                                <td>{{mon.day}}</td>
+                                <td>{{mon.projectName}}</td>
+                                <td>{{mon.taskName}}</td>
+                                <td>{{mon.fromHours}}</td>
+                                <td>{{mon.toHours}}</td>
+                                <td>{{mon.taskStatus}}</td>
+                                <td>{{mon.comment}}</td>
+                                <td><i class="fa fa-trash" (click)="deleteRow(mon.day,mon.id,i,mon)"></i></td>
+                            </tr>
+                            <tr *ngFor="let tue of tuesday,let i = index">
+                                <td>{{tue.day}}</td>
+                                <td>{{tue.projectName}}</td>
+                                <td>{{tue.taskName}}</td>
+                                <td>{{tue.fromHours}}</td>
+                                <td>{{tue.toHours}}</td>
+                                <td>{{tue.taskStatus}}</td>
+                                <td>{{tue.comment}}</td>
+                                <td><i class="fa fa-trash" (click)="deleteRow(tue.day,tue.id,i,tue)"></i></td>
+                            </tr>
+                            <tr *ngFor="let wed of wednesday,let i = index">
+                                <td>{{wed.day}}</td>
+                                <td>{{wed.projectName}}</td>
+                                <td>{{wed.taskName}}</td>
+                                <td>{{wed.fromHours}}</td>
+                                <td>{{wed.toHours}}</td>
+                                <td>{{wed.taskStatus}}</td>
+                                <td>{{wed.comment}}</td>
+                                <td><i class="fa fa-trash" (click)="deleteRow(wed.day,wed.id,i,wed)"></i></td>
+                            </tr>
+                            <tr *ngFor="let thu of thursday,let i = index">
+                                <td>{{thu.day}}</td>
+                                <td>{{thu.projectName}}</td>
+                                <td>{{thu.taskName}}</td>
+                                <td>{{thu.fromHours}}</td>
+                                <td>{{thu.toHours}}</td>
+                                <td>{{thu.taskStatus}}</td>
+                                <td>{{thu.comment}}</td>
+                                <td><i class="fa fa-trash" (click)="deleteRow(thu.day,thu.id,i,thu)"></i></td>
+                            </tr>
+                            <tr *ngFor="let fri of friday,let i = index">
+                                <td>{{fri.day}}</td>
+                                <td>{{fri.projectName}}</td>
+                                <td>{{fri.taskName}}</td>
+                                <td>{{fri.fromHours}}</td>
+                                <td>{{fri.toHours}}</td>
+                                <td>{{fri.taskStatus}}</td>
+                                <td>{{fri.comment}}</td>
+                                <td><i class="fa fa-trash" (click)="deleteRow(fri.day,fri.id,i,fri)"></i></td>
+                            </tr>
+                            <tr *ngFor="let sat of saturday,let i = index">
+                                <td>{{sat.day}}</td>
+                                <td>{{sat.projectName}}</td>
+                                <td>{{sat.taskName}}</td>
+                                <td>{{sat.fromHours}}</td>
+                                <td>{{sat.toHours}}</td>
+                                <td>{{sat.taskStatus}}</td>
+                                <td>{{sat.comment}}</td>
+                                <td><i class="fa fa-trash" (click)="deleteRow(sat.day,sat.id,i,sat)"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="submitWeeklyTs()">{{'Submit'}}</button>
+                        <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3">{{'Cancel'}}</button>
+                    </div>
+                </div>
+               <!-- </div> -->
+          </form>
+        </ng-template>
+    </div>
+</form>

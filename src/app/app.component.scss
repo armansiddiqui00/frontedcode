@@ -1,0 +1,213 @@
+﻿@import "../itcss/02-tools.scss";
+
+.base {
+    width: 100vw;
+    height: 100vh;
+}
+
+.container_login{
+//     // width: 100vw;
+//     // height: 100vh;
+//     background: #FFFFFF;
+//     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1019607843);
+//     z-index: 100;
+//     margin-top: 11%;
+//     padding: 2rem;
+//    // border: 1px solid #e9edf4;
+//     border-radius: 3px;
+//     margin-left: auto;
+//     margin-right: auto;
+//    // max-width: 47%;
+//     z-index: 1;
+
+background: #FFFFFF;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1019607843);
+    z-index: 100;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding: 2rem;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    width: auto;
+    /* max-width: 47%; */
+    z-index: 1;
+    
+}
+.responsive {
+//     width: 50%;
+//     height: auto;
+//     display: block;
+//     margin-left: auto;
+//     margin-right: 0px;
+//    // margin-top: -111rem;
+//     background-size: cover;
+//     background-position: center top;
+//     display: block;
+//     height: 100%;
+//     background-repeat: no-repeat;
+width: 50%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: 0px;
+    background-size: cover;
+    background-position: center top;
+    display: block;
+    position: fixed;
+    height: 100%;
+    background-repeat: no-repeat;
+    translate: 100%;
+
+
+  }
+
+  .right-backgroud {
+   // background-image: url(../assets/icons/mobile-payments-mobile-scanning-payments-face-face-payments.png);
+    background-size: cover;
+    background-position: center top;
+    display: block;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.base-grid-container {
+   // width: 100vw;
+    height: 97vh;
+    display: grid;
+
+    @include custom_media((
+        grid-template: (
+            56px 1fr / 56px 1fr,
+            56px 1fr / 56px 1fr,
+            56px 1fr / 56px 1fr,
+            56px 1fr / 0px 1fr,
+            56px 1fr / 0px 1fr
+        )
+    ));
+    .header {
+        background-color: $white;
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .site-logo {
+        // background-color: #30759d;
+       // background-color: #3a7ba0;
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .side-nav {
+        background-color: linear-gradient(180deg, #0A3158 11.84%, #1D6BB9 31.71%, #2364A5 39.08%, #1A4D80 69.27%, #0D3E6C 82.29%, #034180 99.99%, rgba(1, 83, 165, 0) 100%) !important;;
+        grid-column: 1;
+        grid-row: 2;
+        margin-top: 30px;
+        height: 883px;
+        //width: 56px;
+    }
+    .content {
+        background-color: $secondary;
+        grid-column: 2;
+        grid-row: 2;
+        overflow: auto;
+
+        .router {
+            padding: 24px 27px;
+            background: #FBFBFB;
+        }
+    }
+}
+
+.menu-open {
+    @include custom_media((grid-template: (60px 1fr / 280px 1fr,
+                60px 1fr / 280px 1fr,
+                60px 1fr / 280px 1fr,
+                60px 1fr / 280px 1fr,
+                60px 1fr / 280px 1fr,
+            ),
+        ));
+
+    .side-nav {
+        //width: 100%;
+        margin-top: 26px
+    }
+}
+
+.grid-item {
+   // overflow: hidden;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $secondary;
+
+    // .fa-spinner {
+    //     font-size: $jumbo-plus;
+    //     animation: rotate 3s infinite;
+    // }
+}
+
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    margin-left: -87px;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 9991;
+}
+
+.loader {
+    width: 10rem;
+    height: 10rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: auto;
+    border: 0.5em solid;
+    border-right-color: transparent;
+    z-index: 9999;
+}
+
+.site-logo {
+    /*background: url(../assets/icons/layout_set_logo.png) no-repeat;*/
+    background:#0A3158;
+    grid-column: 1;
+    grid-row: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100px;
+   // padding: 19px 1px 8px 10px;
+   // border-bottom: 1px solid $blue-black;
+}
+
+.site-logo.center {
+    background-position: center;
+    margin-left: 0px;
+    justify-content: center;
+
+}
+
+.overlaylogin{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    margin-left: -30%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 9991;
+}

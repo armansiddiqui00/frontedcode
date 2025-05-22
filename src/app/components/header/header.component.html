@@ -1,0 +1,68 @@
+<!-- <header class=" flex-row-between-stretch">
+  <div class="menu-button flex-row-center-center" (click)="toggleMenu()">
+   
+    <div class="menu-container" [class.menu-change]="sideMenu.menuOpen">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+  </div>
+  <div class="right flex-row-between-stretch">
+    <div class="menu-button flex-row-center-center"><div class="envelope"><i class="far fa-envelope"><span class="badge">{{header.mailCount}}</span></i></div></div>
+    <div class="menu-button flex-row-center-center user-profile text-capitalize"><div class="user"><i class="fas fa-user"></i></div>&nbsp;&nbsp; {{currentUser.firstName}}</div>
+  </div>
+</header> -->
+
+
+<header class="header flex-row-between-stretch">
+  <div class="menu-button flex-row-center-center" (click)="toggleMenu()">
+    <div class="menu-container" [class.menu-change]="sideMenu.menuOpen">
+
+      <img src="assets/icons/icon-menu-expand.svg" class="ham-right" alt="menu">
+      <img src="assets/icons/icon-menu-collapse.svg" class="ham-left" alt="menu">
+      <!--<div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>-->
+    </div>
+  </div>
+  <div class="row right flex-row-between-stretch">
+    <!-- <span class="form-inline">
+      <select class="form-control language-box" [(ngModel)]="selectedLang" (change)="switchLang($event)">
+        <option *ngFor="let language of translate.getLangs()" [value]="language"
+          [selected]="language === translate.currentLang">
+          {{ (language == 'ar' ? 'Arabic' : 'English') | translate }}    
+        </option>
+      </select>
+    </span>&nbsp;&nbsp; -->
+    <!-- <div class="menu-button flex-row-center-center"><i class="far fa-envelope"><span class="badge">{{header.mailCount}}</span></i></div> -->
+    <div class="menu-button flex-row-center-center user-profile text-capitalize">
+      &nbsp;&nbsp;&nbsp;
+      <div class="menu-button flex-row-center-center left-side" (click)="toggleRightMenu()">
+        <div class="menu-container" [class.menu-change]="sideMenu.menuOpen">
+          <img src="assets/icons/right-menu.svg" data-bs-toggle="tooltip" data-bs-placement="top" title="Release Note">
+        </div>
+      </div>
+      <div ngbDropdown class="d-flex dropdown align-items-center">
+        
+        <div class="user-profile-box"> <img src="assets/icons/avtar.jpg"> </div>
+        <div class="user-name" id="dropdownMenuButton" (click)="currentUserr()" ngbDropdownToggle>
+          {{currentUser?.loginUserDetails?.firstName}}</div>
+        <div class="user-menu-cont" ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+          <div class="block-6"></div>
+          <div class="d-flex user-m-box" style="justify-content: start;">
+            <div class="item-icon flex-row-start-center user-icon-box"> <img src="assets/icons/icon-account.svg"
+                class="" alt="user-icon"></div>
+            <div class="item-text flex-row-start-center user-text-box" (click)="navigate()">{{'Edit Profile'}}</div>
+          </div>
+
+          <div class="block-13"></div>
+          <div class="d-flex border-top-log user-m-box user-log-box" (click)="logout()" style="justify-content: start;">
+            <div class="item-icon flex-row-start-center user-icon-box"> <img src="assets/icons/icon-logout.svg" class=""
+                alt="user-icon"></div>
+            <div class="item-text flex-row-start-center user-text-box">{{'Logout'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

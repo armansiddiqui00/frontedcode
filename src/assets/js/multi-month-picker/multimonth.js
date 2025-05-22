@@ -1,0 +1,90 @@
+// <!DOCTYPE html>
+// <html>
+// <head>
+//     <title>jQuery Multi Month Picker Widget Demo</title>
+//     <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js"></script>
+//     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/flick/jquery-ui.css">
+// <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.1/jquery-ui.min.js"></script>
+//     <script src="../dist/multi-month-picker.min.js"></script>
+//     <link rel="stylesheet" href="../dist/multi-month-picker.min.css">
+//     <style>
+//         html,* { font-family: 'Inter'; box-sizing: border-box; }
+// body { background-color: #fafafa; line-height:1.6; padding: 20px;}
+// .lead { font-size: 1.5rem; font-weight: 300;background: linear-gradient(to right, #000000 0%, #000000 50%,#999999 100%);
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color:transparent; }
+// .container { margin: 0 auto; max-width: 960px; }
+// h1 {
+//   background: linear-gradient( 120deg, #bd34fe 30%, #41d1ff );
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+// }
+// input {
+//       -webkit-appearance: none;
+//     -moz-appearance: none;
+//     appearance: none;
+//     background-color: #fff;
+//     border-color: #6b7280;
+//     border-width: 1px;
+//     border-radius: 0;
+//     padding-top: 0.5rem;
+//     padding-right: 0.75rem;
+//     padding-bottom: 0.5rem;
+//     padding-left: 0.75rem;
+//     font-size: 1rem;
+//     line-height: 1.5rem;
+//     width: 100%;
+// }
+// </style>
+// </head>
+// <body>
+//     <div class="container">
+//         <h1>jQuery Multi Month Picker Widget Demo</h1><style>
+// .download{ padding: 1.25rem; border:0; border-radius:3px; background-color:#4F46E5; color:#fff;cursor:pointer; text-decoration:none;}.download:hover{color: #fff}#carbonads{display:block;overflow:hidden;max-width:728px;position:relative;font-size:22px;box-sizing:content-box}#carbonads>span{display:block}#carbonads a{color:#4F46E5;text-decoration:none}#carbonads a:hover{color:#4F46E5}.carbon-wrap{display:flex;align-items:center}.carbon-img{display:block;margin:0;line-height:1}.carbon-img img{display:block;height:90px;width:auto}.carbon-text{display:block;padding:0 1em;line-height:1.35;text-align:left}.carbon-poweredby{display:block;position:absolute;bottom:0;right:0;padding:6px 10px;text-align:center;text-transform:uppercase;letter-spacing:.5px;font-weight:600;font-size:8px;border-top-left-radius:4px;line-height:1;color:#aaa!important}@media only screen and (min-width:320px) and (max-width:759px){.carbon-text{font-size:14px}}
+// </style>
+// <div><div id="carbon-block"></div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2783044520727903"
+//      crossorigin="anonymous"></script>
+// <!-- jQuery_Replace_Demo -->
+// <ins class="adsbygoogle"
+//      style="display:block"
+//      data-ad-client="ca-pub-2783044520727903"
+//      data-ad-slot="7325992188"
+//      data-ad-format="auto"
+//      data-full-width-responsive="true"></ins>
+// <script>
+//      (adsbygoogle = window.adsbygoogle || []).push({});
+// </script></div>
+// <p style="margin:2rem auto"><a class="download" href="https://www.jqueryscript.net/time-clock/multi-month-picker.html">Download This Plugin</a> <a class="download" href="https://www.jqueryscript.net/">Back To jQueryScript</a></p>
+//         <p class="lead">The Multi Month Picker jQuery widget makes it easy to choose any number of months for your web app. </p>
+//     <input type="text" id="exampleInput">
+//     </div>
+//     <script>
+//         // Initialize the plugin
+//         $(document).ready(function() {
+//             $('#exampleInput').multiMonthPicker({
+//                 monthFormat: 'yyyy-mmm',
+//                 value: ['2023-Feb','2023-Mar']
+//             });
+//         });
+//     </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-1VDDWMRSTH"></script>
+// <script>
+//   window.dataLayer = window.dataLayer || [];
+//   function gtag(){dataLayer.push(arguments);}
+//   gtag('js', new Date());
+//   gtag('config', 'G-1VDDWMRSTH');
+// </script><script>
+// try {
+//   fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+//     return true;
+//   }).catch(function(e) {
+//     var carbonScript = document.createElement("script");
+//     carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+//     carbonScript.id = "_carbonads_js";
+//     document.getElementById("carbon-block").appendChild(carbonScript);
+//   });
+// } catch (error) {
+//   console.log(error);
+// }
+// </script>
+// </body>
+// </html>

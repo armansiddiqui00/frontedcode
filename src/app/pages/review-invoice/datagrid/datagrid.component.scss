@@ -1,0 +1,151 @@
+.modal-header{
+    height: 60px;
+    padding: 10px 12px 10px 3px !important;
+
+    .close{
+        margin: 0px !important;
+
+        span{
+            margin-left: -4px;
+        }
+    }
+}
+.modal-body{
+    padding: 16px 16px;
+   .row{
+    input{
+        background: #FFFFFF;
+        border: 1px solid rgba(116, 124, 145, 0.3);
+        border-radius: 6px;
+        box-sizing: border-box;
+        height: 50px;
+        font-family: "Frutiger-LT-Arabic-55-Roman";
+        vertical-align: middle !important;
+        background-color: #FFFFFF !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        color: #747C91 !important;
+        opacity: 1;
+        font-weight: 500;
+        font-size: 16px !important;
+        margin: 0px;
+        margin-bottom:  25px;
+    }
+    label{
+        font-family: "Frutiger-LT-Arabic-55-Roman";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 31px !important;
+        color: #747C91;
+        margin-bottom: 30px;
+    }
+    .d-flex{
+        justify-content: end;
+
+        .bg-primary-blue{
+            background: #2A235F;
+            border-radius: 4px;
+            height: 30px;
+        }
+        .bg-primary-light{
+            border-radius: 4px;
+            height: 30px;
+        }
+    }
+    select{
+        background-color: #FFFFFF;
+        color: #cfd1d7;
+        border: 1px solid rgba(116, 124, 145, 0.3);
+        border-radius: 6px;
+        height: 50px;
+        font-family: "Frutiger-LT-Arabic-55-Roman";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 31px;
+        margin: 0px;
+    }
+    }
+   
+}
+
+
+.formBody{
+    margin-bottom: 18px !important;
+    margin-top: 18px !important;
+    .all{
+        font-weight: 700;
+        color: #494e5c;
+    }
+
+    label{
+        font-family: "Frutiger-LT-Arabic-55-Roman";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 31px !important;
+        color: #747C91;
+        margin-bottom: 30px;
+    }
+   }
+
+.dropdown-menu{
+    transform: translateX(-75px) !important;
+    inset: 45% auto auto 73px  !important;
+}
+
+.updateBtn{
+    margin: 0px 3px 0px 6.8px !important;
+    background-color: #747C91;
+    div{
+        border: inherit;
+        font-family: "FrutigerLTArabic-65Bold";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+::ng-deep #updateModal.modal-content{
+     width: 450px !important;
+}
+
+.bg-primary-blue{
+    background: #2A235F;
+    border-radius: 4px;
+    height: 35px;
+}
+
+.selected {
+    color: #747C91 !important;
+  }
+
+  a[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: -100%;
+    left: 0;
+  }
+
+  .widthCls{
+    width: 500px;
+  }
+
+
+  ::ng-deep #gridContainer {
+    .dx-widget.dx-checkbox.dx-select-checkbox.dx-datagrid-checkbox-size {
+        width: 1em;
+        height: 1em;
+        font-size: 18px;
+        border: 2px solid rgba(0, 0, 0, .54);
+        border-radius: 2px;
+    }
+  }
+  .required:after {
+    content: " *";
+    color: #E53012;
+  }

@@ -1,0 +1,216 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Invoice Details'}}&nbsp;<span class="subpage-heading2">/&nbsp;{{'Fill Attendance Timesheet'}}</span></span>
+    <hr>
+</div>
+
+<div class="wrapper-main">
+
+    <form>
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div><label class="label">{{'Consultant/Company Name'}}</label></div>
+                <div><label class="value">{{data?.vendor == null || data?.vendor == "" ? data?.consultantName : data?.vendor}}</label></div>
+            </div>
+            <div class="col-md-3 col-12">
+                <div><label class="label">{{'Manager Name'}}</label></div>
+                <div><label class="value">{{data?.reportingManagerName}}</label></div>
+            </div>
+            <div class="col-md-3 col-12">
+                <div><label class="label">{{'Project Name(s)'}}</label></div>
+                <div><div class="value" style="word-break: break-all;">{{data?.projectName}}</div></div>
+            </div>
+            <div class="col-md-3 col-12">
+                <div><label class="label" >{{'Client Name(s)'}}</label></div>
+                <div><div class="value" style="word-break: break-all;">{{data?.clientName}}</div></div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <div><label class="label">{{'Invoice Date'}}</label></div>
+                <div><label class="value">{{data?.submissionDate}}</label></div>
+            </div>
+
+            <div class="col-md-3 col-12">
+                <div><label class="label">{{'Bill To'}}</label></div>
+                <div><label class="value">{{"Rootware Technologies DWC-LLC Dated 4/26/2024 PO Box 712738, Dubai UAE"}}</label></div>
+            </div>
+        </div>
+        <div class="block-20"></div>
+        <div class="row">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{'Particular(s)'}}</th>
+                        <th style="text-align: end;">{{'Attachment(s)'}}</th>
+                        <th style="text-align: end;">{{'No. of days'}}</th>
+                        <th style="text-align: end;">{{'Amount(s)'}}{{data?.compEntity?.defaultPkg == 'Onsite' ? '('+data?.compEntity?.onsiteCurrency+')' : '('+data?.compEntity?.currency+')'}}</th>
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{data?.particulars}}</td>
+                        <td></td>
+                        <td style="text-align: end;">{{data?.noOfDays}}</td>
+                        <!-- <td style="text-align: end;cursor: pointer;" (click)="this.data?.invAmount == '*****' ? encryptAndDecrypt(passwordTemplate) : decript()">{{this.data?.invAmount == "*****" ? this.data?.invAmount : (this.data?.invAmount | number: '.2')}}</td> -->
+                        <td style="text-align: end;cursor: pointer;">{{this.data?.invAmount | number: '.2'}}</td>
+                    </tr>
+                    <tr *ngFor="let deduct of data?.deductions;let i = index;let last = last">
+                        <td *ngIf="deduct.name != ''">{{deduct?.name == "otherDeduction" ? "Other Deductions" + ' (' + deduct.comment + ')' : deduct?.name == "otherAddition" ? "Other Additions" + ' (' + deduct.comment + ')' : 
+                            deduct?.name == "Onsite" ? deduct?.comment : deduct?.name == "Offshore" ? deduct.comment : deduct?.name == "Onsite Unpaid Leave" ? "Onsite Unpaid Leave":
+                            deduct?.name == "Offshore Unpaid Leave" ? 'Offshore Unpaid Leave' : deduct?.name == "Onsite Leave" ? 'Onsite Leave' : deduct?.name == "Offshore Leave" ? 'Offshore Leave' :
+                            deduct?.name == "partialInvoice" ? 'Partial Invoice' : deduct?.name}}</td>
+                         <td *ngIf="deduct.name != ''" style="text-align: end;">{{'-'}}</td>
+                         <td *ngIf="deduct.name != ''" style="text-align: end;">{{deduct.noOfDays}}</td>
+                        <!-- <td *ngIf="deduct.amount != ''" style="text-align: end;cursor: pointer;" (click)="data?.totalAmt == '*****' ? encryptAndDecrypt(passwordTemplate) : decript()">{{deduct.amount == "*****" ? deduct.amount : (deduct.amount  | number: '.2')}}</td> -->
+                        <td *ngIf="deduct.name != ''" style="text-align: end;cursor: pointer;" (click)="data?.totalAmt == '*****' ? encryptAndDecrypt(passwordTemplate) : decript()"><span *ngIf="deduct.amount != '*****' && (deduct.name == 'Onsite Unpaid Leave' || deduct.name == 'Offshore Unpaid Leave' || deduct.name == 'partialInvoice' || deduct.name == 'otherDeduction')" id="minus">-</span>{{deduct.amount == "*****" ? deduct.amount : (deduct.amount  | number: '.2')}}</td>
+                  
+                    </tr>
+                    <tr *ngFor="let count of data?.expenses;let i = index;let last = last">
+                        <td *ngIf="count.name != ''">{{count?.name == "Overtime" ? count?.name + '  (' + count.hours +' hrs)': count?.name == "Others" ? count?.name + '  (' + count.others +')'  : count?.name}}</td>
+                        <td *ngIf="count.name != ''" style="max-width:174px !important;text-align: end;">
+                            <span *ngFor="let file of count.attachment, let j = index">
+                                <!-- <i  class="fa fa-times" (click)="cancelImage(i,j)"></i> -->
+                              <i  class="fa fa-eye" (click)="openReasonModal(viewDoc,i,j)"></i>
+                              </span>
+                          <ng-template #viewDoc>
+   
+                            <div class="modal-header">
+                              <h4 class="modal-title pull-left">{{'Document Viewer'}}</h4>
+                              <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                           </div>
+                           <div class="modal-body">
+                               
+                            <div class="row">
+                                <img [src]="showImage" > <br/>
+                                <pdf-viewer  [src]="showPdf" [render-text]="true"  [show-all]="true" [original-size]="true"
+                                      [fit-to-page]="false"  style="display: block;"></pdf-viewer>
+                                <div *ngIf="showMail != ''" [innerHTML]="showMail.html"></div>
+                            </div>
+                              
+                              <div class="row">
+                                 <div class="d-flex">
+                                    <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                                       (click)="hideModal()">{{'Close'}}</button>
+                                 </div>
+                              </div>
+                           </div>
+                          </ng-template>
+                        </td>
+                        <td *ngIf="count.name != ''" style="text-align: end;">{{count.name == 'Perdiem' ? count.noOfDays : '-'}}</td>
+                        <td *ngIf="count.name != ''" style="text-align: end;cursor: pointer;"  (click)="data?.totalAmt == '*****' ? encryptAndDecrypt(passwordTemplate) : decript()">{{count.amount == "*****" ? count.amount : (count.amount  | number: '.2')}}</td>
+                    </tr>
+                  
+                    <tr>
+                        <td style="text-align: left;font-weight: 700;color: #1d1556;"><label style="font-family:'FrutigerLTArabic-65Bold' ">{{amountInWords}}</label></td>
+                        <td></td><td></td>
+                        <td style="text-align: end;font-weight: 700 !important;color: #1d1556;"><span class="total">Total Amount : </span><label  (click)="data?.totalAmt == '*****' ? encryptAndDecrypt(passwordTemplate) : decript()" style="text-align: end;font-weight: 700 !important;cursor: pointer;color: #1d1556;">{{data?.totalAmt == "*****" ? data?.totalAmt : (data?.totalAmt | number: '.2')}}</label></td>
+                    </tr>
+                    <!-- <tr>
+                        <td></td><td></td><td></td>
+                        <td style="text-align: end;font-weight: 700;color: #1d1556;"><label style="font-family:'FrutigerLTArabic-65Bold' ">{{amountInWords}}</label></td>
+                        
+                    </tr> -->
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="block-20"></div> <div class="block-20"></div>
+        <div class="d-flex" style="justify-content: left;" >
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-2 col-md-3" (click)="generateAttendance()">{{'Generate Timesheet'}}</button>
+        </div>
+        <div class="block-20"></div>
+        <div *ngIf="gridView==true"  class="paymentDetails">{{'Timesheet'}}</div>
+        <div *ngIf="gridView==true" class="col-md-12 col-12 paymentDeadline">
+            <div class="attendance">
+            <table  style="margin: 0px 0px 24px;">
+                <thead>
+                  <tr>
+                      <th scope="col">{{'Date of Month'}}</th>
+                      <th scope="col">{{'No of Hours Worked'}}</th>
+                    <th scope="col">{{'Overtime'}}</th>
+                    <th scope="col">{{'Total Hours'}}</th>
+                    <th scope="col">{{'Remarks'}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of attendenceDetails;let i = index">
+                    <td><input type="text" name="months-{{i}}" style="width: 100% !important;border: none;padding: 0px;margin:0px;" [(ngModel)]="data.dateOfMonth" [disabled]="true"></td>
+                    <td><input type="text" name="hoursWorked-{{i}}" style="width: 100% !important;border: none;padding: 0px;margin:0px;" [(ngModel)]="data.noOfHoursWorked" (ngModelChange)="noOfWorkedChange($event,i)" maxlength="7"></td>
+                    <!-- [disabled]="true" -->
+                    <td><input type="number" min="0" max="16" name="overtime-{{i}}" style="width: 100% !important;border: none;padding: 0px;margin:0px;" [(ngModel)]="data.overTimeHours" (ngModelChange)="overtimeChange($event,i)" pattern="^\d+(\.\d+)?$"></td>
+                    <!-- [disabled]="data.noOfHoursWorked == 0 ||  data.noOfHoursWorked == 4" -->
+                    <td><input type="text" name="totalHours-{{i}}" style="width: 100% !important;border: none;padding: 0px;margin:0px;" [(ngModel)]="data.totalHours" [disabled]="true"></td>
+                    <td><input type="text" name="remarks-{{i}}" style="width: 100% !important;border: none;padding: 0px;margin:0px;" [(ngModel)]="data.remarks" [disabled]="data.overTimeHours == 0"></td>
+                    <!-- [disabled]="data.noOfHoursWorked == 'weekend' || data.noOfHoursWorked == 0" -->
+                    <!-- <td>{{data.daysOfMonth}}</td>
+                    <td>{{data.hoursWorked}}</td>
+                    <td>{{data.overtime}}</td>
+                    <td>{{data.totalHours}}</td>
+                    <td>{{data.remarks}}</td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="block-20"></div>
+        <div class="d-flex" >
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="previous()" [disabled]="submitted">{{'Previous'}}</button>
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="submit(popTemplate)" [disabled]="submitted">{{'Submit'}}</button>
+            
+        </div>
+
+    </form>
+</div>
+
+<ng-template #popTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">{{'Confirmation'}}</h4>
+       <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+        
+          <!-- <span aria-hidden="true" class="visually-hidden">&times;</span> -->
+          <span aria-hidden="true">&times;</span>
+       </button>
+    </div>
+    <div class="modal-body">
+       <!-- <div class="wrapper-main"> -->
+          <!-- <div class="wrapper-main"> -->
+          <div class="row">
+                <label class="form-label">{{'Are you sure, you want to submit the invoice?'}}</label>
+          </div>
+          <div class="row">
+             <div class="d-flex" style="margin-top: 12px">
+                <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                   (click)="hideModal();successfull()">{{'Yes'}}</button>
+                   <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3"
+                   (click)="hideModal()">{{'Cancel'}}</button>
+             </div>
+          </div>
+       <!-- </div> --> 
+    </div>
+ </ng-template>
+
+ <ng-template #passwordTemplate>
+ 
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'Enter Password'}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+    <!-- <div class="wrapper-main"> -->
+       <!-- <div class="wrapper-main"> -->
+       <div class="row">
+        <input type="password" name="password" [(ngModel)]="password" placeholder = "Enter Password" (keyup.enter)="decript();hideModal()">
+          <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                (click)="decript();hideModal()">{{'OK'}}</button>
+          </div>
+       </div>
+    <!-- </div> -->
+ </div>
+  </ng-template>

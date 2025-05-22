@@ -1,0 +1,124 @@
+<!-- <div class="card">
+    <div class="card-header">
+        <h4>{{'Inbox'}}</h4>
+    </div>
+    <div class="card-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>{{"Project Name"}}</th>
+                    <th>{{"Task Name"}}</th>
+                    <th>{{"Total Hours"}}</th>
+                    <th>{{'Timesheet Date'}}</th>
+                    <th>{{"Submitted Date"}}</th>
+                    <th colspan="3">{{"Action"}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{{"DPP"}}</th>
+                    <th>{{"Task 1"}}</th>
+                    <th>{{"8"}}</th>
+                    <th>{{'18 Apr 2023'}}</th>
+                    <th>{{"18 Apr 2023"}}</th>
+                    <th><i class="fa fa-check" style="color:green"></i></th>
+                    <th><i class="fa fa-times" style="color:red"></i></th>
+                    <th><i class="fa fa-eye" style="color: lightskyblue"></i></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Timesheet'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{'Timesheet Review'}}</span></span>
+    <hr>
+   </div>
+
+<form>
+    <div class="card wrapperCard wrapper-main">
+        <!-- <div class="card-header" style="display:flex">
+            <h3>{{'Inbox Timesheet'}}</h3>
+        </div> -->
+        <div class="card-body">
+            <div class="row"><div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Timesheet Date"}}</label>
+                <input type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', showWeekNumbers: false,isAnimated: false }" name="createdDate" [(ngModel)]="timesheetDate"
+                (bsValueChange)="submitteddate($event)"
+                [maxDate] = maxDate
+                >
+            </div></div><br>
+            
+            
+           
+        </div>
+    </div>
+</form>
+
+
+
+    <div class="wrapper-main" *ngIf="dataToDisplay && showNoRecords==false">
+        <table>
+            <thead>
+                <tr>
+                  
+                    <th *ngFor="let header of inboxTableHeader">{{header}}</th>
+                    <!-- <th>{{'Action'}}</th> -->
+                </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let data of dataToDisplay" class="table">
+                <!-- <td>{{data.projectName}}</td> -->
+                <td>{{data.timesheetDate}}</td>
+                <td>{{data.submittedDate}}</td>
+                <td>{{data.submittedBy}}</td>
+                <td>{{data.approvalEmpName}}</td>
+                <td>{{data.dailyHours}}</td>
+                <td [ngClass]="data.timesheetStatus == 'Completed'?'text-success':data.timesheetStatus == 'Pending'?'text-warning':data.timesheetStatus == 'Rejected'?'text-danger':'text-info'">{{data.timesheetStatus}}</td>
+                <td>{{data.description}}</td>
+                
+                <!-- <td>
+                    <tr class="row cust"> -->
+                        <td class="col col-sm-auto col-12 iconss"><button class="fa fa-check" type="submit" [ngStyle]="data.timesheetStatus=='Approved' || data.timesheetStatus=='Rejected'?{'pointer-events':'none'}:{'cursor':'pointer'}" [disabled]="data.timesheetStatus=='Approved' || data.timesheetStatus=='Rejected' || data.flag == false" (click)="approvedTimesheet(data.timesheetId)" ><i class=""></i></button></td>&nbsp;
+                        <td class="col col-sm-auto col-12 iconss"><button class="fa fa-close" type="submit" [ngStyle]="data.timesheetStatus=='Approved' || data.timesheetStatus=='Rejected'?{'pointer-events':'none'}:{'cursor':'pointer'}" [disabled]="data.timesheetStatus=='Approved' || data.timesheetStatus=='Rejected' || data.flag == false" (click)="openModalRejected(template)" ><i class=""></i></button></td>&nbsp;
+                        <td class="col col-sm-auto col-12 iconss"><button class="fa fa-eye" type="submit" (click)="viewTS(data.timesheetId)"></button></td>&nbsp;
+                        <ng-template #template>
+                            <div class="modal-header">
+                              <h3 class="modal-title pull-left" style="padding-left: 14px;">{{'Add a comment'}}</h3>
+                              <button type="button" class="btn btn-light pull-right"  (click)="modalRef?.hide()">
+                                <span aria-hidden="true"><i class="fa fa-close closed"></i></span>
+                            </button>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="form-group col col-10">
+                                    <label>{{"Comment"}}</label>
+                                    <textarea type="text" name='hours' [(ngModel)]="comment" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group col col-2">
+                                    <!-- <button *ngIf="approved==true" class="btn btn-light modalBtn" type="submit"  [disabled]="comment==null || comment=='' || comment==undefined" (click)="approvedTimesheet(data.timesheetId);modalRef?.hide()"><i class="fa fa-check"></i></button> -->
+                                    <button *ngIf="rejected==true" class="btn btn-light modalBtn" type="submit" [disabled]="comment==null || comment=='' || comment==undefined" (click)="rejectedTimesheet(data.timesheetId);modalRef?.hide()"><i class="fa fa-close bb"></i></button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    <!-- </tr>
+                </td> -->
+              
+            </tbody>
+        </table>
+    </div>
+
+    <div class="wrapper-main noRecords-Todisplay" *ngIf="showNoRecords==true && statusData==null">
+        <section class="no-records">
+            <img class="mb-3" src="assets/icons/icon-no-record.svg">
+            <div style="clear:both;"></div>
+            <span>{{"No records to display"}}</span>
+        </section>
+    </div>
+
+
+
+    

@@ -1,0 +1,192 @@
+
+@font-face {
+    font-family: 'FrutigerLTArabic-45Light';
+    src: url('../assets/fonts/FrutigerLTArabic-45Light.woff') format('woff');
+   
+    
+}
+
+@font-face {
+    font-family: 'Frutiger LT Arabic mix';
+    src: local('Frutiger LT Arabic'), url('../assets/fonts/alfont_com_AlFont_com_AvenirArabic-Medium.woff2') format('woff2');
+   
+    
+}
+
+@font-face {
+    font-family: 'Frutiger LT Arabic 45';
+    src: url('../assets/fonts/FrutigerLTArabic-45Light.eot');
+    src: local('Frutiger LT Arabic 45 Light'), local('FrutigerLTArabic-45Light'),
+    url('../assets/fonts/FrutigerLTArabic-45Light.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/FrutigerLTArabic-45Light.woff2') format('woff2'),
+    url('../assets/fonts/FrutigerLTArabic-45Light.woff') format('woff'),
+    url('../assets/fonts/FrutigerLTArabic-45Light.ttf') format('truetype'),
+    url('../assets/fonts/FrutigerLTArabic-45Light.svg#FrutigerLTArabic-45Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Frutiger-LT-Arabic-55-Roman';
+    src: local('Frutiger_LT_Arabic_55_Roman'), local('Frutiger_LT_Arabic_55_Roman'),
+    url('../assets/fonts/Frutiger_LT_Arabic_55_Roman.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Frutiger LT Arabic 55 Roman SM';
+    src: url('../assets/fonts/FrutigerLTArabic-55Roman.eot');
+    src: local('FrutigerLTArabic-55Roman'), local('FrutigerLTArabic-55Roman'),
+    url('../assets/fonts/FrutigerLTArabic-55Roman.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/FrutigerLTArabic-55Roman.woff2') format('woff2'),
+    url('../assets/fonts/FrutigerLTArabic-55Roman.woff') format('woff'),
+    url('../assets/fonts/FrutigerLTArabic-55Roman.ttf') format('truetype'),
+    url('../assets/fonts/FrutigerLTArabic-55Roman.svg#FrutigerLTArabic-55Roman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FrutigerLTArabic-65Bold'; 
+    src: local('Frutiger_LT_Arabic_65_Bold'), local('Frutiger_LT_Arabic_65_Bold'), 
+    url('../assets/fonts/Frutiger_LT_Arabic_65_Bold.ttf') format('TrueType');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Frutiger_LT_Arabic_75_Black'; 
+    src: local('Frutiger_LT_Arabic_75_Black'), local('Frutiger_LT_Arabic_75_Black'), 
+    url('../assets/fonts/Frutiger_LT_Arabic_75_Black.ttf') format('TrueType');
+   
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+@font-face {
+    font-family: 'Frutiger LT Arabic 75 Black';
+    src: local('FrutigerLTArabic_75Black'), local('FrutigerLTArabic_75Black'),
+    url('../assets/fonts/Frutiger_LT_Arabic_75_Black.ttf') format('TrueType');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Arabic Black';
+    src: url('../assets/fonts/AvenirArabic-Black.eot');
+    src: local('Avenir Arabic Black'), local('AvenirArabic-Black'),
+        url('../assets/fonts/AvenirArabic-Black.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/AvenirArabic-Black.woff2') format('woff2'),
+        url('../assets/fonts/AvenirArabic-Black.woff') format('woff'),
+        url('../assets/fonts/AvenirArabic-Black.ttf') format('truetype'),
+        url('../assets/fonts/AvenirArabic-Black.svg#AvenirArabic-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Arabic Medium';
+    src: url('../assets/fonts/AvenirArabic-Medium.eot');
+    src: local('Avenir Arabic Medium'), local('AvenirArabic-Medium'),
+        url('../assets/fonts/AvenirArabic-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/AvenirArabic-Medium.woff2') format('woff2'),
+        url('../assets/fonts/AvenirArabic-Medium.woff') format('woff'),
+        url('../assets/fonts/AvenirArabic-Medium.ttf') format('truetype'),
+        url('../assets/fonts/AvenirArabic-Medium.svg#AvenirArabic-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir W05 Light';
+    src: url('../assets/fonts/AvenirArabic-Light.eot');
+    src: local('Avenir W05 Light'), local('AvenirArabic-Light'),
+        url('../assets/fonts/AvenirArabic-Light.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/AvenirArabic-Light.woff2') format('woff2'),
+        url('../assets/fonts/AvenirArabic-Light.woff') format('woff'),
+        url('../assets/fonts/AvenirArabic-Light.ttf') format('truetype'),
+        url('../assets/fonts/AvenirArabic-Light.svg#AvenirArabic-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Arabic Book';
+    src: url('../assets/fonts/AvenirArabic-Book.eot');
+    src: local('Avenir Arabic Book'), local('AvenirArabic-Book'),
+        url('../assets/fonts/AvenirArabic-Book.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/AvenirArabic-Book.woff2') format('woff2'),
+        url('../assets/fonts/AvenirArabic-Book.woff') format('woff'),
+        url('../assets/fonts/AvenirArabic-Book.ttf') format('truetype'),
+        url('../assets/fonts/AvenirArabic-Book.svg#AvenirArabic-Book') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Medium';
+    src: url('../assets/fonts/Roboto-Medium.eot');
+    src: local('Roboto Medium'), local('Roboto-Medium'),
+        url('../assets/fonts/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/Roboto-Medium.woff2') format('woff2'),
+        url('../assets/fonts/Roboto-Medium.woff') format('woff'),
+        url('../assets/fonts/Roboto-Medium.ttf') format('truetype'),
+        url('../assets/fonts/Roboto-Medium.svg#Roboto-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Roboto Light';
+    src: url('../assets/fonts/Roboto-Light.eot');
+    src: local('Roboto Light'), local('Roboto-Light'),
+    url('../assets/fonts/Roboto-Light.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Roboto-Light.woff2') format('woff2'),
+    url('../assets/fonts/Roboto-Light.woff') format('woff'),
+    url('../assets/fonts/Roboto-Light.ttf') format('truetype'),
+    url('../assets/fonts/Roboto-Light.svg#Roboto-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../assets/fonts/Roboto-Regular.eot');
+    src: local('Roboto'), local('Roboto-Regular'),
+    url('../assets/fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Roboto-Regular.woff2') format('woff2'),
+    url('../assets/fonts/Roboto-Regular.woff') format('woff'),
+    url('../assets/fonts/Roboto-Regular.ttf') format('truetype'),
+    url('../assets/fonts/Roboto-Regular.svg#Roboto-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Bold';
+    src: url('../assets/fonts/Roboto-Bold.eot');
+    src: local('Roboto Bold'), local('Roboto-Bold'),
+    url('../assets/fonts/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Roboto-Bold.woff2') format('woff2'),
+    url('../assets/fonts/Roboto-Bold.woff') format('woff'),
+    url('../assets/fonts/Roboto-Bold.ttf') format('truetype'),
+    url('../assets/fonts/Roboto-Bold.svg#Roboto-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}

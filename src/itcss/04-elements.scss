@@ -1,0 +1,134 @@
+// styling for bare HTML elements (like H1, A, etc.).
+// These come with default styling from the browser so we can redefine them here
+
+@import "../itcss/03-generics.scss";
+
+html {
+    
+    @include custom_media((
+        font-size: (0.9 * 65.2%, 0.85 * 62.5%, 0.8 * 62.5%, 0.75 * 62.5%, 0.7 * 62.5%)
+    ));
+
+}
+
+body {
+    background-color: $secondary;
+}
+
+* {
+    font-size: $regular;
+    font-family: lato;
+  //  transition: all 0.3s;
+}
+
+h1 {
+    margin-top: $regular-flat;
+    margin-bottom: $regular-flat;
+    font-size: $jumbo;
+    font-family: lato;
+}
+
+h2 {
+    margin-top: $regular-flat;
+    margin-bottom: $regular-flat;
+    font-size: $half-jumbo;
+    font-family: lato;
+}
+
+h3 {
+    margin-top: $regular-flat;
+    margin-bottom: $regular-flat;
+    font-size: $larger;
+    font-family: lato;
+}
+
+h4 {
+    margin-top: $regular-flat;
+    margin-bottom: $regular-flat;
+    font-size: $large;
+    font-family: lato;
+}
+
+h5 {
+    margin-top: $regular-flat;
+    margin-bottom: $regular-flat;
+    font-size: $regular-sharp;
+    font-family: lato;
+}
+
+h6 {
+    margin-top: $regular-flat;
+    margin-bottom: $regular-flat;
+    font-size: $regular-flat;
+    font-family: lato;
+}
+
+input, textarea {
+    box-sizing: border-box;
+    padding: $small $regular-flat;
+    margin: $small;
+}
+
+input.ng-touched.ng-valid, textarea.ng-touched.ng-valid, select.ng-touched.ng-valid {
+    border: 1px solid $success;
+}
+
+input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid, select.ng-touched.ng-invalid {
+    border: 1px solid $error;
+}
+
+label {
+  //  margin: $small $small 0 $small;
+    font-size: $regular;
+}
+
+select {
+    height: 3.6rem;
+    margin: $small;
+}
+
+button {
+    box-sizing: unset;
+    border: none;
+    cursor: pointer;
+
+    min-width: 60px;
+    height: $regular-sharp;
+
+    padding: $small $regular-flat;
+    margin: $small;
+
+    color: white;
+    background-color: $primary;
+}
+
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    background: transparent;
+}
+
+td, th {
+    padding: $small;
+    max-width: 200px;
+}
+
+tr {
+    background-color: #fafafa;
+}
+
+tbody {
+    tr:nth-child(odd) {
+        background-color: #f3f3f3;
+    }
+    tr:hover {
+        background-color: #dddddd;
+    }
+}
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,33 @@
+<div class="block-20"></div>
+<dx-data-grid [hidden]="showNoRecords" id="gridContainer" [dataSource]="dataSource" [columns]="columns" [showBorders]="true" 
+[showColumnLines]="true" [showRowLines]="true" [columnAutoWidth]="true" [rowAlternationEnabled]="true"  (onCellHoverChanged)="onCellHoverChanged($event)"
+(onCellPrepared)="onCellPrepared($event)">
+
+<!-- <div  *dxTemplate="let data of 'diffCellTemplate'">{{data}}
+  {{ '(new record)' }}
+</div> -->
+</dx-data-grid>
+
+<!-- <div *dxTemplate="let d of 'diffCellTemplate'">                                           >
+<span>{{'(new record)'}}</span>
+</div> -->
+
+
+
+
+<div class="wrapper-main" *ngIf="showNoRecords">
+    <section class="no-records">
+        <img class="mb-3" src="assets/icons/icon-no-record.svg">
+        <div style="clear:both;"></div>
+        <span>{{'No records to display'}}</span>
+    </section>
+</div>
+
+<dx-tooltip  [target]="TooltipTarget" [visible]="isVisible"  >
+  <div *dxTemplate="let data of 'content'">
+      <div style="height: 500; width: 200; color: black;">{{ToolTipText}}
+      </div>
+  </div>
+</dx-tooltip>
+
+  <!-- (onContextMenuPreparing)="onRightClick($event)" (onCellHoverChanged)="onCellHoverChanged($event)" -->

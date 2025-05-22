@@ -1,0 +1,90 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Travel Desk'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{'Travel Request'}}</span></span>
+    <hr>
+</div>
+
+<div class="wrapper-main">
+   <div class="card-body">
+    <form #travelForm="ngForm" autocomplete="off"> 
+        <div class="row">
+            <div class="form-group col-md-3 col-sm-3">
+                <input  type="radio" name="newReq" value="new request" checked [(ngModel)]="travelReq.typeOFRequest" (change)="onSelect()">
+                <label class="form-label">{{'New Request'}}</label>   
+            </div>
+            <div class="form-group col-md-3 col-sm-3">
+                <input type="radio" name="existReq" value="existing request" [(ngModel)]="travelReq.typeOFRequest" (change)="onSelect()">
+                <label class="form-label">{{'Existing Request'}}</label>   
+            </div>
+            <div class="form-group col-md-3 col-sm-3">
+                <input type="radio" name="UTurnOnsite" value="U turn from Onsite" [(ngModel)]="travelReq.typeOFRequest" (change)="onSelect()">
+                <label class="form-label">{{'U turn from Onsite'}}</label>   
+            </div>
+            <div class="form-group col-md-3 col-sm-3">
+                <input type="radio" name="UTurnHomeTown" value="U turn from Hometown" [(ngModel)]="travelReq.typeOFRequest" (change)="onSelect()">
+                <label class="form-label">{{'U turn from Hometown'}}</label>   
+            </div>
+        </div>
+        <div class="row">
+            <div *ngIf="employeeList != null" class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{"Employee Name"}}</label>
+                <select name="empName"  class="form-select mt" name="employeeName" [(ngModel)]="travelReq.employeName" (change)="onChange()"  [ngClass]="{'selected':travelReq.employeName != null,'redBorder': (travelReq.employeName == null && submitFlag)}"  required>
+                    <option selected value="null" [disabled]="true">{{'Select Employee'}}</option>
+                    <option *ngFor="let data of employeeList" [ngValue]="data.empFirstName">{{data.empFirstName}}</option>
+                </select>
+            </div>
+            <div *ngIf="editData != null" class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{"Employee Name"}}</label>
+                <select name="empName"  class="form-select mt" name="employeeName" [(ngModel)]="travelReq.employeName" (change)="onChange()"  [ngClass]="{'selected':travelReq.employeName != null,'redBorder': (travelReq.employeName == null && submitFlag)}"  required>
+                    <option selected value="null" [disabled]="true">{{'Select Employee'}}</option>
+                    <option [ngValue]="editData?.employeName">{{editData?.employeName}}</option>
+                </select>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Email Id'}}</label>
+                <input type="text" class="form-control" placeholder="Email" name="employeeEmailId" [(ngModel)]="travelReq.employeeEmailId" pattern="[a-zA-Z][a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" #employeeEmailId="ngModel" required
+                [ngClass]="{'redBorder' :(submitFlag && travelReq.employeeEmailId==null) || (employeeEmailId?.errors?.['pattern'])}">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Travel Origin'}}</label>
+                <input type="text" class="form-control" placeholder="Origin" name="travelOrign" [(ngModel)]="travelReq.travelOrign" required
+                [ngClass]="{'redBorder' :(submitFlag && travelReq.travelOrign==null)}">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Travel Destination'}}</label>
+                <input type="text" class="form-control" placeholder="Destination" name="travelDestination" [(ngModel)]="travelReq.travelDestination" required
+                [ngClass]="{'redBorder' :(submitFlag && travelReq.travelDestination==null)}">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6" *ngIf="showField==false">
+                <label class="form-label">{{'Total No. Of days for Travel'}}</label>
+                <input type="text" class="form-control" placeholder="Total No. Of days for Travel" name="noOFDays" #noOFDays="ngModel" [(ngModel)]="travelReq.noOFDays" pattern="([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1000)"  required
+                [ngClass]="{'redBorder' :(submitFlag && travelReq.noOFDays==null) || (noOFDays?.errors?.['pattern'])}">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6" *ngIf="showField==false">
+                <label class="form-label">{{'Onsite Days'}}</label>
+                <input type="text" class="form-control" placeholder="Onsite Days" name="onSiteDays" #onSiteDays="ngModel" [(ngModel)]="travelReq.onSiteDays" pattern="([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1000)"  required
+                [ngClass]="{'redBorder' :(submitFlag && travelReq.onSiteDays==null) || (onSiteDays?.errors?.['pattern'])}">
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Travel Purpose'}}</label>
+                <textarea type="text" class="form-control" placeholder="Travel Purpose" name="travelPurpose" [(ngModel)]="travelReq.travelPurpose" required
+                [ngClass]="{'redBorder' :(submitFlag && travelReq.travelPurpose==null)}"></textarea>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label">{{'Travel Date'}}</label>
+                <input type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                placement="bottom"
+                bsDatepicker
+                [minDate]="minDate"
+                [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" name="travelDate" [(ngModel)]="travelReq.travelDate">
+            </div>
+            
+        </div>
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="submitEmpInfo(travelForm)">{{edit==true?'Update':'Submit'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="reset()">{{'Cancel'}}</button>
+        </div>
+    </form>
+   </div>
+</div>

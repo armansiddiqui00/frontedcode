@@ -1,0 +1,70 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Timesheet'}} &nbsp;<span class="subpage-heading2">/&nbsp;{{'Timesheet History'}}</span></span>
+    <hr>
+   </div>
+
+<form>
+    <div class="card wrapperCard wrapper-main" id="cantainer">
+        <!-- <div class="card-header" style="display:flex">
+            <h3>{{'View Timesheet'}}</h3>
+        </div> -->
+        <div class="card-body">
+            <div class="row"><div class="form-group custom-form col-md-3 col-sm-6">
+                <label>{{"Timesheet Date"}}</label>
+                <input type="text"
+                placeholder="Datepicker"
+                class="form-control"
+                bsDatepicker
+                placement="bottom"
+                [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                name="createdDate" 
+                [(ngModel)]="timesheetDate" 
+                (bsValueChange)="submitteddate($event)"
+                [maxDate] = maxDate
+                >
+            </div></div><br>
+            
+            
+           
+        </div>
+    </div>
+</form>
+
+
+
+    <div class="wrapper-main" *ngIf="dataSource && showNoRecords==false">
+        <table>
+            <thead>
+                <tr>
+                  
+                    <th *ngFor="let header of viewTableHeader">{{header}}</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let data of dataSource" class="table">
+                <td>{{data.timesheetDate}}</td>
+                <td>{{data.submittedDate}}</td>
+                <td>{{data.submittedBy}}</td>
+                <td>{{data.approvalEmpName}}</td>
+                <td>{{data.dailyHours}}</td> 
+                <td [ngClass]="data.timesheetStatus == 'Completed'?'text-success':data.timesheetStatus == 'Pending'?'text-warning':data.timesheetStatus == 'Rejected'?'text-danger':'text-info'">{{data.timesheetStatus}}</td>
+                <!-- <td><button (click)="reSubmit(data)">{{'Re-Submit'}}</button></td>
+                <td><button (click)="viewEachTimeSheet(data)">{{'View'}}</button></td> -->
+                <td>{{data.description}}</td>
+                <!-- <td>
+                    <tr class="row cust"> -->
+                        <td class="iconss"><button class="fa fa-retweet" type="submit" (click)="reSubmit(data)" [disabled]="data.timesheetStatus == 'Pending' || data.timesheetStatus == 'Approved'"></button></td>&nbsp;&nbsp;&nbsp;
+                        <td class="iconss"><button class="fa fa-eye" type="submit" (click)="viewEachTimeSheet(data)"></button></td>&nbsp;
+                
+               </tr> 
+            </tbody>
+        </table>
+    </div>
+
+    <div class="wrapper-main noRecords-Todisplay" *ngIf="showNoRecords==true && dataSource==null">
+        <section class="no-records">
+            <img class="mb-3" src="assets/icons/icon-no-record.svg">
+            <div style="clear:both;"></div>
+            <span>{{"No records to display"}}</span>
+        </section>
+    </div>

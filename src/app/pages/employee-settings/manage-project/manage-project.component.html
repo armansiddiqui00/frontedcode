@@ -1,0 +1,44 @@
+<div class="pageHeadings">
+    <span class="page-heading2">{{'Master'}}&nbsp;<span class="subpage-heading2">/&nbsp;{{'Manage Project'}}</span></span>
+    <hr>
+</div>
+
+
+<div class="wrapper-main">
+
+
+    <form autocomplete="off" #projectForm="ngForm">
+        <div class="row">
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Client Name'}}</label>
+                <input type="text" class="form-control" name="clientName"  placeholder="Client Name" [(ngModel)]="data.clientName"   required onkeydown="return /^[A-Za-z ]+$/.test(event.key)" appBlockCopyPaste>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Client Location'}}</label>
+                <input type="text" class="form-control" name="clientLocation"  placeholder="Client Location" [(ngModel)]="data.clientLocation" required onkeydown="return /^[A-Za-z ]+$/.test(event.key)" appBlockCopyPaste>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Manager'}}</label>
+                <input type="text" class="form-control" name="supervisor"  placeholder="Manager" [(ngModel)]="data.supervisor" required onkeydown="return /^[A-Za-z ]+$/.test(event.key)" appBlockCopyPaste>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Client Address'}}</label>
+                <input type="text" class="form-control" name="clientAddress"  placeholder="Client Address" [(ngModel)]="data.clientAddress" required >
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Project Name'}}</label>
+                <input type="text" class="form-control" name="projectName"  placeholder="Project Name" [(ngModel)]="data.projectName" required>
+            </div>
+            <div class="form-group custom-form col-md-3 col-sm-6">
+                <label class="form-label required">{{'Project Description'}}</label>
+                <input type="text" class="form-control" name="projectDesc"  placeholder="Project Description" [(ngModel)]="data.projectDesc" required>
+            </div>
+        </div>
+        <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="Save(projectForm)">{{data.cpdId == null ? 'Save' : 'Update'}}</button>
+            <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3" (click)="reset()">{{'Reset'}}</button>
+        </div>
+    </form>
+</div>
+
+<!-- <app-datagrid *ngIf="manageProjectPageInfo.urlPageName=='manageProject'" (applyFiltersEvent)="applyFilters($event)"  [dataSource]="dataSource" [manageProjectPageInfo]="manageProjectPageInfo"></app-datagrid> -->

@@ -1,0 +1,216 @@
+/* @font-face {
+    font-family: 'Frutiger LT Arabic';
+    src: local('Frutiger LT Arabic'), url('./AnyConv.com__alfont_com_AlFont_com_AvenirArabic-Medium.woff') format('woff');
+   
+    
+}
+
+@font-face {
+    font-family: 'FrutigerLTArabic-45Light';
+    src: url('./FrutigerLTArabic-45Light.woff') format('woff');
+   
+    
+}
+
+@font-face {
+    font-family: 'Frutiger-LT-Arabic-55-Roman';
+    src: url('./FrutigerLTArabic-55Roman.woff') format('woff');
+ 
+    
+}
+
+@font-face {
+    font-family: 'FrutigerLTArabic-75Black';
+    src:url('./FrutigerLTArabic-75Black.woff') format('woff');
+    
+}
+
+@font-face {
+    font-family: 'FrutigerLTArabic-65Bold';
+    src:url('./FrutigerLTArabic-65Bold.woff') format('woff');
+    
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    src: url('./AnyConv.com__AvenirArabic-Medium.woff') format('woff');
+    
+}
+
+@font-face {
+    font-family: 'Roboto-ThinItalic';
+    src: url('./Roboto-ThinItalic.woff') format('woff');
+    
+} */
+
+
+
+@font-face {
+    font-family: 'Frutiger LT Arabic 45';
+    src: url('./FrutigerLTArabic-45Light.eot');
+    src: local('Frutiger LT Arabic 45 Light'), local('FrutigerLTArabic-45Light'),
+    url('./FrutigerLTArabic-45Light.eot?#iefix') format('embedded-opentype'),
+    url('./FrutigerLTArabic-45Light.woff2') format('woff2'),
+    url('./FrutigerLTArabic-45Light.woff') format('woff'),
+    url('./FrutigerLTArabic-45Light.ttf') format('truetype'),
+    url('./FrutigerLTArabic-45Light.svg#FrutigerLTArabic-45Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Frutiger LT Arabic 55 Roman';
+    src: url('./FrutigerLTArabic-55Roman.eot');
+    src: local('Frutiger LT Arabic 55 Roman'), local('FrutigerLTArabic-55Roman'),
+    url('./FrutigerLTArabic-55Roman.eot?#iefix') format('embedded-opentype'),
+    url('./FrutigerLTArabic-55Roman.woff2') format('woff2'),
+    url('./FrutigerLTArabic-55Roman.woff') format('woff'),
+    url('./FrutigerLTArabic-55Roman.ttf') format('truetype'),
+    url('./FrutigerLTArabic-55Roman.svg#FrutigerLTArabic-55Roman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+@font-face {
+    font-family: 'Frutiger LT Arabic 65';
+    src: url('./FrutigerLTArabic-65Bold.eot');
+    src: local('Frutiger LT Arabic 65 Bold'), local('FrutigerLTArabic-65Bold'),
+    url('./FrutigerLTArabic-65Bold.eot?#iefix') format('embedded-opentype'),
+    url('./FrutigerLTArabic-65Bold.woff2') format('woff2'),
+    url('./FrutigerLTArabic-65Bold.woff') format('woff'),
+    url('./FrutigerLTArabic-65Bold.ttf') format('truetype'),
+    url('./FrutigerLTArabic-65Bold.svg#FrutigerLTArabic-65Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Frutiger LT Arabic 75 Black';
+    src: url('./FrutigerLTArabic-75Black.eot');
+    src: local('FrutigerLTArabic-75Black'), local('FrutigerLTArabic-75Black'),
+    url('assets/fonts/custom-fonts.css') format('embedded-opentype'),
+    url('assets/fonts/FrutigerLTArabic-75Black.woff2') format('woff2'),
+    url('assets/fonts/FrutigerLTArabic-75Black.woff') format('woff'),
+    url('assets/fonts/FrutigerLTArabic-75Black.ttf') format('truetype'),
+    url('assets/fonts/FrutigerLTArabic-75Black.svg#FrutigerLTArabic-75Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+    font-family: 'Avenir Arabic Black';
+    src: url('./AvenirArabic-Black.eot');
+    src: local('Avenir Arabic Black'), local('AvenirArabic-Black'),
+        url('./AvenirArabic-Black.eot?#iefix') format('embedded-opentype'),
+        url('./AvenirArabic-Black.woff2') format('woff2'),
+        url('./AvenirArabic-Black.woff') format('woff'),
+        url('./AvenirArabic-Black.ttf') format('truetype'),
+        url('./AvenirArabic-Black.svg#AvenirArabic-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Arabic Medium';
+    src: url('./AvenirArabic-Medium.eot');
+    src: local('Avenir Arabic Medium'), local('AvenirArabic-Medium'),
+        url('./AvenirArabic-Medium.eot?#iefix') format('embedded-opentype'),
+        url('./AvenirArabic-Medium.woff2') format('woff2'),
+        url('./AvenirArabic-Medium.woff') format('woff'),
+        url('./AvenirArabic-Medium.ttf') format('truetype'),
+        url('./AvenirArabic-Medium.svg#AvenirArabic-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir W05 Light';
+    src: url('./AvenirArabic-Light.eot');
+    src: local('Avenir W05 Light'), local('AvenirArabic-Light'),
+        url('./AvenirArabic-Light.eot?#iefix') format('embedded-opentype'),
+        url('./AvenirArabic-Light.woff2') format('woff2'),
+        url('./AvenirArabic-Light.woff') format('woff'),
+        url('./AvenirArabic-Light.ttf') format('truetype'),
+        url('./AvenirArabic-Light.svg#AvenirArabic-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Avenir Arabic Book';
+    src: url('./AvenirArabic-Book.eot');
+    src: local('Avenir Arabic Book'), local('AvenirArabic-Book'),
+        url('./AvenirArabic-Book.eot?#iefix') format('embedded-opentype'),
+        url('./AvenirArabic-Book.woff2') format('woff2'),
+        url('./AvenirArabic-Book.woff') format('woff'),
+        url('./AvenirArabic-Book.ttf') format('truetype'),
+        url('./AvenirArabic-Book.svg#AvenirArabic-Book') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Medium';
+    src: url('./Roboto-Medium.eot');
+    src: local('Roboto Medium'), local('Roboto-Medium'),
+        url('./Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+        url('./Roboto-Medium.woff2') format('woff2'),
+        url('./Roboto-Medium.woff') format('woff'),
+        url('./Roboto-Medium.ttf') format('truetype'),
+        url('./Roboto-Medium.svg#Roboto-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Roboto Light';
+    src: url('./Roboto-Light.eot');
+    src: local('Roboto Light'), local('Roboto-Light'),
+    url('./Roboto-Light.eot?#iefix') format('embedded-opentype'),
+    url('./Roboto-Light.woff2') format('woff2'),
+    url('./Roboto-Light.woff') format('woff'),
+    url('./Roboto-Light.ttf') format('truetype'),
+    url('./Roboto-Light.svg#Roboto-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./Roboto-Regular.eot');
+    src: local('Roboto'), local('Roboto-Regular'),
+    url('./Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+    url('./Roboto-Regular.woff2') format('woff2'),
+    url('./Roboto-Regular.woff') format('woff'),
+    url('./Roboto-Regular.ttf') format('truetype'),
+    url('./Roboto-Regular.svg#Roboto-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Bold';
+    src: url('./Roboto-Bold.eot');
+    src: local('Roboto Bold'), local('Roboto-Bold'),
+    url('./Roboto-Bold.eot?#iefix') format('embedded-opentype'),
+    url('./Roboto-Bold.woff2') format('woff2'),
+    url('./Roboto-Bold.woff') format('woff'),
+    url('./Roboto-Bold.ttf') format('truetype'),
+    url('./Roboto-Bold.svg#Roboto-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}

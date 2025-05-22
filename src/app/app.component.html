@@ -1,0 +1,84 @@
+﻿<!-- nav -->
+<!--<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/home">Dashboard</a>
+        <a class="nav-item nav-link" routerLink="/businesstrip">Request a trip</a>
+        <a class="nav-item nav-link" routerLink="/manager" *ngIf="isManager">Manager Page</a>
+        <a class="nav-item nav-link" routerLink="/agent" *ngIf="isAgent">Agent Page</a> 
+        <a class="nav-item nav-link" routerLink="/hrteam" *ngIf="isHR">HR Page</a>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    </div>
+</nav>-->
+
+<!-- main app container -->
+<!--<div class="container">
+    <router-outlet></router-outlet>
+</div>-->
+
+<!-- credits -->
+<!--<div class="text-center mt-4">
+    <p>
+        <a href="https://jasonwatmore.com/post/2019/08/06/angular-8-role-based-authorization-tutorial-with-example" target="_top">Angular 8 - Role Based Authorization Tutorial with Example</a>
+    </p>
+    <p>
+        <a href="https://jasonwatmore.com" target="_top">JasonWatmore.com</a>
+    </p>
+</div>-->
+<div *ngIf="currentUser?.loginUserDetails?.menus == null">
+  <app-permission-denied></app-permission-denied>
+</div>
+<div class="base-grid-container" [ngClass]="{'menu-open': menuOpen, 'menu-close': !menuOpen}" *ngIf="currentUser !=null && currentUser?.loginStatus?.isUserValid=='true'">
+  
+    <div class="header grid-item">
+    <app-header></app-header>
+    </div>
+    <!-- <div class="site-logo grid-item"></div> -->
+    <div class="site-logo grid-item" [class.center]="!menuOpen" routerLink="/home">
+      <img src="assets/icons/side-menu-logo.svg" class="ham-left logo-full" alt="logo">
+      <img src="assets/icons/logo-small-site.svg" class="ham-right logo-small" alt="logo">
+
+  </div>
+    <div class="side-nav grid-item">
+      <app-side-menu></app-side-menu>
+    </div>
+    <div class="grid-item">
+      <app-right-menu></app-right-menu>
+    </div>
+    <div class="content grid-item flex-column-between-stretch">
+      <div class="router flex-auto">
+        <!-- <app-page-name></app-page-name> -->
+        <div [class.overlay]="loader"></div>
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="loader">
+        <div class="spinner-border loader" role="status">
+            <!-- <span class="sr-only">Loading...</span> -->
+        </div>
+    </div>
+  <app-footer></app-footer>
+    </div>
+  </div>
+  <div class="row" *ngIf="currentUser == null">
+    <div class="container_login" >
+        <!-- <div class="container"> -->
+            <!-- <div class="row"> -->
+                <!-- <div class="col-sm-6 offset-sm-3"> -->
+                  <div [class.overlaylogin]="loader"></div>
+                    <app-login></app-login>
+
+                    <div *ngIf="loader">
+                      <div class="spinner-border loader" role="status">
+                          <!-- <span class="sr-only">Loading...</span> -->
+                      </div>
+                  </div>
+                    
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+    <!-- <img src="assets/icons/mobile-payments-mobile-scanning-payments-face-face-payments.png" class="responsive"> -->
+  </div>
+  <!-- <div *ngIf="loader" class="loading">
+    <i class="fas fa-spinner"></i>
+  </div>  -->
+  <div class="" id="google-button"></div>.

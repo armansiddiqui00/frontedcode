@@ -1,0 +1,32 @@
+<!-- <div class="menu-container">
+    <div class="right-menu" id="rightMenu">
+        <ul>
+            <li *ngFor="let r of menuData">
+                <div class="card">
+                    <div class="card-header">{{"Release Detail"}}</div>
+                    <div class="card-body">
+                        <p><strong>Version:</strong> {{r?.version}}</p>
+                        <p><strong>Date:</strong> {{r?.releasedDate}}</p>
+                        <p  class="text-center"><button class="btn btn-primary bg-primary-blue p-2" (click)="onVersion(r?.version)">{{"View Details"}}</button></p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div> -->
+
+<div class="menu-container">
+    <div class="right-menu" id="rightMenu">
+        <div class="card">
+            <div class="card-header">{{"Release Details"}}</div>
+            <div class="card-body">
+                <ul>
+                    <li *ngFor="let r of menuData">
+                        <p><strong>Version: </strong><a (click)="onVersion(r?.version)" >{{r?.version}}</a></p>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</div>

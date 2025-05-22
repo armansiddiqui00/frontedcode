@@ -1,0 +1,33 @@
+@import "../../itcss/02-tools.scss";
+
+.base {
+    display: grid;
+    grid-gap: 10px 10px;
+    @include custom_media((
+        grid-template: (
+            1fr / 1fr 180px,
+            1fr,
+            1fr,
+            1fr,
+            1fr
+        )
+    ));
+
+    .map {
+        grid-column: 1;
+        @include custom_media((
+            grid-row: (1, 2, 2, 2, 2)
+        ));
+    }
+    .calls {
+        grid-row: 1;
+        @include custom_media((
+            grid-column: (2, 1, 1, 1, 1)
+        ));
+
+        padding: 10px;
+        background-color: #67a8ce;
+        color: $secondary;
+        border-radius: 3px;
+    }
+}

@@ -1,0 +1,164 @@
+.Submit{
+    font-family: "Frutiger-LT-Arabic-55-Roman";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 31px !important;
+}
+
+.label{
+    font-family: "Frutiger-LT-Arabic-55-Roman";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 31px !important;
+    color: #747C91;
+}
+
+.value{
+
+    font-size: 18px;
+    font-weight: 700 !important;
+    color: #1d1556;
+    font-family: "FrutigerLTArabic-65Bold" !important;
+    margin-left: 0px;
+   // padding-top: 18px;
+    margin-bottom: 15px;
+    
+}
+.block-20{
+    height: 20px;
+}
+
+.paymentDeadline{
+    border: 2px solid rgba(116, 124, 145, 0.3);
+    padding: 22px 42px;
+    border-radius: 4px;
+    margin:0px 0px 36px 0px;
+    height: 514px !important;
+    overflow: auto;
+}
+
+.paymentDeadline2{
+    border: 2px solid rgba(116, 124, 145, 0.3);
+    padding: 22px 42px;
+    border-radius: 4px;
+    margin:0px 0px 36px 0px;
+   // height: 514px !important;
+    overflow: auto;
+}
+
+.paymentDetails{
+    position: relative;
+    top: 12px;
+    left: 25px;
+    display: inline;
+    padding: 0px 10px;
+    z-index: 1;
+    background: white;
+    font-size: 18px;
+    font-weight: 700 !important;
+    color: #1d1556;
+    font-family: "FrutigerLTArabic-65Bold" !important;
+    line-height: 31px !important;
+}
+.d-flex {
+    justify-content: end;
+    display: flex!important;
+}
+
+.nav{
+    padding-left: 18px;
+    margin-top: 2px;
+}
+.nav-tabs .nav-link.active{
+   background-color: #3498DB;
+   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    color: white;
+   border: 1px solid #0d6efd;
+    border-bottom: none;
+    font-weight: 500;
+
+}
+
+.nav-tabs .nav-link{
+    // background-color: white;
+    // color: #0d6efd;
+    // border: 1px solid #dee2e6;
+    // margin-right: 1px;
+    background-color: white;
+    color: #747C91;
+    border-bottom: 1px solid #dee2e6;
+}
+
+
+.fa-eye{
+    margin-left: 10px;
+}
+
+.modal-header{
+    height: 60px;
+    padding: 10px 12px 10px 3px !important;
+
+    .close{
+        margin: 0px !important;
+
+        span{
+            margin-left: -4px;
+        }
+    }
+}
+.modal-body{
+    padding: 16px 8.5px;
+   .row{
+    input{
+        background: #FFFFFF;
+        border: 1px solid rgba(116, 124, 145, 0.3);
+        border-radius: 6px;
+        box-sizing: border-box;
+        height: 50px;
+        font-family: "Frutiger-LT-Arabic-55-Roman";
+        vertical-align: middle !important;
+        background-color: #FFFFFF !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        color: #747C91 !important;
+        opacity: 1;
+        font-weight: 500;
+        font-size: 16px !important;
+        margin: 0px;
+        margin-bottom:  25px;
+    }
+    label{
+        font-family: "Frutiger-LT-Arabic-55-Roman";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 31px !important;
+        color: #747C91;
+        margin-bottom: 30px;
+    }
+    .d-flex{
+        justify-content: end;
+
+        .bg-primary-blue{
+            background: #2A235F;
+            border-radius: 4px;
+            height: 30px;
+        }
+
+        .bg-primary-light{
+            border-radius: 4px;
+            height: 30px;
+        }
+    }
+   }
+}
+
+.invStatus{
+    text-align: right;
+    font-family: "FrutigerLTArabic-65Bold" !important;
+    font-size: 16px;
+    line-height: 31px !important;
+    display: block;
+}

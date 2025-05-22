@@ -1,0 +1,793 @@
+<div class="modal-header bsdatepicker-modal">
+   <h4 class="modal-title">{{actionStr == 'edit' ? 'Update Process Details' : actionStr == 'view'? 'View Travel Status'
+      : actionStr == 'visaDetails'? 'View Visa Details':actionStr == 'passportDetails'?'Passport Details':actionStr == 'travelExpense'?'Travel Expense':''}}</h4>
+   <button class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<div class="modal-body " *ngIf="actionStr=='edit'" id="container">
+   <div class="wrapper-main">
+      <div class="row">
+         <div class="form-group col-md-4 col-6">
+            <input class="form-check-input" type="checkbox" value="reqCreated" [(ngModel)]="reqCreated"
+               (change)="submitStatus()" checked>
+            <label>{{'Request Created'}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12" id="bsdatepicker">
+                  <label>{{'Request Created Date'}}</label>
+                  <input id="container" type="text" class="form-control calender-icon" bsDatepicker
+                     placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.reqCreatedDate">
+               </div>
+            </div>
+         </div>
+
+         <div class="form-group col-md-4 col-6" *ngIf="showField==false">
+            <input class="form-check-input" type="checkbox" value="documentCollected" [(ngModel)]="documentCollected"
+               (change)="submitStatus()">
+            <label>{{'Document (Collect passport, Degree)'}}</label> &nbsp; {{travelProcessReq.documentRange}}
+            <div class="row">
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Document Collection Start Date'}}</label>
+                  <input id="container" type="text" class="form-control calender-icon" bsDatepicker
+                     placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.documentStartDate">
+               </div>
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Document Collection End Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.documentEndDate"
+                     (ngModelChange)="documentRangeChange($event)">
+               </div>
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6" *ngIf="showField==false">
+            <input class="form-check-input" type="checkbox" value="sendDetailsStatus" [(ngModel)]="sendDetailsStatus"
+               (change)="submitStatus()">
+            <label>{{'Sent email to Anjum for getting visa invitation slip'}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12">
+                  <label>{{'Reminder Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.sendDetailsReminderDate" (ngModelChange)="sentMail($event)">
+               </div>
+               <!-- <div class="form-group custom-form col-sm-6 col-12">
+               <label>{{'Send details end date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom"                
+                      [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.sendDetailsEndDate" (ngModelChange)="sendDetailsVisaChange($event)">
+            </div> -->
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6" *ngIf="showField==false">
+            <input class="form-check-input" type="checkbox" value="receiveVisaInvitationStatus"
+               [(ngModel)]="receiveVisaInvitationStatus" (change)="submitStatus()">
+            <label>{{'Received visa invitation slip from client through anjum'}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12">
+                  <label>{{'Receive Visa Invitation Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.receiveVisaInvitationDate" (ngModelChange)="receivedVisaInvitation($event)">
+               </div>
+               <!-- <div class="form-group custom-form col-sm-6 col-12">
+               <label>{{'Receive Visa invitation start date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom"                
+                      [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.receiveVisaInvitationEndDate" (ngModelChange)="receiveVisaChange($event)">
+            </div> -->
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6" *ngIf="showField==false">
+            <input class="form-check-input" type="checkbox" value="marathaChemberStatus"
+               [(ngModel)]="marathaChemberStatus" (change)="submitStatus()">
+            <label>{{'Mahratta Chamber of Commerce'}}</label>&nbsp;&nbsp;<i class="fa fa-info"
+               (mouseenter)="openModal(maharattatemplateReason)"></i>&nbsp; {{travelProcessReq.marathaChemberRange}}
+            <div class="row">
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Submission Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.marathaChemberSubmissionDate">
+               </div>
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Received Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.marathaChemberReceivedDate"
+                     (ngModelChange)="marathaChemberChange($event);openModal(maharattatemplate)">
+               </div>
+            </div>
+         </div>
+
+         <div class="form-group col-md-4 col-6" *ngIf="showField==false">
+            <input class="form-check-input" type="checkbox" value="companyLetterToSaudiEmbassyStatus"
+               [(ngModel)]="companyLetterToSaudiEmbassyStatus" (change)="submitStatus()">
+            <label>{{"Company's Letter to Saudi Embassy"}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12">
+                  <label>{{'Company Letter Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.companyLetterToSaudiEmbassyDate" (ngModelChange)="companyLetterChange($event)">
+               </div>
+               <!-- <div class="form-group custom-form col-sm-6 col-12">
+               <label>{{'Company Letter end date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom"                
+                      [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.companyLetterToSaudiEmbassyEndDate" (ngModelChange)="companyLetterChange($event)">
+            </div> -->
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6">
+            <input class="form-check-input" type="checkbox" value="biometricAppointmentStatus"
+               [(ngModel)]="biometricAppointmentStatus" (change)="submitStatus()">
+            <label>{{'Biometric VFS Appointment Date'}}</label>&nbsp;&nbsp;<i class="fa fa-info"
+               (mouseenter)="openModal(template)"></i>
+            &nbsp;&nbsp;{{travelProcessReq.biometricAppointmentRange}}&nbsp;&nbsp;
+            <div class="btn-group" dropdown>
+               <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                  aria-controls="dropdown-basic">
+                  {{vfscenter}}<span class="caret"></span>
+               </button>
+               <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                  <li *ngFor="let a of vfsCenter" role="menuitem" (click)="dropdown(a)">{{a}}</li>
+               </ul>
+            </div>
+            <div class="row">
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Biometric start date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.biometricAppointmentStartDate"
+                     (ngModelChange)="openReasonModal(popTemplate)">
+               </div>
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Biometric end date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.biometricAppointmentEndDate"
+                     (ngModelChange)="biometricAppointmentChange($event)">
+               </div>
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6">
+            <input class="form-check-input" type="checkbox" value="biometricCompletedStatus"
+               [(ngModel)]="biometricCompletedStatus" (change)="submitStatus()">
+            <label>{{'Biometric completed + E.visa Approved'}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12">
+                  <label>{{'Biometric Completed Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.biometricCompletedDate">
+               </div>
+               <!-- <div class="form-group custom-form col-sm-6 col-12">
+               <label>{{'Biometric completed end date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom"                
+                      [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.biometricCompletedEndDate" (ngModelChange)="biometricCompletedChange($event)">
+            </div> -->
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6">
+            <input class="form-check-input" type="checkbox" value="passportEvisaReceivedStatus"
+               [(ngModel)]="passportEvisaReceivedStatus" (change)="submitStatus()">
+            <label>{{'Passport and E-visa received From VFS'}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12">
+                  <label>{{'Passport Received Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="bottom"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.passportEvisaReceivedDate" (ngModelChange)="passportReceived($event)">
+               </div>
+               <!-- <div class="form-group custom-form col-sm-6 col-12">
+               <label>{{'Passport received end date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom"                
+                      [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.passportEvisaReceivedEndDate" (ngModelChange)="passportEvisaChange($event)">
+            </div> -->
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6">
+            <input class="form-check-input" type="checkbox" value="requestRaisedStatus"
+               [(ngModel)]="requestRaisedStatus" (change)="submitStatus()">
+            <label>{{'Request raised to rafique for ticket'}}</label>&nbsp; {{travelProcessReq.requestRaisedRange}}
+            <div class="row">
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Request Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="top"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.requestRaisedDate">
+               </div>
+               <div class="form-group custom-form col-sm-6 col-12">
+                  <label>{{'Ticket Received Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="top"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.requestRaisedTicketReceivedDate"
+                     (ngModelChange)="requestRaisedChange($event)">
+               </div>
+            </div>
+         </div>
+         <!-- <div class="form-group col-md-4 col-6">
+         <input class="form-check-input" type="checkbox" value="ticketBoockedStatus" [(ngModel)]="ticketBoockedStatus" (change)="submitStatus()">
+         <label>{{'Ticket Boocked'}}</label>
+         <div class="row">
+            <div class="form-group custom-form col-sm-12 col-12">
+               <label>{{'Ticket booked date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom"
+                      [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.ticketBoockedStartDate" >
+            </div>
+         </div>
+      </div> -->
+         <div class="form-group col-md-4 col-6">
+            <input class="form-check-input" type="checkbox" value="travellingStaffDocumentStatus"
+               [(ngModel)]="travellingStaffDocumentStatus" (change)="submitStatus()">
+            <label>{{'Documents provided to first time travelling staff'}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12">
+                  <label>{{'Document Provided Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker placement="top"
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.travellingStaffDocumentProvidedDate" (ngModelChange)="documentsProvided($event)">
+               </div>
+               <!-- <div class="form-group custom-form col-sm-6 col-12">
+               <label>{{'Document provided end date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom" [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.travellingStaffDocumentEndDate" (ngModelChange)="travellingStaffChange($event)">
+            </div> -->
+            </div>
+         </div>
+         <div class="form-group col-md-4 col-6">
+            <input class="form-check-input" type="checkbox" value="empOnBoardedStatus" [(ngModel)]="empOnBoardedStatus"
+               (change)="submitStatus()">
+            <label>{{'Employee on boarded on client location'}}</label>
+            <div class="row">
+               <div class="form-group custom-form col-sm-12 col-12">
+                  <label>{{'Employee On Boarded Date'}}</label>
+                  <input type="text" class="form-control calender-icon" bsDatepicker 
+                     [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }"
+                     name="createdDate" [(ngModel)]="travelProcessReq.empOnBoardedDate" placement="top" (ngModelChange)="EmployeeOnBoarded($event)">
+               </div>
+               <!-- <div class="form-group custom-form col-sm-6 col-12">
+               <label>{{'Employee on boarded start date'}}</label>
+               <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker placement="bottom"               
+                      [bsConfig]="{dateInputFormat: 'MM/DD/YYYY',showWeekNumbers: false, isAnimated: false }" 
+                      name="createdDate" [(ngModel)]="travelProcessReq.empOnBoardedEndDate" (ngModelChange)="employeeBoardedChange($event)" placement="top">
+            </div> -->
+            </div>
+         </div>
+      </div>
+
+      <div class="d-flex">
+         <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+            (click)="updateProcessDetails()">{{'Update'}}</button>
+         <button type="button" class="btn btn-light bg-primary-light col-lg-1 col-md-3"
+            (click)="cancel()">{{'Cancel'}}</button>
+      </div>
+   </div>
+</div>
+
+
+<div *ngIf="actionStr == 'view'">
+   <div class="modal-body">
+      <div class="block-20"></div>
+      <div>
+         <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.reqCreatedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Request Created'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.reqCreatedDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.reqCreatedDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center" *ngIf="showField==false">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq?.documentEndDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Document (Collect passport, Degree)'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq?.documentEndDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq?.documentEndDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center" *ngIf="showField==false">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.sendDetailsReminderDate != null ?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Sent email to Anjum for getting visa invitation slip'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.sendDetailsReminderDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.sendDetailsReminderDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center" *ngIf="showField==false">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.receiveVisaInvitationDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Received visa invitation slip from client through Anjum'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.receiveVisaInvitationDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.receiveVisaInvitationDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center" *ngIf="showField==false">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.marathaChemberReceivedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Mahratta Chamber of Commerce'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.marathaChemberReceivedDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.marathaChemberReceivedDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center" *ngIf="showField==false">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.companyLetterToSaudiEmbassyDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{"Company's Letter to Saudi Embassy"}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.companyLetterToSaudiEmbassyDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.companyLetterToSaudiEmbassyDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.biometricAppointmentEndDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Biometric VFS Appointment Date'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.biometricAppointmentEndDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.biometricAppointmentEndDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.biometricCompletedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Biometric Completed + E.visa Approved'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.biometricCompletedDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.biometricCompletedDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.passportEvisaReceivedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Passport and E-visa received from VFS'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.passportEvisaReceivedDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.passportEvisaReceivedDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.requestRaisedTicketReceivedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Request raised to rafique for ticket'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.requestRaisedTicketReceivedDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.requestRaisedTicketReceivedDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+        <!-- <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.travellingStaffDocumentProvidedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Ticket Boocked'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.travellingStaffDocumentProvidedDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.travellingStaffDocumentProvidedDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div> -->
+         <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.empOnBoardedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Documents provided to first time travelling staff'}}</div>
+               <div class="connecting-line-template"
+                  [ngStyle]="travelProcessReq.empOnBoardedDate != null?{'border-color':'green'}:{'border-color':'black'}">
+                  <i class="arrow down"
+                     [ngStyle]="travelProcessReq.empOnBoardedDate != null?{'border-color':'green'}:{'border-color':'black'}"></i>
+               </div>
+            </div>
+         </div>
+         <div class="d-flex justify-content-center">
+            <div class="col-md-3">
+               <div class="dataBox"
+                  [ngStyle]="travelProcessReq.empOnBoardedDate != null?{'background-color':'green','color': '#FFFFFF'}:{'background-color':'white','color': 'black'}">
+                  {{'Employee on boarded on client location'}}</div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<div *ngIf="actionStr == 'visaDetails'">
+   <!-- <h1>visaDetails</h1> -->
+   <div class="modal-body ">
+      <div class="wrapper-main">
+         <div class="row" *ngIf="visaDetails != null">
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{'Employee Name : '}}</label>
+               <label class="form-label">{{visaDetails.employeName}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Employee Name" name="employeName" [(ngModel)]="visaDetails.employeName"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{'Visa No. : '}}</label>
+               <label class="form-label">{{visaDetails.visaNo}}</label>
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{'Valid From : '}}</label>
+               <label class="form-label">{{visaDetails.validFrom  | date:"longDate"}}</label>
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{'Valid Until : '}}</label>
+               <label class="form-label expiryDate">{{visaDetails.validUntill | date:'longDate'}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Enter Client Name" name="clientName" [(ngModel)]="visaDetails.clientName"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Duration Of Stay : "}}</label>
+               <label class="form-label">{{visaDetails.durationOfStay}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Enter Visa Number" name="visaNo" [(ngModel)]="visaDetails.visaNumber"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Place Of Issue :"}}</label>
+               <label class="form-label">{{visaDetails.placeOfIssue}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity From Date" name="visaFromDate" [(ngModel)]="visaDetails.visaFromDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Purpose : "}}</label>
+               <label class="form-label">{{visaDetails.purpose}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="visaDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Entry Type : "}}</label>
+               <label class="form-label">{{visaDetails.entryType}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="visaDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Visa Type : "}}</label>
+               <label class="form-label">{{visaDetails.visaType}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="visaDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Nationality : "}}</label>
+               <label class="form-label">{{visaDetails.nationality}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="visaDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Passport No : "}}</label>
+               <label class="form-label">{{visaDetails.passportNo}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="visaDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Occupation : "}}</label>
+               <label class="form-label">{{visaDetails.occupation}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="visaDetails.visaToDate"> -->
+            </div>
+         </div>
+         <div class="row" *ngIf="visaDetails == null">
+            <section class="no-records">
+               <img class="mb-3" src="assets/icons/icon-no-record.svg">
+               <div style="clear:both;"></div>
+               <span>{{'No records to display'}}</span>
+           </section>
+         </div>
+         <div class="row">
+            <div class="d-flex">
+               <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="close()">{{'OK'}}</button>
+           </div>
+         </div>
+      </div>
+   </div>
+
+</div>
+<div *ngIf="actionStr == 'passportDetails'">
+   <!-- <h1>visaDetails</h1> -->
+   <div class="modal-body ">
+      <div class="wrapper-main">
+         <div class="row" *ngIf="passportDetails != null">
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{'Passport Type : '}}</label>
+               <label class="form-label">{{passportDetails.passportType}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Employee Name" name="employeName" [(ngModel)]="visaDetails.passportType"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{'Country Code : '}}</label>
+               <label class="form-label">{{passportDetails.countryCode}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Type" name="visaType" [(ngModel)]="passportDetails.visaType"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{'Passport Number : '}}</label>
+               <label class="form-label">{{passportDetails.passportNumber}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Enter Client Name" name="clientName" [(ngModel)]="passportDetails.clientName"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Last Name : "}}</label>
+               <label class="form-label">{{passportDetails.surname}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Enter Visa Number" name="visaNo" [(ngModel)]="passportDetails.visaNumber"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"First Name :"}}</label>
+               <label class="form-label">{{passportDetails.givenName}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity From Date" name="visaFromDate" [(ngModel)]="passportDetails.visaFromDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Nationality : "}}</label>
+               <label class="form-label">{{passportDetails.nationality}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Sex : "}}</label>
+               <label class="form-label">{{passportDetails.sex}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Date of Birth : "}}</label>
+               <label class="form-label">{{passportDetails.dateOfBirth | date:"longDate"}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Place Of Birth : "}}</label>
+               <label class="form-label">{{passportDetails.placeOfBirth}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Place Of Issue : "}}</label>
+               <label class="form-label">{{passportDetails.placeOfIssue}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Date Of Issue : "}}</label>
+               <label class="form-label">{{passportDetails.dateOfIssue | date:"longDate"}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6">
+               <label class="form-label inputLabel">{{"Date Of Expiry : "}}</label>
+               <label class="form-label expiryDate">{{passportDetails.dateOfExpiry | date:"longDate"}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+         </div>
+         <div class="row" *ngIf="passportDetails == null">
+            <section class="no-records">
+               <img class="mb-3" src="assets/icons/icon-no-record.svg">
+               <div style="clear:both;"></div>
+               <span>{{'No records to display'}}</span>
+            </section>
+         </div>
+         <div class="row">
+            <div class="d-flex">
+               <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="close()">{{'OK'}}</button>
+           </div>
+         </div>
+      </div>
+   </div>
+
+</div>
+<div *ngIf="actionStr == 'travelExpense'">
+   <div class="modal-body ">
+      <div class="wrapper-main">
+         <div class="row" *ngIf="travelExpense != null">
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{'Employee ID : '}}</label>
+               <label class="form-label">{{travelExpense.empId}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Employee Name" name="employeName" [(ngModel)]="visaDetails.passportType"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{'Employee Name : '}}</label>
+               <label class="form-label">{{travelExpense.employeName}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Type" name="visaType" [(ngModel)]="passportDetails.visaType"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{'Added By : '}}</label>
+               <label class="form-label">{{travelExpense.addedBy}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Enter Client Name" name="clientName" [(ngModel)]="passportDetails.clientName"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{"Added Time : "}}</label>
+               <label class="form-label">{{travelExpense.addedTime}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Enter Visa Number" name="visaNo" [(ngModel)]="passportDetails.visaNumber"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{"Modified By :"}}</label>
+               <label class="form-label">{{travelExpense.modifiedBy}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity From Date" name="visaFromDate" [(ngModel)]="passportDetails.visaFromDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{"Modified Time : "}}</label>
+               <label class="form-label">{{travelExpense.modifiedTime}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{"Travel ID : "}}</label>
+               <label class="form-label">{{travelExpense.travelId}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;">
+               <label class="form-label inputLabel">{{"Travel Orign : "}}</label>
+               <label class="form-label">{{travelExpense.travelOrign}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+            <div class="form-group custom-form col-md-6 col-sm-6" style="padding-right: 0px;"> 
+               <label class="form-label inputLabel">{{"Travel Purpose : "}}</label>
+               <label class="form-label">{{travelExpense.travelPurpose}}</label>
+               <!-- <input type="text" class="form-control" placeholder="Visa Validity To Date" name="visaToDate" [(ngModel)]="passportDetails.visaToDate"> -->
+            </div>
+
+         </div>
+         <div class="row" *ngIf="travelExpense == null">
+            <section class="no-records">
+               <img class="mb-3" src="assets/icons/icon-no-record.svg">
+               <div style="clear:both;"></div>
+               <span>{{'No records to display'}}</span>
+            </section>
+         </div>
+         <div class="row">
+            <div class="d-flex">
+               <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="close()">{{'OK'}}</button>
+           </div>
+         </div>
+      </div>
+   </div>
+
+</div>
+
+<ng-template #template>
+   <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'Biometric Appointment History'}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+         <!-- <span aria-hidden="true" class="visually-hidden">&times;</span> -->
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <!-- <div class="wrapper-main"> -->
+      <div class="row">
+         <table *ngIf="BiometricList.length != 0">
+            <thead>
+               <tr>
+                  <th>{{'Biometric Appointment Start Date'}}</th>
+                  <th>{{'Biometric Appointment End Date'}}</th>
+                  <th>{{'Reason'}}</th>
+                  <th>{{'vfsCenter'}}</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let bio of BiometricList">
+                  <td>{{bio.biometricAppointmentStartDate}}</td>
+                  <td>{{bio.biometricAppointmentEndDate}}</td>
+                  <td>{{bio.reason}}</td>
+                  <td>{{bio.vfsCenter}}</td>
+               </tr>
+            </tbody>
+         </table>
+         <!-- </div> -->
+         <section class="no-records" *ngIf="BiometricList == null || BiometricList.length == 0">
+            <img class="mb-3" src="assets/icons/icon-no-record.svg">
+            <div style="clear:both;"></div>
+            <span>{{'No History Available'}}</span>
+         </section>
+      </div>
+      <div class="row">
+         <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3" (click)="modalRef?.hide()">{{'OK'}}</button>
+        </div>
+      </div>
+   </div>
+</ng-template>
+
+<ng-template #maharattatemplate>
+   <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'Mahratta Chamber of Commerce'}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <div class="row">
+         <div class="form-group custom-form col-md-12 col-12">
+            <label class="form-label">{{'Comment'}}</label>
+            <textarea type="text" class="form-control" placeholder="Comment" name="mahrattareason"
+               [(ngModel)]="travelProcessReq.mahrattareason"></textarea>
+         </div>
+      </div>
+      <div class="row">
+         <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+               (click)="modalRef?.hide()">{{'OK'}}</button>
+         </div>
+      </div>
+   </div>
+</ng-template>
+
+<ng-template #maharattatemplateReason>
+   <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'Mahratta Chamber of Commerce'}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <div class="row" *ngIf="travelProcessReq.mahrattareason != null">
+         <div class="form-group custom-form col-md-6 col-sm-6">
+            <label class="form-label inputLabel">{{'Comment : '}}</label>
+            <label class="form-label">{{travelProcessReq.mahrattareason}}</label>
+            <!-- <input type="text" class="form-control" placeholder="Employee Name" name="employeName" [(ngModel)]="visaDetails.passportType"> -->
+         </div>
+      </div>
+      <div class="row" *ngIf="travelProcessReq.mahrattareason == null">
+         <section class="no-records">
+            <img class="mb-3" src="assets/icons/icon-no-record.svg">
+            <div style="clear:both;"></div>
+            <span>{{'No reason to display'}}</span>
+         </section>
+      </div>
+      <div class="row">
+         <div class="d-flex">
+            <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+               (click)="modalRef?.hide()">{{'OK'}}</button>
+         </div>
+      </div>
+   </div>
+</ng-template>
+
+<ng-template #popTemplate>
+   <div class="modal-header">
+      <h4 class="modal-title pull-left">{{'Biometric Appointment Reason For Change'}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+         <!-- <span aria-hidden="true" class="visually-hidden">&times;</span> -->
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <div class="wrapper-main">
+         <!-- <div class="wrapper-main"> -->
+         <div class="row">
+            <div class="form-group custom-form col-md-12 col-12">
+               <label class="form-label">{{'Comment'}}</label>
+               <textarea type="text" class="form-control" placeholder="Comment" name="comment"
+                  [(ngModel)]="reason"></textarea>
+            </div>
+         </div>
+         <div class="row">
+            <div class="d-flex">
+               <button type="button" class="btn btn-primary bg-primary-blue col-lg-1 col-md-3"
+                  (click)="modalRef?.hide()">{{'OK'}}</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</ng-template>

@@ -1,0 +1,68 @@
+@import '../../../../itcss/01-settings.scss';
+
+.color-red{
+    font-size: 25px;
+    color: $error;
+}
+
+::ng-deep #reviewerContainer{
+    .dx-editor-cell .dx-texteditor .dx-texteditor-input{
+        background : #F6F8FA !important;
+    }
+    .dx-datagrid-rowsview .dx-row.dx-row-lines >td{
+        text-align: left !important;
+    }
+    .dx-datagrid .dx-row>td {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 27px;
+        font-family: 'Frutiger-LT-Arabic-55-Roman';
+        color: #333333;
+        &:focus {
+            outline: transparent !important;
+        }
+    }
+       
+
+    .dx-datagrid-text-content.dx-text-content-alignment-right .dx-template-wrapper {
+        position: absolute;
+    }
+
+    .dx-datagrid-borders > .dx-datagrid-filter-panel, .dx-datagrid-borders > .dx-datagrid-headers {
+        border-bottom: 1px solid $cyan-blue;
+        
+    }
+
+    .dx-datagrid.dx-gridbase-container {
+        background: $white;
+        box-sizing: border-box;
+        border: 1px solid $white;
+        border-radius: 4px;
+    }
+
+    .dx-datagrid-borders > .dx-datagrid-headers{
+        border-top: 1px solid $white;
+        border-left: 1px solid $white;
+        border-right: 1px solid $white;
+    }
+
+    .dx-datagrid.dx-gridbase-container .fixed-headers .dx-row.dx-column-lines.dx-header-row {
+        background-color: $white;
+        color: #26273B;
+        font-weight: 700;
+        border-bottom: 1px solid $cyan-blue;
+        /* box-shadow: 0px 3px 4px rgb(0 0 0 / 10%); */
+        height: 58.25px;
+    }
+
+
+
+    .dx-overlay-content.dx-popup-normal.dx-resizable.dx-popup-flex-height {
+        height: 216px !important;
+        width: 265px !important;
+    }
+
+
+    
+}
+

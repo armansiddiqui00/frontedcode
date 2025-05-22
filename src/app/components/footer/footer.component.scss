@@ -1,0 +1,13 @@
+@import "../../../itcss/01-settings.scss";
+
+.base {
+    height: 60px;
+    background-color: $white;
+    padding: 15px;
+    color: $default;
+}
+
+.developer {
+    font-family: alegreya;
+    font-size: $regular-sharp;
+}

@@ -1,0 +1,124 @@
+@import "../../../itcss/01-settings.scss";
+
+
+.header,
+.right {
+    height: 60px;
+
+}
+.lang-text{
+   padding-left: 73%; 
+   padding-top: 8%;
+}
+.menu-button {
+    width: 56px;
+   // cursor: pointer;
+
+    &:hover {
+        background-color: rgba($color: $secondary, $alpha: 0.1);
+    }
+}
+
+.badge {
+    font-size: $regular-flat;
+    position: relative;
+    top: -10px;
+    background: $success;
+    padding: 1px 4px 2px 4px;
+    border-radius: 7px;
+}
+
+.user-profile {
+    padding: 0px 24px 0px 10px;
+    width: auto;
+    white-space: nowrap;
+    word-break: keep-all;
+    word-wrap: none;
+
+    .dropdown-menu {
+        top: 50px !important;
+        right: -23px;
+        left: auto !important;
+        font-size: inherit;
+        will-change: auto !important;
+        transform: inherit !important;
+        min-width: 200px;
+
+        .dropdown-item {
+            width: auto;
+            padding: 1rem;
+        }
+    }
+}
+
+.user-name{
+    cursor: pointer;
+    font-family: 'Frutiger-LT-Arabic-55-Roman';
+}
+
+.menu-container {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 25px;
+    height: 3px;
+    background-color: $secondary;
+    margin: 6px 0;
+}
+
+.menu-change {
+    .bar1 {
+        -webkit-transform: rotate(-45deg) translate(-7px, 6px);
+        transform: rotate(-45deg) translate(-7px, 6px);
+    }
+
+    .bar2 {
+        opacity: 0;
+    }
+
+    .bar3 {
+        -webkit-transform: rotate(45deg) translate(-6px, -6px);
+        transform: rotate(45deg) translate(-6px, -6px);
+    }
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+
+    .language-box {
+        min-width: 100px;
+        height: 26px;
+        line-height: 15px;
+        border: 1px solid $cream-violet;
+        background: $safe-blue;
+        appearance: auto;
+        padding-bottom:0px;
+        padding-top:0px;
+        border-radius: 4px;
+        font-size:12px!important;
+    }
+}
+
+
+.logout .item-icon.glow{
+    width: 35px;
+    height: 36px;
+
+}
+
+
+.logout,
+.download-manager {
+    background-color: rgba($color: $tertiary, $alpha: 0.03);
+
+    .item-icon {
+        width: 35px;
+        height: 36px;
+        margin-left: 2px;
+    }
+}
